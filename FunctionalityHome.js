@@ -87,6 +87,7 @@ const products = {
     },
     6: {
         name: "Abyss Beast",
+        available: false,
         description: "Espinas violetas atraviesan la prenda como una herida elegante. Un diseño agresivo, oscuro y dominante nacido desde el abismo.",
         price: "$75.000",
         sizes: cloneSizes(),
@@ -100,6 +101,10 @@ const products = {
         colors: createColors("D7")
     }
 };
+function isProductAvailable(productId) {
+    const product = products[productId];
+    return product && product.available !== false;
+}
 const newProductIds = [1, 2, 3, 4, 5, 6, 7];
 const wardrobeProductIds = [1, 2, 3, 4];
 
@@ -242,6 +247,7 @@ function renderWardrobeProducts() {
     if (!wardrobeGrid) return;
 
     wardrobeGrid.innerHTML = wardrobeProductIds
+        .filter(isProductAvailable)
         .map(createWardrobeCardMarkup)
         .join("");
 
@@ -361,6 +367,7 @@ function renderWardrobeProducts() {
     if (!wardrobeGrid) return;
 
     wardrobeGrid.innerHTML = wardrobeProductIds
+        .filter(isProductAvailable)
         .map(createWardrobeCardMarkup)
         .join("");
 
@@ -433,7 +440,10 @@ function createRelatedCardMarkup(productId) {
 }
 
 function renderProducts() {
-    const cards = Object.keys(products).map(createCardMarkup).join("");
+    const cards = Object.keys(products)
+        .filter(isProductAvailable)
+        .map(createCardMarkup)
+        .join("");
 
     ropaCompleta.innerHTML = cards;
 
@@ -443,7 +453,10 @@ function renderProducts() {
 function renderNewProducts() {
     if (!newProductsTrack) return;
 
-    const newCards = newProductIds.map(createNewProductMarkup).join("");
+    const newCards = newProductIds
+        .filter(isProductAvailable)
+        .map(createNewProductMarkup)
+        .join("");
 
     newProductsTrack.innerHTML = newCards;
     newProductsTrack.scrollTo({ left: 0, behavior: "auto" });
@@ -503,7 +516,7 @@ function renderRelatedProducts() {
     if (!relatedProductsTrack || !currentProductId) return;
 
     const relatedCards = Object.keys(products)
-        .filter((productId) => productId !== String(currentProductId))
+        .filter((productId) => productId !== String(currentProductId) && isProductAvailable(productId))
         .map(createRelatedCardMarkup)
         .join("");
 
@@ -722,7 +735,7 @@ function renderModal() {
 function openProduct(productId, openedFromArmario = false) {
     const product = products[productId];
 
-    if (!product) {
+    if (!product || !isProductAvailable(productId)) {
         hidePageLoader();
         return;
     }
