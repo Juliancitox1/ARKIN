@@ -51,51 +51,51 @@ function createColors(baseName, includeRedBlack = false) {
 
 const products = {
     1: {
-        name: "Producto 1",
+        name: "Heart Cross",
         description: "Descripción provisional del producto 1. Reemplaza este texto con la información real de la prenda.",
-        price: "$100.000",
+        price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D1", true)
     },
     2: {
-        name: "Producto 2",
+        name: "Tribal Cross",
         description: "Descripción provisional del producto 2. Reemplaza este texto con la información real de la prenda.",
-        price: "$120.000",
+        price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D2")
     },
     3: {
-        name: "Producto 3",
+        name: "Framing",
         description: "Descripción provisional del producto 3. Reemplaza este texto con la información real de la prenda.",
-        price: "$90.000",
+        price: "$85.000",
         sizes: cloneSizes(),
         colors: createColors("D3")
     },
     4: {
-        name: "Producto 4",
+        name: "Demonic Flash",
         description: "Descripción provisional del producto 4. Reemplaza este texto con la información real de la prenda.",
-        price: "$150.000",
+        price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D4")
     },
     5: {
-        name: "Producto 5",
+        name: "Chain",
         description: "Descripción provisional del producto 5. Reemplaza este texto con la información real de la prenda.",
-        price: "$80.000",
+        price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D5")
     },
     6: {
-        name: "Producto 6",
+        name: "Abyss Beast",
         description: "Descripción provisional del producto 6. Reemplaza este texto con la información real de la prenda.",
-        price: "$200.000",
+        price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D6")
     },
     7: {
-        name: "Producto 7",
+        name: "Winged Arcane",
         description: "Descripción provisional del producto 7. Reemplaza este texto con la información real de la prenda.",
-        price: "$110.000",
+        price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D7")
     }
