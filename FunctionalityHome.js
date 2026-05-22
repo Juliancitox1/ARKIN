@@ -100,6 +100,7 @@ const products = {
         colors: createColors("D7")
     }
 };
+const newProductIds = [1, 2, 3];
 
 const siteHeader = document.getElementById("siteHeader");
 const navLinks = [...document.querySelectorAll(".nav-link")];
@@ -128,16 +129,47 @@ const relatedProductsTrack = document.getElementById("relatedProductsTrack");
 const relatedPrevButton = document.getElementById("relatedPrev");
 const relatedNextButton = document.getElementById("relatedNext");
 const scrollToRelatedButton = document.getElementById("scrollToRelated");
+const newProductsTrack = document.getElementById("loNuevoTrack");
+const newPrevButton = document.getElementById("loNuevoPrev");
+const newNextButton = document.getElementById("loNuevoNext");
 
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 
 let autoScrollInterval = null;
+let newProductsAutoScrollInterval = null;
 let relatedHoverScrollInterval = null;
 let currentProductId = null;
 let currentColorName = "";
 let currentSize = "";
 let currentImageIndex = 0;
 let productOpenedFromArmario = false;
+
+const heroSlides = [...document.querySelectorAll("[data-hero-slide]")];
+const HERO_SLIDE_TIME = 6000;
+const NEW_PRODUCTS_AUTOSCROLL_TIME = 8000;
+
+let currentHeroSlide = 0;
+let heroSlideInterval = null;
+
+function showHeroSlide(index) {
+    if (!heroSlides.length) return;
+
+    heroSlides[currentHeroSlide].classList.remove("active");
+
+    currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
+
+    heroSlides[currentHeroSlide].classList.add("active");
+}
+
+function startHeroSlider() {
+    if (heroSlides.length <= 1) return;
+
+    clearInterval(heroSlideInterval);
+
+    heroSlideInterval = setInterval(() => {
+        showHeroSlide(currentHeroSlide + 1);
+    }, HERO_SLIDE_TIME);
+}
 
 function getFirstEnabledColor(product) {
     const availableColor = Object.entries(product.colors).find(([, color]) => color.enabled !== false);
@@ -167,6 +199,33 @@ function createCardMarkup(productId) {
     `;
 }
 
+function createNewProductMarkup(productId) {
+    const product = products[productId];
+
+    if (!product) return "";
+
+    const image = getPrimaryImage(product);
+
+    return `
+        <article class="new-product-card reveal" data-new-product-id="${productId}">
+            <div class="new-product-media">
+                <img src="${image}" alt="${product.name}" loading="lazy" />
+            </div>
+
+            <div class="new-product-content">
+                <span class="new-product-label">Lo Nuevo</span>
+                <h3 class="new-product-name">${product.name}</h3>
+                <p class="new-product-description">${product.description}</p>
+
+                <div class="new-product-footer">
+                    <span class="new-product-price">${product.price}</span>
+                    <span class="new-product-action">Ver detalle</span>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
 function createRelatedCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
@@ -190,6 +249,65 @@ function renderProducts() {
     carouselTrack.innerHTML = cards;
     ropaCompleta.innerHTML = cards;
     activateReveal();
+}
+
+function renderNewProducts() {
+    if (!newProductsTrack) return;
+
+    const newCards = newProductIds.map(createNewProductMarkup).join("");
+
+    newProductsTrack.innerHTML = newCards;
+    newProductsTrack.scrollTo({ left: 0, behavior: "auto" });
+    activateReveal();
+}
+
+function getNewProductsScrollAmount() {
+    const firstCard = newProductsTrack.querySelector(".new-product-card");
+
+    if (!firstCard) return newProductsTrack.clientWidth;
+
+    const trackStyles = window.getComputedStyle(newProductsTrack);
+    const gap = parseFloat(trackStyles.gap) || 0;
+    const cardWidth = firstCard.getBoundingClientRect().width;
+
+    return cardWidth + gap;
+}
+
+function moveNewProducts(direction) {
+    if (!newProductsTrack) return;
+
+    const maxScroll = newProductsTrack.scrollWidth - newProductsTrack.clientWidth;
+    const scrollAmount = getNewProductsScrollAmount();
+
+    if (direction > 0 && newProductsTrack.scrollLeft >= maxScroll - 8) {
+        newProductsTrack.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+    }
+
+    if (direction < 0 && newProductsTrack.scrollLeft <= 8) {
+        newProductsTrack.scrollTo({ left: maxScroll, behavior: "smooth" });
+        return;
+    }
+
+    newProductsTrack.scrollBy({
+        left: direction * scrollAmount,
+        behavior: "smooth"
+    });
+}
+
+function startNewProductsAutoScroll() {
+    if (!newProductsTrack || newProductIds.length <= 2) return;
+
+    stopNewProductsAutoScroll();
+
+    newProductsAutoScrollInterval = setInterval(() => {
+        moveNewProducts(1);
+    }, NEW_PRODUCTS_AUTOSCROLL_TIME);
+}
+
+function stopNewProductsAutoScroll() {
+    clearInterval(newProductsAutoScrollInterval);
+    newProductsAutoScrollInterval = null;
 }
 
 function renderRelatedProducts() {
@@ -530,6 +648,25 @@ function activateReveal() {
 
 rightArrow.addEventListener("click", moveRight);
 leftArrow.addEventListener("click", moveLeft);
+newNextButton.addEventListener("click", () => {
+    moveNewProducts(1);
+    startNewProductsAutoScroll();
+});
+
+newPrevButton.addEventListener("click", () => {
+    moveNewProducts(-1);
+    startNewProductsAutoScroll();
+});
+
+newProductsTrack.addEventListener("mouseenter", stopNewProductsAutoScroll);
+newProductsTrack.addEventListener("mouseleave", startNewProductsAutoScroll);
+
+newProductsTrack.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card) return;
+
+    openProduct(card.dataset.newProductId);
+});
 relatedNextButton.addEventListener("click", () => moveRelatedProducts(1));
 relatedPrevButton.addEventListener("click", () => moveRelatedProducts(-1));
 
@@ -663,9 +800,12 @@ window.addEventListener("scroll", () => {
 window.addEventListener("resize", updateActiveNav);
 
 renderProducts();
+renderNewProducts();
 updateHeaderState();
 updateActiveNav();
 startAutoScroll();
+startHeroSlider();
+startNewProductsAutoScroll();
 
 document.addEventListener("mousemove", (event) => {
     const nearRightEdge = event.clientX >= window.innerWidth - 28;

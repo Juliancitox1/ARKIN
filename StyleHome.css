@@ -22,11 +22,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-color: #000;
-    background-image: url("Images/ImagenFondo.png");
-    background-repeat: no-repeat;
-    background-position: center 55px;
-    background-size: 103.5% 2500px;
+    background: #000;
     color: var(--text);
     font-family: "Manrope", sans-serif;
 }
@@ -53,17 +49,32 @@ section {
 }
 
 .site-header {
-    position: sticky;
+    position: fixed;
+    left: 0;
+    width: 100%;
     top: 0;
     z-index: 100;
-    padding: 8px 24px;
-    background: rgba(5, 3, 8, 0.68);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--line);
+    padding: 10px 24px;
+    background: transparent;
+    backdrop-filter: blur(0);
+    border-bottom: 1px solid transparent;
+    transition:
+        padding 0.32s ease,
+        background 0.32s ease,
+        backdrop-filter 0.32s ease,
+        border-color 0.32s ease,
+        box-shadow 0.32s ease;
 }
 
 .site-header.is-scrolled {
-    padding: 6px 24px;
+    padding: 7px 24px;
+    background:
+        linear-gradient(180deg, rgba(5, 3, 8, 0.94), rgba(5, 3, 8, 0.84));
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 16px 34px rgba(0, 0, 0, 0.34),
+        0 1px 0 rgba(255, 255, 255, 0.035) inset;
 }
 
 .nav {
@@ -72,12 +83,12 @@ section {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
 }
 
 .nav-links {
     display: flex;
-    gap: 22px;
+    gap: 24px;
     align-items: center;
 }
 
@@ -90,11 +101,29 @@ section {
 }
 
 .nav-link {
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
+    position: relative;
+    padding: 8px 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--muted);
-    transition: color 0.25s ease, opacity 0.25s ease;
+    color: rgba(245, 241, 232, 0.72);
+    transition:
+        color 0.25s ease,
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 1px;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(183, 148, 255, 0.95), transparent);
+    transform: translateX(-50%);
+    transition: width 0.25s ease;
 }
 
 .nav-link:hover,
@@ -102,18 +131,41 @@ section {
     color: var(--text);
 }
 
+.nav-link:hover {
+    transform: translateY(-1px);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
 .nav-logo {
-    width: 64px;
-    height: 64px;
+    width: 66px;
+    height: 66px;
     justify-self: center;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
+    transition:
+        transform 0.28s ease,
+        filter 0.28s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 14px rgba(183, 148, 255, 0.22));
 }
 
 .nav-logo img {
     width: 56px;
     height: auto;
+    transition: width 0.28s ease;
+}
+
+.site-header.is-scrolled .nav-logo img {
+    width: 50px;
 }
 
 .hero {
@@ -125,78 +177,6 @@ section {
     text-align: center;
     overflow: hidden;
     isolation: isolate;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 760px;
-}
-
-.hero-decor {
-    position: absolute;
-    top: 120px;
-    left: clamp(24px, 13vw, 198px);
-    width: clamp(220px, 24vw, 340px);
-    height: auto;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0.78;
-    filter: drop-shadow(0 0 26px rgba(183, 148, 255, 0.12));
-}
-
-.hero-title {
-    margin: 0 0 30px;
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(5rem, 13vw, 9rem);
-    line-height: 0.9;
-    letter-spacing: 0.055em;
-    text-transform: uppercase;
-    text-shadow:
-        0 0 24px rgba(183, 148, 255, 0.14),
-        0 18px 46px rgba(0, 0, 0, 0.42);
-}
-
-.hero-button,
-.view-all-button {
-    position: relative;
-    z-index: 0;
-    isolation: isolate;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    color: var(--text);
-    cursor: pointer;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-}
-
-.hero-button::before {
-    content: "";
-    position: absolute;
-    inset: -8px;
-    border-radius: inherit;
-    background:
-        radial-gradient(circle, rgba(183, 148, 255, 0.45), rgba(109, 40, 217, 0.12) 48%, transparent 72%);
-    filter: blur(14px);
-    z-index: -2;
-    opacity: 0.9;
-    animation: arcadeGlowSoft 2.8s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.hero-button::after {
-    content: "";
-    position: absolute;
-    inset: 2px;
-    border-radius: inherit;
-    background:
-        linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(183, 148, 255, 0.05), rgba(255, 255, 255, 0.12));
-    z-index: -1;
-    opacity: 0.9;
 }
 
 .view-all-button::before {
@@ -391,40 +371,6 @@ section {
 .armario-actions {
     margin-top: 36px;
     text-align: center;
-}
-
-.hero-button {
-    min-width: 178px;
-    padding: 13px 26px;
-    font-size: 0.8rem;
-    border: 1px solid rgba(183, 148, 255, 0.62);
-    background:
-        linear-gradient(135deg, rgba(16, 8, 28, 0.88), rgba(54, 22, 92, 0.52)),
-        rgba(5, 3, 8, 0.72);
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-        0 0 16px rgba(183, 148, 255, 0.28),
-        0 0 34px rgba(109, 40, 217, 0.18),
-        0 12px 28px rgba(0, 0, 0, 0.32);
-}
-
-.hero-button:hover {
-    transform: translateY(-2px) scale(1.02);
-    border-color: rgba(220, 202, 255, 0.9);
-    background:
-        linear-gradient(135deg, rgba(28, 11, 48, 0.94), rgba(91, 36, 150, 0.68)),
-        rgba(5, 3, 8, 0.78);
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.10) inset,
-        0 0 22px rgba(183, 148, 255, 0.42),
-        0 0 48px rgba(109, 40, 217, 0.26),
-        0 16px 34px rgba(0, 0, 0, 0.36);
-}
-
-.hero-button:hover::before {
-    inset: -11px;
-    opacity: 1;
-    filter: blur(17px);
 }
 
 .view-all-button {
@@ -1360,5 +1306,442 @@ body.modal-open {
     50% {
         transform: translateY(2px);
         opacity: 1;
+    }
+}
+
+/* ================================
+   INICIO / HERO - SLIDER PRINCIPAL
+================================ */
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 680px;
+    padding: 0;
+    overflow: hidden;
+    isolation: isolate;
+    background: #000;
+}
+
+.hero-slider {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.035);
+    transition:
+        opacity 1.15s ease,
+        visibility 1.15s ease,
+        transform 6s ease;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Capa oscura sutil para que el header siempre se lea bien */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.38) 0%,
+            rgba(0, 0, 0, 0.08) 38%,
+            rgba(0, 0, 0, 0.42) 100%
+        );
+}
+
+@media (max-width: 1100px) {
+    .hero {
+        height: 100vh;
+        min-height: 620px;
+        padding: 0;
+    }
+
+    .hero-slide img {
+        object-position: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: 100svh;
+        min-height: 560px;
+        padding: 0;
+    }
+
+    .hero-slide img {
+        object-position: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 520px;
+    }
+}
+
+/* ================================
+   HEADER - AJUSTE LOGO + LO NUEVO
+================================ */
+
+.nav-logo {
+    width: 78px;
+    height: 78px;
+}
+
+.nav-logo img {
+    width: 66px;
+}
+
+.site-header.is-scrolled .nav-logo img {
+    width: 60px;
+}
+
+section[id] {
+    scroll-margin-top: 96px;
+}
+
+/* ================================
+   SECCIÓN LO NUEVO
+================================ */
+
+.lo-nuevo-section {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 104px 34px 104px;
+    position: relative;
+}
+
+.lo-nuevo-heading {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 42px;
+}
+
+.lo-nuevo-heading p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lo-nuevo-heading h2 {
+    margin-bottom: 14px;
+}
+
+.lo-nuevo-heading p {
+    max-width: 58ch;
+}
+
+.lo-nuevo-carousel-shell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.lo-nuevo-track {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 26px;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    padding: 4px 0;
+}
+
+.lo-nuevo-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        rgba(8, 6, 12, 0.82);
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    flex: 0 0 auto;
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.30),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    transition:
+        transform 0.24s ease,
+        border-color 0.24s ease,
+        background 0.24s ease,
+        box-shadow 0.24s ease;
+}
+
+.lo-nuevo-arrow:hover {
+    transform: translateY(-1px);
+    border-color: rgba(183, 148, 255, 0.34);
+    background:
+        linear-gradient(180deg, rgba(183, 148, 255, 0.14), rgba(255, 255, 255, 0.04)),
+        rgba(8, 6, 12, 0.88);
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.36),
+        0 0 18px rgba(183, 148, 255, 0.12);
+}
+
+.new-product-card {
+    position: relative;
+    flex: 0 0 calc((100% - 26px) / 2);
+    min-height: 640px;
+    border-radius: 34px;
+    overflow: hidden;
+    background: rgba(8, 6, 12, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+        0 24px 62px rgba(0, 0, 0, 0.38),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    cursor: pointer;
+    isolation: isolate;
+    transition:
+        transform 0.32s ease,
+        border-color 0.32s ease,
+        box-shadow 0.32s ease;
+}
+
+.new-product-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.04) 0%,
+            rgba(0, 0, 0, 0.18) 44%,
+            rgba(0, 0, 0, 0.82) 100%
+        );
+    pointer-events: none;
+}
+
+.new-product-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(183, 148, 255, 0.38);
+    box-shadow:
+        0 30px 72px rgba(0, 0, 0, 0.46),
+        0 0 24px rgba(183, 148, 255, 0.12);
+}
+
+.new-product-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.new-product-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+        transform 0.55s ease,
+        filter 0.55s ease;
+}
+
+.new-product-card:hover .new-product-media img {
+    transform: scale(1.035);
+    filter: contrast(1.04) brightness(1.03);
+}
+
+.new-product-content {
+    position: absolute;
+    left: 34px;
+    right: 34px;
+    bottom: 34px;
+    z-index: 2;
+    max-width: 520px;
+}
+
+.new-product-label {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(5, 3, 8, 0.66);
+    border: 1px solid rgba(183, 148, 255, 0.22);
+    color: var(--purple-soft);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+}
+
+.new-product-name {
+    margin: 0 0 10px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.3rem, 5vw, 4.2rem);
+    line-height: 0.92;
+    color: var(--text);
+}
+
+.new-product-description {
+    margin: 0 0 18px;
+    color: rgba(245, 241, 232, 0.78);
+    line-height: 1.6;
+}
+
+.new-product-footer {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.new-product-price {
+    color: #c7adff;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.new-product-action {
+    color: rgba(245, 241, 232, 0.92);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* Responsive Lo Nuevo */
+
+@media (max-width: 1100px) {
+    .nav-logo {
+        width: 72px;
+        height: 72px;
+    }
+
+    .nav-logo img {
+        width: 60px;
+    }
+
+    .site-header.is-scrolled .nav-logo img {
+        width: 56px;
+    }
+
+    .lo-nuevo-section {
+        padding: 88px 24px;
+    }
+
+    .new-product-card {
+    flex: 0 0 calc((100% - 22px) / 2);
+    min-height: 560px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-logo {
+        width: 62px;
+        height: 62px;
+    }
+
+    .nav-logo img {
+        width: 52px;
+    }
+
+    .site-header.is-scrolled .nav-logo img {
+        width: 48px;
+    }
+
+    .lo-nuevo-section {
+    padding: 76px 16px;
+    max-width: 100%;
+    }
+
+    .lo-nuevo-heading {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .lo-nuevo-carousel-shell {
+        gap: 8px;
+    }
+
+    .lo-nuevo-track {
+        gap: 0;
+    }
+
+    .lo-nuevo-arrow {
+        position: absolute;
+        z-index: 5;
+        width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
+    }
+
+    .lo-nuevo-arrow-left {
+        left: 10px;
+    }
+
+    .lo-nuevo-arrow-right {
+        right: 10px;
+    }
+
+    .new-product-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+        min-height: 520px;
+        border-radius: 28px;
+    }
+
+    .new-product-content {
+        left: 22px;
+        right: 22px;
+        bottom: 24px;
+    }
+
+    .new-product-name {
+        font-size: clamp(2rem, 12vw, 3.2rem);
+    }
+
+    .new-product-description {
+        font-size: 0.92rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .new-product-card {
+        min-height: 480px;
+        border-radius: 24px;
+    }
+
+    .new-product-content {
+        left: 18px;
+        right: 18px;
+        bottom: 22px;
+    }
+
+    .new-product-label {
+        font-size: 0.62rem;
+    }
+
+    .new-product-description {
+        display: none;
     }
 }
