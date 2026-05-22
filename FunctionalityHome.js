@@ -1,4 +1,4 @@
-const whatsappNumber = "573242626679";
+const whatsappNumber = "573160551532";
 
 const baseSizes = [
     { label: "S", enabled: true },
