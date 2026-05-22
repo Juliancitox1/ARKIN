@@ -48,7 +48,7 @@
 
         <section class="lo-nuevo-section" id="loNuevo" aria-labelledby="loNuevoTitle">
             <div class="section-heading lo-nuevo-heading">
-                <span class="eyebrow">ARK</span>
+                <span class="eyebrow">ARKIN</span>
                 <h2 id="loNuevoTitle">Nuevo</h2>
             </div>
 
@@ -65,27 +65,18 @@
             </div>
         </section>
 
-        <section class="armario-section" id="armario">
-            <div class="section-heading">
-                <span class="eyebrow">ARK</span>
-                <h2>Armario</h2>
-                <p>Encuentra tu estilo con la mejor calidad y al mejor precio</p>
+        <section class="armario-section" id="armario" aria-labelledby="armarioTitle">
+            <div class="armario-editorial-header">
+                <span class="eyebrow">ARKIN</span>
+                <h2 id="armarioTitle">Armario</h2>
             </div>
 
-            <div class="carousel-shell">
-                <button class="carousel-arrow carousel-arrow-left" id="flechaIzquierda" aria-label="Ver productos anteriores">
-                    &#10094;
+            <div class="wardrobe-grid" id="wardrobeGrid" aria-label="Productos destacados del armario"></div>
+
+            <div class="armario-actions armario-editorial-actions">
+                <button class="view-all-button" id="toggleArmario" type="button">
+                    Armario completo
                 </button>
-
-                <div class="carousel-track" id="filaropa"></div>
-
-                <button class="carousel-arrow carousel-arrow-right" id="flechaDerecha" aria-label="Ver más productos">
-                    &#10095;
-                </button>
-            </div>
-
-            <div class="armario-actions">
-                <button class="view-all-button" id="toggleArmario">Ver Todo</button>
             </div>
 
             <div class="armario-modal" id="armarioCompleto" aria-hidden="true">
@@ -97,8 +88,8 @@
                     </button>
 
                     <div class="armario-panel-header">
-                        <span class="eyebrow">ARK</span>
-                        <h3 id="armarioTitulo">Armario</h3>
+                        <span class="eyebrow">ARKIN</span>
+                        <h3 id="armarioTitulo">Armario completo</h3>
                     </div>
 
                     <div class="all-products-grid armario-grid" id="ropaCompleta"></div>
@@ -106,88 +97,105 @@
             </div>
         </section>
 
-        <section class="nosotros-section" id="nosotros">
-            <div class="nosotros-copy">
+        <section class="nosotros-section" id="nosotros" aria-labelledby="nosotrosTitle">
+            <div class="nosotros-content">
                 <span class="eyebrow">Nosotros</span>
-                <h2>Vestimos presencia, carácter y una identidad que no pide permiso.</h2>
-                <p>
-                    ARK nace como una propuesta visual para quienes entienden la ropa como una
-                    extensión de su energía. No buscamos llenar espacios; buscamos construir una
-                    imagen que se sienta firme, estética y distinta desde el primer vistazo.
-                </p>
-                <p>
-                    Cada prenda está pensada para transmitir una vibra más artística, más oscura y
-                    más exclusiva. La intención no es seguir una línea genérica, sino proyectar una
-                    identidad con lenguaje propio.
+
+                <p class="nosotros-intro">
+                    ARKIN nace como una contrapropuesta a la cotidianidad de la industria textil en Colombia y a la necesidad de una marca oscura y elegante, donde las personas se sientan únicas, identificadas y cómodas por medio de diseños y prendas de alta calidad, capaces de conectar con un público amplio.
                 </p>
 
-                <div class="brand-quote">
-                    <span>Exclusividad convertida en forma.</span>
+                <div class="nosotros-values">
+                    <article class="nosotros-value-card">
+                        <h3>Misión</h3>
+                        <p>
+                            Impactar y conectar a personas de diferentes estilos y generaciones mediante prendas con identidad. Buscamos crear una marca con estilo oscuro y carácter, conservando la elegancia y la limpieza mediante diseños versátiles y propios, evolucionando constantemente en calidad y visión creativa sin perder nuestra esencia.
+                        </p>
+                    </article>
+
+                    <article class="nosotros-value-card">
+                        <h3>Visión</h3>
+                        <p>
+                            Convertirnos en una marca reconocida mundialmente, llevando nuestra identidad desde las calles hasta la alta costura internacional. Aspiramos a construir un universo visual y cultural que inspire autenticidad, exclusividad y arte, manteniendo siempre una esencia oscura, rebelde y atemporal.
+                        </p>
+                    </article>
                 </div>
             </div>
 
             <div class="nosotros-visual">
                 <article class="visual-card visual-card-large">
-                    <img src="Images/D1_BlancoMorado.png" alt="Producto destacado ARK" />
+                    <img src="Images/D1_BlancoMorado.png" alt="Prenda destacada ARKIN" />
                 </article>
+
                 <article class="visual-card visual-card-small">
-                    <img src="Images/D2_BlancoMorado.png" alt="Producto secundario ARK" />
+                    <img src="Images/D2_BlancoMorado.png" alt="Detalle visual ARKIN" />
                 </article>
             </div>
         </section>
 
-        <section class="contacto-section" id="contacto">
-            <div class="section-heading section-heading-contacto">
-                <span class="eyebrow">Contáctanos</span>
-                <h2>Conecta con ARK</h2>
-            </div>
+        <section class="contacto-section" id="contacto" aria-labelledby="contactoTitle">
+            <div class="contacto-inner">
+                <div class="contacto-heading">
+                    <span class="eyebrow">Contáctanos</span>
+                    <h2 id="contactoTitle">Conecta con ARKIN</h2>
+                </div>
 
-            <div class="contact-grid">
-                <a href="https://wa.me/573242626679" target="_blank" rel="noopener noreferrer" class="contact-card">
-                    <span class="contact-label">Celular 1</span>
-                    <span class="contact-value">+57 324 262 6679</span>
-                </a>
+                <div class="contact-grid">
+                    <a href="https://wa.me/573160551532" target="_blank" rel="noopener noreferrer" class="contact-card">
+                        <span class="contact-label">WhatsApp</span>
+                        <span class="contact-value">+57 316 055 1532</span>
+                    </a>
 
-                <a href="https://wa.me/573242626679" target="_blank" rel="noopener noreferrer" class="contact-card">
-                    <span class="contact-label">Celular 2</span>
-                    <span class="contact-value">+57 324 262 6679</span>
-                </a>
+                    <a href="https://wa.me/573242626679" target="_blank" rel="noopener noreferrer" class="contact-card">
+                        <span class="contact-label">WhatsApp</span>
+                        <span class="contact-value">+57 324 262 6679</span>
+                    </a>
 
-                <a href="https://instagram.com/_julian_cito" target="_blank" rel="noopener noreferrer" class="contact-card">
-                    <span class="contact-label">Instagram</span>
-                    <span class="contact-value">@_julian_cito</span>
-                </a>
+                    <a href="https://instagram.com/4rkin_7" target="_blank" rel="noopener noreferrer" class="contact-card">
+                        <span class="contact-label">Instagram</span>
+                        <span class="contact-value">4rkin_7</span>
+                    </a>
 
-                <a href="https://tiktok.com/@_julian_cito" target="_blank" rel="noopener noreferrer" class="contact-card">
-                    <span class="contact-label">TikTok</span>
-                    <span class="contact-value">@_julian_cito</span>
-                </a>
+                    <article class="contact-card">
+                        <span class="contact-label">TikTok</span>
+                        <span class="contact-value">Próximamente</span>
+                    </article>
 
-                <article class="contact-card contact-card-wide">
-                    <span class="contact-label">Horario</span>
-                    <span class="contact-value">24 horas</span>
-                </article>
+                    <article class="contact-card contact-card-schedule">
+                        <span class="contact-label">Horario</span>
+                        <span class="contact-value">24 horas</span>
+                    </article>
+                </div>
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <div class="footer-brand">
-            <a href="#inicio" class="footer-logo-link" aria-label="Volver al inicio">
-                <img src="Images/Logo.png" alt="Logo ARK" class="footer-logo" />
-            </a>
-            <h3>ARK</h3>
-            <p>Exclusividad convertida en forma.</p>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="#inicio" class="footer-logo-link" aria-label="Volver al inicio">
+                    <img src="Images/Logo.png" alt="Logo ARK" class="footer-logo" />
+                </a>
+
+                <div>
+                    <h3>ARK</h3>
+                    <p>Exclusividad convertida en forma.</p>
+                </div>
+            </div>
+
+            <nav class="footer-nav" aria-label="Navegación del footer">
+                <a href="#inicio">Inicio</a>
+                <a href="#loNuevo">Lo Nuevo</a>
+                <a href="#armario">Armario</a>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#contacto">Contáctanos</a>
+            </nav>
         </div>
 
-        <div class="footer-nav">
-            <a href="#inicio">Inicio</a>
-            <a href="#armario">Armario</a>
-            <a href="#nosotros">Nosotros</a>
-            <a href="#contacto">Contáctanos</a>
+        <div class="footer-bottom">
+            <p class="footer-copy">© <span id="currentYear"></span> ARK. Todos los derechos reservados.</p>
+            <span class="footer-tagline">Oscuro · Elegante · Atemporal</span>
         </div>
-
-        <p class="footer-copy">© <span id="currentYear"></span> ARK. Todos los derechos reservados.</p>
     </footer>
 
     <div class="product-modal" id="productModal" aria-hidden="true">
@@ -259,6 +267,10 @@
                 </div>
             </section>
         </div>
+    </div>
+
+    <div class="page-loader" id="pageLoader" aria-hidden="true">
+        <img src="Images/LogoLoader.png" alt="Cargando" class="page-loader-logo" />
     </div>
 
     <script src="FunctionalityHome.js"></script>

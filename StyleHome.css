@@ -1745,3 +1745,3627 @@ section[id] {
         display: none;
     }
 }
+
+/* ================================
+   ARMARIO - GRID EDITORIAL
+================================ */
+
+.armario-section {
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 84px 0 72px;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.armario-editorial-header {
+    text-align: center;
+    margin-bottom: 22px;
+    padding: 0 24px;
+}
+
+.armario-editorial-header .eyebrow {
+    margin-bottom: 8px;
+    font-size: 0.64rem;
+    opacity: 0.7;
+}
+
+.armario-editorial-header h2 {
+    margin: 0;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.74);
+}
+
+.wardrobe-grid {
+    width: 100%;
+    min-height: calc(100vh - 230px);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    background: #000;
+    border-top: 1px solid rgba(255, 255, 255, 0.075);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.wardrobe-card {
+    position: relative;
+    min-height: 360px;
+    overflow: hidden;
+    background: #050308;
+    cursor: pointer;
+    isolation: isolate;
+    border: 0;
+}
+
+.wardrobe-card:nth-child(odd) {
+    border-right: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.wardrobe-card:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.wardrobe-image {
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    object-fit: cover;
+    object-position: center;
+    transition:
+        transform 0.7s ease,
+        filter 0.7s ease,
+        opacity 0.35s ease;
+}
+
+.wardrobe-card:hover .wardrobe-image {
+    transform: scale(1.035);
+    filter: contrast(1.04) brightness(0.82);
+}
+
+.wardrobe-card.is-changing .wardrobe-image {
+    opacity: 0.32;
+}
+
+.wardrobe-card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    padding: 28px;
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(0);
+    opacity: 0;
+    transition:
+        opacity 0.32s ease,
+        backdrop-filter 0.32s ease,
+        background 0.32s ease;
+}
+
+.wardrobe-card:hover .wardrobe-card-overlay {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.34);
+}
+
+.wardrobe-card-title {
+    color: var(--text);
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2rem, 4vw, 4.2rem);
+    line-height: 0.95;
+    text-align: center;
+    transform: translateY(12px);
+    opacity: 0;
+    transition:
+        opacity 0.32s ease,
+        transform 0.32s ease;
+}
+
+.wardrobe-card:hover .wardrobe-card-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.armario-editorial-actions {
+    margin-top: 34px;
+    text-align: center;
+    padding: 0 24px;
+}
+
+@media (max-width: 900px) {
+    .wardrobe-grid {
+        min-height: auto;
+        grid-template-columns: 1fr;
+    }
+
+    .wardrobe-card {
+        min-height: 70svh;
+        border-right: 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+    }
+}
+
+@media (max-width: 480px) {
+    .armario-section {
+        padding-top: 76px;
+    }
+
+    .wardrobe-card {
+        min-height: 62svh;
+    }
+
+    .wardrobe-card-title {
+        font-size: clamp(2rem, 12vw, 3.2rem);
+    }
+}
+
+/* ================================
+   MODAL ARMARIO COMPLETO
+================================ */
+
+.armario-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: stretch;
+    justify-content: stretch;
+    z-index: 1000;
+}
+
+.armario-modal.is-open {
+    display: block;
+}
+
+.armario-backdrop {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    backdrop-filter: none;
+}
+
+.armario-panel {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    background:
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.10), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(109, 40, 217, 0.08), transparent 34%),
+        linear-gradient(180deg, #050308 0%, #000 100%);
+    border: none;
+    border-radius: 0;
+    padding: 0 34px 56px;
+    box-shadow: none;
+}
+
+.armario-panel-header {
+    position: sticky;
+    top: 0;
+    z-index: 8;
+    margin: 0 -34px 42px;
+    padding: 26px 88px 24px;
+    background:
+        linear-gradient(180deg, rgba(5, 3, 8, 0.98), rgba(5, 3, 8, 0.84));
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+    text-align: center;
+}
+
+.armario-panel-header .eyebrow {
+    margin-bottom: 8px;
+    font-size: 0.66rem;
+    opacity: 0.78;
+}
+
+#armarioTitulo {
+    margin: 0;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.36em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.82);
+}
+
+.armario-close {
+    position: fixed;
+    top: 22px;
+    right: 24px;
+    z-index: 20;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(8, 6, 12, 0.72);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    font-size: 1.55rem;
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.armario-close:hover {
+    transform: scale(1.06);
+    background: rgba(183, 148, 255, 0.14);
+    border-color: rgba(183, 148, 255, 0.36);
+    box-shadow: 0 0 20px rgba(183, 148, 255, 0.16);
+}
+
+#ropaCompleta {
+    width: min(100%, 1380px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+#ropaCompleta .product-card {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    flex: initial;
+    border-radius: 30px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.022)),
+        rgba(8, 6, 12, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    box-shadow:
+        0 22px 54px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    cursor: pointer;
+    transition:
+        transform 0.32s ease,
+        border-color 0.32s ease,
+        box-shadow 0.32s ease,
+        background 0.32s ease;
+}
+
+#ropaCompleta .product-card::after {
+    content: "Ver detalle";
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    z-index: 4;
+    transform: translate(-50%, -8px);
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: rgba(5, 3, 8, 0.70);
+    color: rgba(245, 241, 232, 0.92);
+    border: 1px solid rgba(183, 148, 255, 0.22);
+    backdrop-filter: blur(8px);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease;
+}
+
+#ropaCompleta .product-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(183, 148, 255, 0.38);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.028)),
+        rgba(8, 6, 12, 0.92);
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.46),
+        0 0 24px rgba(183, 148, 255, 0.12);
+}
+
+#ropaCompleta .product-card:hover::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+#ropaCompleta .product-card-media {
+    position: relative;
+    overflow: hidden;
+    background: #050308;
+}
+
+#ropaCompleta .product-card-media img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition:
+        transform 0.55s ease,
+        filter 0.55s ease;
+}
+
+#ropaCompleta .product-card:hover .product-card-media img {
+    transform: scale(1.035);
+    filter: contrast(1.04) brightness(1.03);
+}
+
+#ropaCompleta .product-card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 24px 24px;
+    background:
+        linear-gradient(180deg, rgba(13, 9, 18, 0.96) 0%, rgba(4, 3, 8, 1) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+#ropaCompleta .product-card-name {
+    margin: 0;
+    color: rgba(245, 241, 232, 0.96);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+#ropaCompleta .product-card-price {
+    margin-left: auto;
+    white-space: nowrap;
+    color: #c7adff;
+    font-size: 0.96rem;
+    font-weight: 800;
+}
+
+/* Responsive armario completo */
+
+@media (max-width: 1100px) {
+    .armario-panel {
+        padding: 0 18px 42px;
+    }
+
+    .armario-panel-header {
+        margin: 0 -18px 28px;
+        padding: 22px 74px 20px;
+    }
+
+    #ropaCompleta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+
+    #ropaCompleta .product-card {
+        border-radius: 26px;
+    }
+}
+
+@media (max-width: 700px) {
+    #ropaCompleta {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .armario-panel {
+        padding: 0 12px 34px;
+    }
+
+    .armario-panel-header {
+        margin: 0 -12px 24px;
+        padding: 18px 62px 16px;
+    }
+
+    #armarioTitulo {
+        font-size: 0.74rem;
+        letter-spacing: 0.24em;
+    }
+
+    .armario-close {
+        top: 14px;
+        right: 14px;
+        width: 42px;
+        height: 42px;
+    }
+
+    #ropaCompleta {
+        gap: 18px;
+    }
+
+    #ropaCompleta .product-card {
+        border-radius: 22px;
+    }
+
+    #ropaCompleta .product-card-info {
+        padding: 18px 18px 20px;
+    }
+
+    #ropaCompleta .product-card-name {
+        font-size: 0.94rem;
+    }
+
+    #ropaCompleta .product-card-price {
+        font-size: 0.9rem;
+    }
+}
+
+/* ================================
+   MODAL ARMARIO COMPLETO - DISEÑO PREMIUM
+================================ */
+
+.armario-panel {
+    background:
+        radial-gradient(circle at 12% 8%, rgba(183, 148, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 88% 18%, rgba(109, 40, 217, 0.10), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(183, 148, 255, 0.07), transparent 34%),
+        linear-gradient(180deg, #050308 0%, #000 58%, #050308 100%);
+}
+
+.armario-panel-header {
+    padding: 30px 88px 28px;
+    background:
+        linear-gradient(180deg, rgba(5, 3, 8, 0.98), rgba(5, 3, 8, 0.78));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.armario-panel-header::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: min(360px, 42vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(183, 148, 255, 0.65),
+        transparent
+    );
+}
+
+.armario-panel-header .eyebrow {
+    color: rgba(183, 148, 255, 0.88);
+    letter-spacing: 0.24em;
+}
+
+#armarioTitulo {
+    font-size: 0.92rem;
+    letter-spacing: 0.42em;
+    color: rgba(245, 241, 232, 0.9);
+}
+
+#ropaCompleta {
+    width: min(100%, 1460px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    padding-bottom: 30px;
+}
+
+#ropaCompleta .product-card {
+    border-radius: 34px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.026)),
+        rgba(8, 6, 12, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.105);
+    box-shadow:
+        0 26px 66px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(255, 255, 255, 0.022) inset;
+    isolation: isolate;
+}
+
+#ropaCompleta .product-card::before {
+    content: "ARK";
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 4;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(5, 3, 8, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(245, 241, 232, 0.82);
+    backdrop-filter: blur(10px);
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+#ropaCompleta .product-card::after {
+    content: "Ver prenda";
+    top: 18px;
+    right: 18px;
+    left: auto;
+    transform: translateY(-6px);
+    padding: 7px 12px;
+    background: rgba(5, 3, 8, 0.58);
+    border: 1px solid rgba(183, 148, 255, 0.24);
+    color: rgba(245, 241, 232, 0.9);
+    backdrop-filter: blur(10px);
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+#ropaCompleta .product-card:hover::before,
+#ropaCompleta .product-card:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#ropaCompleta .product-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(183, 148, 255, 0.42);
+    box-shadow:
+        0 34px 82px rgba(0, 0, 0, 0.55),
+        0 0 34px rgba(183, 148, 255, 0.12),
+        0 0 0 1px rgba(183, 148, 255, 0.08) inset;
+}
+
+#ropaCompleta .product-card-media {
+    position: relative;
+    overflow: hidden;
+    background: #050308;
+}
+
+#ropaCompleta .product-card-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.02) 0%,
+            rgba(0, 0, 0, 0.08) 45%,
+            rgba(0, 0, 0, 0.38) 100%
+        );
+    opacity: 0.72;
+    transition: opacity 0.35s ease;
+}
+
+#ropaCompleta .product-card:hover .product-card-media::after {
+    opacity: 1;
+}
+
+#ropaCompleta .product-card-media img {
+    aspect-ratio: 4 / 5.35;
+    object-fit: cover;
+    transform: scale(1.001);
+}
+
+#ropaCompleta .product-card:hover .product-card-media img {
+    transform: scale(1.055);
+    filter: contrast(1.06) brightness(0.96);
+}
+
+#ropaCompleta .product-card-info {
+    position: relative;
+    padding: 24px 24px 26px;
+    background:
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.09), transparent 34%),
+        linear-gradient(180deg, rgba(13, 9, 18, 0.98) 0%, rgba(3, 2, 5, 1) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.085);
+}
+
+#ropaCompleta .product-card-info::before {
+    content: "";
+    position: absolute;
+    left: 24px;
+    top: 0;
+    width: 54px;
+    height: 1px;
+    background: rgba(183, 148, 255, 0.65);
+}
+
+#ropaCompleta .product-card-name {
+    font-size: 1.04rem;
+    font-weight: 900;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+}
+
+#ropaCompleta .product-card-price {
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(183, 148, 255, 0.10);
+    border: 1px solid rgba(183, 148, 255, 0.16);
+    color: rgba(220, 202, 255, 0.96);
+    font-size: 0.86rem;
+}
+
+/* Ajuste responsive premium */
+
+@media (max-width: 1100px) {
+    #ropaCompleta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+    }
+}
+
+@media (max-width: 700px) {
+    #ropaCompleta {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    #ropaCompleta .product-card {
+        border-radius: 26px;
+    }
+
+    #ropaCompleta .product-card-media img {
+        aspect-ratio: 4 / 5;
+    }
+
+    #ropaCompleta .product-card-info {
+        padding: 20px 20px 22px;
+    }
+}
+
+/* ================================
+   ARMARIO COMPLETO - LUCES TIPO PASARELA
+================================ */
+
+.armario-panel {
+    position: relative;
+    overflow-y: auto;
+    background:
+        radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 18% 18%, rgba(183, 148, 255, 0.20), transparent 30%),
+        radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 50% 105%, rgba(183, 148, 255, 0.13), transparent 34%),
+        linear-gradient(180deg, #07040b 0%, #000 54%, #050308 100%);
+}
+
+.armario-panel::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 0%,
+            transparent 27%,
+            rgba(255, 255, 255, 0.055) 43%,
+            transparent 58%,
+            transparent 100%
+        ),
+        linear-gradient(
+            65deg,
+            transparent 0%,
+            transparent 31%,
+            rgba(183, 148, 255, 0.07) 48%,
+            transparent 63%,
+            transparent 100%
+        );
+    opacity: 0.9;
+    mix-blend-mode: screen;
+}
+
+.armario-panel::after {
+    content: "";
+    position: fixed;
+    left: 50%;
+    bottom: -18%;
+    z-index: 0;
+    width: min(980px, 88vw);
+    height: 360px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.16) 0%,
+            rgba(183, 148, 255, 0.10) 26%,
+            rgba(109, 40, 217, 0.045) 48%,
+            transparent 72%
+        );
+    filter: blur(12px);
+    opacity: 0.95;
+}
+
+.armario-panel > * {
+    position: relative;
+    z-index: 1;
+}
+
+.armario-panel-header {
+    z-index: 8;
+}
+
+.armario-close {
+    z-index: 20;
+}
+
+#ropaCompleta {
+    position: relative;
+}
+
+#ropaCompleta::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -28px;
+    width: min(760px, 72vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.18),
+        rgba(183, 148, 255, 0.46),
+        rgba(255, 255, 255, 0.18),
+        transparent
+    );
+    pointer-events: none;
+}
+
+/* ================================
+   ARMARIO COMPLETO - HEADER PREMIUM + X DISCRETA
+================================ */
+
+.armario-panel-header {
+    position: sticky;
+    top: 0;
+    z-index: 12;
+    margin: 0 -34px 46px;
+    padding: 24px 84px 22px;
+    text-align: center;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(183, 148, 255, 0.16), transparent 52%),
+        linear-gradient(180deg, rgba(12, 8, 18, 0.88), rgba(5, 3, 8, 0.66));
+    backdrop-filter: blur(22px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 18px 34px rgba(0, 0, 0, 0.26),
+        0 1px 0 rgba(255, 255, 255, 0.035) inset;
+}
+
+.armario-panel-header::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 12px;
+    width: min(420px, 54vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(245, 241, 232, 0.20),
+        rgba(183, 148, 255, 0.44),
+        rgba(245, 241, 232, 0.20),
+        transparent
+    );
+    pointer-events: none;
+}
+
+.armario-panel-header::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: min(520px, 62vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(183, 148, 255, 0.72),
+        rgba(255, 255, 255, 0.28),
+        rgba(183, 148, 255, 0.72),
+        transparent
+    );
+    pointer-events: none;
+}
+
+.armario-panel-header .eyebrow {
+    margin-bottom: 8px;
+    color: rgba(183, 148, 255, 0.92);
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+}
+
+#armarioTitulo {
+    margin: 0;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.42em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.88);
+}
+
+/* Botón X más pequeño y discreto */
+.armario-close {
+    position: fixed;
+    top: 21px;
+    right: 24px;
+    z-index: 30;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    background: rgba(5, 3, 8, 0.46);
+    color: rgba(245, 241, 232, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    backdrop-filter: blur(12px);
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    transition:
+        transform 0.22s ease,
+        background 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.armario-close:hover {
+    transform: scale(1.06);
+    background: rgba(183, 148, 255, 0.14);
+    color: #fff;
+    border-color: rgba(183, 148, 255, 0.34);
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.34),
+        0 0 18px rgba(183, 148, 255, 0.14);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .armario-panel-header {
+        margin: 0 -18px 34px;
+        padding: 20px 64px 18px;
+    }
+
+    .armario-close {
+        top: 17px;
+        right: 16px;
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    #armarioTitulo {
+        font-size: 0.7rem;
+        letter-spacing: 0.28em;
+    }
+}
+
+/* ================================
+   MODAL PRODUCTO - ESTILO PRODUCT PAGE PREMIUM
+================================ */
+
+.product-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: stretch;
+    justify-content: stretch;
+    z-index: 1000;
+}
+
+.product-modal.is-open {
+    display: block;
+}
+
+.product-backdrop {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    backdrop-filter: none;
+}
+
+.product-panel {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 0;
+    border-radius: 0;
+    background:
+        radial-gradient(circle at 14% 8%, rgba(183, 148, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.055), transparent 28%),
+        linear-gradient(180deg, #050308 0%, #000 58%, #050308 100%);
+    box-shadow: none;
+}
+
+.product-panel::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 0%,
+            transparent 34%,
+            rgba(255, 255, 255, 0.035) 48%,
+            transparent 62%,
+            transparent 100%
+        );
+    opacity: 0.75;
+    mix-blend-mode: screen;
+}
+
+.product-panel > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Botón cerrar del producto */
+.modal-close {
+    position: fixed;
+    top: 22px;
+    right: 24px;
+    z-index: 30;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    background: rgba(5, 3, 8, 0.52);
+    color: rgba(245, 241, 232, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    font-size: 1.08rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.30),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    transition:
+        transform 0.22s ease,
+        background 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.modal-close:hover {
+    transform: scale(1.06);
+    background: rgba(183, 148, 255, 0.14);
+    color: #fff;
+    border-color: rgba(183, 148, 255, 0.34);
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.36),
+        0 0 18px rgba(183, 148, 255, 0.14);
+}
+
+/* Layout principal */
+.product-layout {
+    width: min(100%, 1500px);
+    min-height: 100vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(390px, 0.82fr);
+    gap: 0;
+    align-items: stretch;
+    padding: 34px;
+}
+
+/* Galería */
+.product-gallery {
+    min-width: 0;
+    padding-right: 34px;
+}
+
+.product-main-frame {
+    position: sticky;
+    top: 34px;
+    min-height: calc(100vh - 68px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 0;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
+        rgba(8, 6, 12, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    box-shadow:
+        0 28px 76px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.product-main-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.02) 0%,
+            rgba(0, 0, 0, 0.06) 54%,
+            rgba(0, 0, 0, 0.34) 100%
+        );
+}
+
+.product-main-image {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    min-height: calc(100vh - 68px);
+    object-fit: cover;
+    object-position: center;
+    transition:
+        transform 0.55s ease,
+        filter 0.55s ease;
+}
+
+.product-main-frame:hover .product-main-image {
+    transform: scale(1.025);
+    filter: contrast(1.04) brightness(1.02);
+}
+
+/* Flechas galería */
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background: rgba(5, 3, 8, 0.54);
+    color: rgba(245, 241, 232, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    font-size: 1rem;
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.30),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.gallery-arrow-left {
+    left: 18px;
+}
+
+.gallery-arrow-right {
+    right: 18px;
+}
+
+.gallery-arrow:hover {
+    transform: translateY(-50%) scale(1.05);
+    border-color: rgba(183, 148, 255, 0.34);
+    background: rgba(183, 148, 255, 0.14);
+    box-shadow:
+        0 16px 32px rgba(0, 0, 0, 0.38),
+        0 0 18px rgba(183, 148, 255, 0.13);
+}
+
+/* Miniaturas */
+.thumb-strip {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    overflow-x: auto;
+    padding: 2px 2px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(183, 148, 255, 0.35) rgba(255, 255, 255, 0.04);
+}
+
+.thumb-strip::-webkit-scrollbar {
+    height: 7px;
+}
+
+.thumb-strip::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.thumb-strip::-webkit-scrollbar-thumb {
+    background: rgba(183, 148, 255, 0.34);
+    border-radius: 999px;
+}
+
+.thumb-button {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 88px;
+    padding: 0;
+    border-radius: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    cursor: pointer;
+    opacity: 0.62;
+    transition:
+        opacity 0.22s ease,
+        border-color 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.thumb-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumb-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    border-color: rgba(183, 148, 255, 0.38);
+}
+
+.thumb-button.active {
+    opacity: 1;
+    border-color: rgba(245, 241, 232, 0.78);
+    box-shadow:
+        0 0 0 1px rgba(245, 241, 232, 0.18),
+        0 0 16px rgba(183, 148, 255, 0.16);
+}
+
+/* Panel de información */
+.product-info {
+    position: sticky;
+    top: 34px;
+    align-self: start;
+    min-height: calc(100vh - 68px);
+    padding: 42px 38px;
+    border-radius: 0;
+    background:
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(11, 8, 15, 0.94), rgba(3, 2, 5, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    box-shadow:
+        0 28px 76px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.product-info .eyebrow {
+    margin-bottom: 16px;
+    color: rgba(183, 148, 255, 0.9);
+    font-size: 0.64rem;
+    font-weight: 900;
+    letter-spacing: 0.24em;
+}
+
+.product-info #modalTitle {
+    margin: 0 0 18px;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(1.8rem, 3.2vw, 3.4rem);
+    line-height: 0.96;
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.98);
+}
+
+.product-info .modal-description {
+    max-width: 52ch;
+    margin: 0 0 22px;
+    color: rgba(199, 191, 214, 0.86);
+    line-height: 1.72;
+    font-size: 0.94rem;
+}
+
+.product-info .modal-price {
+    margin: 0 0 34px;
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(183, 148, 255, 0.10);
+    border: 1px solid rgba(183, 148, 255, 0.18);
+    color: rgba(220, 202, 255, 0.98);
+    font-size: 0.98rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+}
+
+/* Bloques selectores */
+.selector-block {
+    margin-top: 0;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.selector-block p {
+    margin: 0;
+    color: rgba(245, 241, 232, 0.9);
+    font-size: 0.70rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.option-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    align-items: center;
+}
+
+/* Colores */
+.color-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    position: relative;
+    box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.54),
+        0 10px 20px rgba(0, 0, 0, 0.20);
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        opacity 0.22s ease;
+}
+
+.color-button:hover {
+    transform: translateY(-2px) scale(1.04);
+    border-color: rgba(245, 241, 232, 0.62);
+    box-shadow:
+        0 0 0 4px rgba(183, 148, 255, 0.10),
+        0 12px 24px rgba(0, 0, 0, 0.28);
+}
+
+.color-button.active {
+    transform: scale(1.08);
+    border-color: rgba(245, 241, 232, 0.92);
+    box-shadow:
+        0 0 0 4px rgba(183, 148, 255, 0.18),
+        0 0 18px rgba(183, 148, 255, 0.26);
+}
+
+/* Tallas */
+.size-button {
+    min-width: 54px;
+    padding: 13px 16px;
+    border-radius: 0;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.035);
+    color: rgba(245, 241, 232, 0.86);
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    transition:
+        background 0.22s ease,
+        color 0.22s ease,
+        border-color 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.size-button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(245, 241, 232, 0.38);
+    background: rgba(255, 255, 255, 0.075);
+}
+
+.size-button.active {
+    background: rgba(245, 241, 232, 0.96);
+    color: #050308;
+    border-color: rgba(245, 241, 232, 0.96);
+    box-shadow: 0 12px 24px rgba(245, 241, 232, 0.10);
+}
+
+.color-button.is-disabled,
+.size-button.is-disabled {
+    opacity: 0.28;
+    pointer-events: none;
+}
+
+/* WhatsApp CTA */
+.whatsapp-button {
+    width: 100%;
+    margin-top: 30px;
+    padding: 17px 24px;
+    border-radius: 0;
+    background:
+        linear-gradient(135deg, rgba(245, 241, 232, 0.98), rgba(199, 191, 214, 0.92));
+    color: #050308;
+    border: 1px solid rgba(245, 241, 232, 0.34);
+    font-size: 0.78rem;
+    font-weight: 950;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    box-shadow:
+        0 18px 36px rgba(245, 241, 232, 0.10),
+        0 0 0 1px rgba(255, 255, 255, 0.035) inset;
+    transition:
+        transform 0.24s ease,
+        filter 0.24s ease,
+        box-shadow 0.24s ease;
+}
+
+.whatsapp-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.04);
+    box-shadow:
+        0 24px 48px rgba(245, 241, 232, 0.14),
+        0 0 24px rgba(183, 148, 255, 0.12);
+}
+
+/* Productos relacionados dentro del modal */
+.related-products {
+    width: min(100%, 1500px);
+    margin: 0 auto;
+    padding: 38px 34px 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.085);
+}
+
+.related-products-header {
+    justify-content: flex-start;
+    text-align: left;
+    margin-bottom: 22px;
+}
+
+.related-products-header h4 {
+    font-family: "Manrope", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.82);
+}
+
+.related-track {
+    gap: 18px;
+    padding: 4px 58px 12px;
+}
+
+.related-card {
+    flex: 0 0 210px;
+    border-radius: 0;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.022)),
+        rgba(8, 6, 12, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.related-card-media img {
+    aspect-ratio: 4 / 5.25;
+}
+
+.related-card-info {
+    padding: 14px 14px 16px;
+}
+
+.related-card-name {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.related-card-price {
+    font-size: 0.78rem;
+}
+
+/* Responsive modal producto */
+@media (max-width: 1100px) {
+    .product-layout {
+        grid-template-columns: 1fr;
+        padding: 24px;
+        gap: 22px;
+    }
+
+    .product-gallery {
+        padding-right: 0;
+    }
+
+    .product-main-frame,
+    .product-info {
+        position: relative;
+        top: auto;
+        min-height: auto;
+    }
+
+    .product-main-image {
+        min-height: auto;
+        max-height: 68vh;
+    }
+
+    .product-info {
+        padding: 32px 28px;
+    }
+
+    .related-products {
+        padding: 34px 24px 42px;
+    }
+}
+
+@media (max-width: 700px) {
+    .product-layout {
+        padding: 14px;
+    }
+
+    .modal-close {
+        top: 14px;
+        right: 14px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .product-main-frame {
+        min-height: auto;
+    }
+
+    .product-main-image {
+        max-height: 54vh;
+    }
+
+    .gallery-arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .gallery-arrow-left {
+        left: 10px;
+    }
+
+    .gallery-arrow-right {
+        right: 10px;
+    }
+
+    .thumb-button {
+        flex-basis: 60px;
+        width: 60px;
+        height: 76px;
+    }
+
+    .product-info {
+        padding: 26px 20px;
+    }
+
+    .product-info #modalTitle {
+        font-size: clamp(1.7rem, 9vw, 2.7rem);
+    }
+
+    .selector-block {
+        padding: 20px 0;
+    }
+
+    .size-button {
+        min-width: 48px;
+        padding: 12px 14px;
+    }
+
+    .related-products {
+        padding: 30px 14px 38px;
+    }
+
+    .related-products-header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .related-track {
+        padding: 4px 42px 10px;
+    }
+
+    .related-card {
+        flex-basis: 155px;
+    }
+}
+
+/* ================================
+   MODAL PRODUCTO - BORDE NEGRO SELECTOR COLORES
+================================ */
+
+.color-button {
+    border: 3px solid #050308;
+    box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.95),
+        0 10px 20px rgba(0, 0, 0, 0.28);
+}
+
+.color-button:hover {
+    border-color: #050308;
+    box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 1),
+        0 0 0 5px rgba(245, 241, 232, 0.12),
+        0 12px 24px rgba(0, 0, 0, 0.32);
+}
+
+.color-button.active {
+    border-color: #050308;
+    box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 1),
+        0 0 0 5px rgba(245, 241, 232, 0.22),
+        0 0 18px rgba(0, 0, 0, 0.45);
+}
+
+/* ================================
+   SECCIÓN NOSOTROS - ARKIN
+================================ */
+
+.nosotros-section {
+    width: min(100%, 1280px);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 118px 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+    gap: 54px;
+    align-items: center;
+    position: relative;
+}
+
+.nosotros-section::before {
+    content: "";
+    position: absolute;
+    left: 12%;
+    top: 14%;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: rgba(183, 148, 255, 0.075);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.nosotros-content {
+    position: relative;
+    z-index: 2;
+}
+
+.nosotros-content .eyebrow {
+    margin-bottom: 18px;
+}
+
+.nosotros-content h2 {
+    margin: 0 0 28px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: rgba(245, 241, 232, 0.98);
+}
+
+.nosotros-intro {
+    max-width: 62ch;
+    margin: 0 0 34px;
+    color: rgba(199, 191, 214, 0.9);
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+.nosotros-values {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+.nosotros-value-card {
+    position: relative;
+    padding: 24px 26px 26px;
+    border-radius: 26px;
+    background:
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.10), transparent 38%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.022)),
+        rgba(8, 6, 12, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    box-shadow:
+        0 20px 48px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    overflow: hidden;
+}
+
+.nosotros-value-card::before {
+    content: "";
+    position: absolute;
+    left: 26px;
+    top: 0;
+    width: 58px;
+    height: 1px;
+    background: rgba(183, 148, 255, 0.68);
+}
+
+.nosotros-value-card h3 {
+    margin: 0 0 12px;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.92);
+}
+
+.nosotros-value-card p {
+    margin: 0;
+    color: rgba(199, 191, 214, 0.88);
+    font-size: 0.94rem;
+    line-height: 1.75;
+}
+
+/* Visual lateral */
+
+.nosotros-visual {
+    position: relative;
+    min-height: 660px;
+}
+
+.nosotros-visual::before {
+    content: "";
+    position: absolute;
+    right: 8%;
+    top: 12%;
+    width: 320px;
+    height: 520px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle, rgba(245, 241, 232, 0.10), transparent 52%),
+        radial-gradient(circle, rgba(183, 148, 255, 0.16), transparent 64%);
+    filter: blur(46px);
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+.visual-card {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 34px;
+    background: #050308;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+        0 26px 70px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.visual-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.02) 0%,
+            rgba(0, 0, 0, 0.08) 46%,
+            rgba(0, 0, 0, 0.34) 100%
+        );
+}
+
+.visual-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+        transform 0.7s ease,
+        filter 0.7s ease;
+}
+
+.visual-card:hover img {
+    transform: scale(1.035);
+    filter: contrast(1.04) brightness(1.03);
+}
+
+.visual-card-large {
+    inset: 0 110px 82px 0;
+}
+
+.visual-card-small {
+    width: 48%;
+    height: 48%;
+    right: 0;
+    bottom: 0;
+}
+
+/* Responsive Nosotros */
+
+@media (max-width: 1100px) {
+    .nosotros-section {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding: 96px 24px;
+    }
+
+    .nosotros-content {
+        max-width: 820px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .nosotros-intro {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .nosotros-value-card {
+        text-align: left;
+    }
+
+    .nosotros-visual {
+        width: min(100%, 760px);
+        min-height: 560px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .nosotros-section {
+        padding: 84px 16px;
+    }
+
+    .nosotros-content h2 {
+        font-size: clamp(2.2rem, 12vw, 3.4rem);
+    }
+
+    .nosotros-intro {
+        font-size: 0.95rem;
+        line-height: 1.75;
+    }
+
+    .nosotros-value-card {
+        padding: 22px 20px 24px;
+        border-radius: 22px;
+    }
+
+    .nosotros-visual {
+        min-height: 430px;
+    }
+
+    .visual-card {
+        border-radius: 26px;
+    }
+
+    .visual-card-large {
+        inset: 0 70px 60px 0;
+    }
+
+    .visual-card-small {
+        width: 52%;
+        height: 48%;
+    }
+}
+
+@media (max-width: 480px) {
+    .nosotros-section {
+        padding: 76px 14px;
+    }
+
+    .nosotros-visual {
+        min-height: 360px;
+    }
+
+    .visual-card-large {
+        inset: 0 48px 52px 0;
+    }
+
+    .visual-card-small {
+        width: 56%;
+        height: 46%;
+    }
+}
+
+/* ================================
+   SECCIÓN NOSOTROS - MEJORA DE LECTURA
+================================ */
+
+.nosotros-section {
+    grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+    gap: 76px;
+    padding: 128px 24px;
+}
+
+.nosotros-content {
+    max-width: 760px;
+}
+
+.nosotros-content .eyebrow {
+    margin-bottom: 22px;
+    font-size: 0.82rem;
+    color: rgba(183, 148, 255, 0.95);
+}
+
+.nosotros-intro {
+    max-width: 68ch;
+    margin: 0 0 52px;
+    color: rgba(245, 241, 232, 0.94);
+    font-size: clamp(1.18rem, 1.55vw, 1.42rem);
+    line-height: 1.82;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+}
+
+.nosotros-values {
+    gap: 30px;
+}
+
+.nosotros-value-card {
+    padding: 30px 32px 32px;
+    border-radius: 24px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
+        rgba(8, 6, 12, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.095);
+    box-shadow:
+        0 18px 44px rgba(0, 0, 0, 0.24),
+        0 0 0 1px rgba(255, 255, 255, 0.016) inset;
+}
+
+.nosotros-value-card h3 {
+    margin-bottom: 16px;
+    font-size: 0.84rem;
+    letter-spacing: 0.28em;
+    color: rgba(245, 241, 232, 0.96);
+}
+
+.nosotros-value-card p {
+    color: rgba(222, 216, 232, 0.92);
+    font-size: clamp(1.02rem, 1.15vw, 1.12rem);
+    line-height: 1.86;
+    font-weight: 400;
+}
+
+.nosotros-visual {
+    min-height: 620px;
+    opacity: 0.92;
+}
+
+/* Responsive lectura Nosotros */
+
+@media (max-width: 1100px) {
+    .nosotros-section {
+        grid-template-columns: 1fr;
+        gap: 58px;
+        padding: 104px 24px;
+    }
+
+    .nosotros-content {
+        max-width: 860px;
+    }
+
+    .nosotros-intro {
+        max-width: 70ch;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(1.12rem, 2vw, 1.32rem);
+    }
+
+    .nosotros-value-card p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nosotros-section {
+        padding: 86px 16px;
+        gap: 46px;
+    }
+
+    .nosotros-content {
+        text-align: left;
+    }
+
+    .nosotros-intro {
+        font-size: 1.04rem;
+        line-height: 1.78;
+        margin-bottom: 42px;
+    }
+
+    .nosotros-value-card {
+        padding: 24px 22px 26px;
+        border-radius: 20px;
+    }
+
+    .nosotros-value-card h3 {
+        font-size: 0.78rem;
+        letter-spacing: 0.22em;
+    }
+
+    .nosotros-value-card p {
+        font-size: 0.98rem;
+        line-height: 1.76;
+    }
+}
+
+@media (max-width: 480px) {
+    .nosotros-intro {
+        font-size: 1rem;
+    }
+
+    .nosotros-value-card p {
+        font-size: 0.95rem;
+    }
+}
+
+/* ================================
+   SECCIÓN NOSOTROS - FULL PROTAGONISTA
+================================ */
+
+.nosotros-section {
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 118px 5vw;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(520px, 1fr);
+    gap: 6vw;
+    align-items: center;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.nosotros-section::before {
+    width: 520px;
+    height: 520px;
+    left: 6%;
+    top: 18%;
+    background: rgba(183, 148, 255, 0.085);
+    filter: blur(110px);
+}
+
+.nosotros-content {
+    width: 100%;
+    max-width: 820px;
+    position: relative;
+    z-index: 2;
+}
+
+.nosotros-content .eyebrow {
+    margin-bottom: 28px;
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: 0.26em;
+    color: var(--purple-soft);
+}
+
+.nosotros-intro {
+    max-width: 70ch;
+    margin: 0 0 64px;
+    color: rgba(245, 241, 232, 0.96);
+    font-size: clamp(1.28rem, 1.75vw, 1.72rem);
+    line-height: 1.82;
+    font-weight: 500;
+}
+
+.nosotros-values {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 34px;
+}
+
+.nosotros-value-card {
+    padding: 34px 36px 36px;
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.048), rgba(255, 255, 255, 0.018)),
+        rgba(8, 6, 12, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+        0 22px 52px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.nosotros-value-card::before {
+    background: linear-gradient(
+        90deg,
+        var(--purple-soft),
+        rgba(183, 148, 255, 0.15)
+    );
+}
+
+.nosotros-value-card h3 {
+    margin: 0 0 18px;
+    color: var(--purple-soft);
+    font-size: clamp(0.9rem, 1vw, 1.04rem);
+    font-weight: 950;
+    letter-spacing: 0.30em;
+    text-transform: uppercase;
+    text-shadow: 0 0 18px rgba(183, 148, 255, 0.18);
+}
+
+.nosotros-value-card p {
+    margin: 0;
+    color: rgba(226, 220, 236, 0.94);
+    font-size: clamp(1.06rem, 1.18vw, 1.22rem);
+    line-height: 1.86;
+}
+
+/* Imágenes más protagonistas */
+
+.nosotros-visual {
+    width: 100%;
+    height: calc(100vh - 170px);
+    min-height: 680px;
+    max-height: 900px;
+    position: relative;
+}
+
+.nosotros-visual::before {
+    right: 4%;
+    top: 8%;
+    width: 520px;
+    height: 720px;
+    background:
+        radial-gradient(circle, rgba(245, 241, 232, 0.11), transparent 52%),
+        radial-gradient(circle, rgba(183, 148, 255, 0.18), transparent 66%);
+    filter: blur(58px);
+    opacity: 1;
+}
+
+.visual-card {
+    border-radius: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.105);
+    box-shadow:
+        0 34px 90px rgba(0, 0, 0, 0.52),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.visual-card-large {
+    inset: 0 16% 0 0;
+}
+
+.visual-card-small {
+    width: 48%;
+    height: 58%;
+    right: 0;
+    bottom: 7%;
+}
+
+.visual-card img {
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Responsive Nosotros protagonista */
+
+@media (max-width: 1180px) {
+    .nosotros-section {
+        grid-template-columns: 1fr;
+        gap: 68px;
+        padding: 104px 6vw;
+    }
+
+    .nosotros-content {
+        max-width: 980px;
+        margin: 0 auto;
+    }
+
+    .nosotros-intro {
+        max-width: 78ch;
+        margin-bottom: 54px;
+    }
+
+    .nosotros-visual {
+        width: min(100%, 940px);
+        height: 720px;
+        min-height: 620px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .nosotros-section {
+        padding: 88px 18px;
+        gap: 48px;
+    }
+
+    .nosotros-intro {
+        font-size: 1.08rem;
+        line-height: 1.78;
+        margin-bottom: 42px;
+    }
+
+    .nosotros-values {
+        gap: 26px;
+    }
+
+    .nosotros-value-card {
+        padding: 26px 22px 28px;
+        border-radius: 24px;
+    }
+
+    .nosotros-value-card h3 {
+        font-size: 0.82rem;
+        letter-spacing: 0.24em;
+    }
+
+    .nosotros-value-card p {
+        font-size: 1rem;
+        line-height: 1.76;
+    }
+
+    .nosotros-visual {
+        height: 560px;
+        min-height: 560px;
+    }
+
+    .visual-card {
+        border-radius: 28px;
+    }
+
+    .visual-card-large {
+        inset: 0 14% 0 0;
+    }
+
+    .visual-card-small {
+        width: 52%;
+        height: 54%;
+        bottom: 6%;
+    }
+}
+
+@media (max-width: 480px) {
+    .nosotros-section {
+        padding: 78px 14px;
+    }
+
+    .nosotros-visual {
+        height: 440px;
+        min-height: 440px;
+    }
+
+    .visual-card-large {
+        inset: 0 12% 0 0;
+    }
+
+    .visual-card-small {
+        width: 56%;
+        height: 50%;
+    }
+}
+
+/* ================================
+   SECCIÓN NOSOTROS - IMÁGENES UN POCO MÁS PEQUEÑAS
+================================ */
+
+.nosotros-section {
+    grid-template-columns: minmax(0, 1.08fr) minmax(460px, 0.92fr);
+    gap: 5vw;
+}
+
+.nosotros-visual {
+    height: calc(100vh - 230px);
+    min-height: 590px;
+    max-height: 760px;
+}
+
+.visual-card-large {
+    inset: 4% 20% 6% 2%;
+}
+
+.visual-card-small {
+    width: 43%;
+    height: 50%;
+    right: 3%;
+    bottom: 10%;
+}
+
+/* Responsive ajuste imágenes Nosotros */
+
+@media (max-width: 1180px) {
+    .nosotros-visual {
+        width: min(100%, 820px);
+        height: 620px;
+        min-height: 560px;
+    }
+
+    .visual-card-large {
+        inset: 3% 18% 7% 2%;
+    }
+
+    .visual-card-small {
+        width: 44%;
+        height: 48%;
+        right: 2%;
+        bottom: 9%;
+    }
+}
+
+@media (max-width: 768px) {
+    .nosotros-visual {
+        height: 480px;
+        min-height: 480px;
+    }
+
+    .visual-card-large {
+        inset: 2% 16% 8% 0;
+    }
+
+    .visual-card-small {
+        width: 48%;
+        height: 46%;
+        right: 0;
+        bottom: 8%;
+    }
+}
+
+@media (max-width: 480px) {
+    .nosotros-visual {
+        height: 390px;
+        min-height: 390px;
+    }
+
+    .visual-card-large {
+        inset: 2% 14% 8% 0;
+    }
+
+    .visual-card-small {
+        width: 52%;
+        height: 44%;
+    }
+}
+
+/* ================================
+   SECCIÓN NOSOTROS - TÍTULO E INTRO CENTRADOS
+================================ */
+
+.nosotros-content .eyebrow {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.nosotros-intro {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Mantener Misión y Visión con lectura normal */
+.nosotros-values {
+    text-align: left;
+}
+
+/* ================================
+   SECCIÓN NOSOTROS - IMÁGENES LIGERAMENTE MÁS PROTAGONISTAS
+================================ */
+
+.nosotros-section {
+    grid-template-columns: minmax(0, 0.92fr) minmax(500px, 1.08fr);
+    gap: 5.8vw;
+}
+
+.nosotros-content {
+    max-width: 760px;
+}
+
+.nosotros-intro {
+    max-width: 64ch;
+}
+
+.nosotros-values {
+    max-width: 720px;
+}
+
+.nosotros-visual {
+    height: calc(100vh - 195px);
+    min-height: 640px;
+    max-height: 820px;
+}
+
+.visual-card-large {
+    inset: 2% 17% 4% 0;
+}
+
+.visual-card-small {
+    width: 46%;
+    height: 53%;
+    right: 1%;
+    bottom: 8%;
+}
+
+/* Responsive */
+@media (max-width: 1180px) {
+    .nosotros-section {
+        grid-template-columns: 1fr;
+        gap: 58px;
+    }
+
+    .nosotros-content {
+        max-width: 860px;
+        margin: 0 auto;
+    }
+
+    .nosotros-values {
+        max-width: 780px;
+        margin: 0 auto;
+    }
+
+    .nosotros-visual {
+        width: min(100%, 880px);
+        height: 660px;
+        min-height: 600px;
+        margin: 0 auto;
+    }
+
+    .visual-card-large {
+        inset: 2% 16% 5% 0;
+    }
+
+    .visual-card-small {
+        width: 46%;
+        height: 51%;
+        right: 1%;
+        bottom: 8%;
+    }
+}
+
+@media (max-width: 768px) {
+    .nosotros-section {
+        gap: 46px;
+    }
+
+    .nosotros-visual {
+        height: 520px;
+        min-height: 520px;
+    }
+
+    .visual-card-large {
+        inset: 1% 14% 6% 0;
+    }
+
+    .visual-card-small {
+        width: 50%;
+        height: 48%;
+        right: 0;
+        bottom: 8%;
+    }
+}
+
+@media (max-width: 480px) {
+    .nosotros-visual {
+        height: 420px;
+        min-height: 420px;
+    }
+
+    .visual-card-large {
+        inset: 1% 12% 7% 0;
+    }
+
+    .visual-card-small {
+        width: 54%;
+        height: 45%;
+    }
+}
+
+/* ================================
+   SECCIÓN NOSOTROS - TEXTO UN POCO MÁS PEQUEÑO
+================================ */
+
+.nosotros-content .eyebrow {
+    font-size: 0.78rem;
+}
+
+.nosotros-intro {
+    font-size: clamp(1.08rem, 1.35vw, 1.38rem);
+    line-height: 1.78;
+    max-width: 66ch;
+}
+
+.nosotros-value-card h3 {
+    font-size: clamp(0.82rem, 0.9vw, 0.94rem);
+    color: var(--purple-soft);
+}
+
+.nosotros-value-card p {
+    font-size: clamp(0.96rem, 1.02vw, 1.08rem);
+    line-height: 1.78;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nosotros-intro {
+        font-size: 1rem;
+        line-height: 1.72;
+    }
+
+    .nosotros-value-card p {
+        font-size: 0.94rem;
+        line-height: 1.7;
+    }
+}
+
+@media (max-width: 480px) {
+    .nosotros-intro {
+        font-size: 0.96rem;
+    }
+
+    .nosotros-value-card p {
+        font-size: 0.92rem;
+    }
+}
+
+/* ================================
+   SECCIÓN CONTÁCTANOS - PREMIUM
+================================ */
+
+.contacto-section {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 120px 5vw 130px;
+    background:
+        radial-gradient(circle at 14% 18%, rgba(183, 148, 255, 0.12), transparent 28%),
+        radial-gradient(circle at 86% 72%, rgba(255, 255, 255, 0.055), transparent 30%),
+        linear-gradient(180deg, #000 0%, #050308 48%, #000 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.contacto-section::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: min(760px, 78vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(183, 148, 255, 0.65),
+        rgba(245, 241, 232, 0.26),
+        rgba(183, 148, 255, 0.65),
+        transparent
+    );
+}
+
+.contacto-inner {
+    width: min(100%, 1280px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(520px, 1.22fr);
+    gap: 64px;
+    align-items: center;
+}
+
+.contacto-heading {
+    max-width: 520px;
+}
+
+.contacto-heading .eyebrow {
+    margin-bottom: 18px;
+    color: var(--purple-soft);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.26em;
+}
+
+.contacto-heading h2 {
+    margin: 0 0 22px;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(2.2rem, 4.8vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.98);
+}
+
+.contacto-heading p {
+    margin: 0;
+    max-width: 46ch;
+    color: rgba(199, 191, 214, 0.86);
+    font-size: clamp(1rem, 1.15vw, 1.12rem);
+    line-height: 1.78;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.contact-card {
+    position: relative;
+    min-height: 170px;
+    padding: 28px;
+    border-radius: 30px;
+    background:
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.115), transparent 38%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.018)),
+        rgba(8, 6, 12, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.095);
+    box-shadow:
+        0 22px 54px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    overflow: hidden;
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        box-shadow 0.28s ease,
+        background 0.28s ease;
+}
+
+.contact-card::before {
+    content: "";
+    position: absolute;
+    left: 28px;
+    top: 0;
+    width: 56px;
+    height: 1px;
+    background: rgba(183, 148, 255, 0.72);
+}
+
+.contact-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(183, 148, 255, 0.36);
+    background:
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.16), transparent 40%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.022)),
+        rgba(8, 6, 12, 0.9);
+    box-shadow:
+        0 30px 72px rgba(0, 0, 0, 0.48),
+        0 0 26px rgba(183, 148, 255, 0.12);
+}
+
+.contact-card-main {
+    grid-row: span 2;
+    min-height: 362px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background:
+        radial-gradient(circle at 20% 12%, rgba(183, 148, 255, 0.22), transparent 36%),
+        radial-gradient(circle at 78% 88%, rgba(255, 255, 255, 0.08), transparent 38%),
+        linear-gradient(180deg, rgba(20, 12, 32, 0.92), rgba(5, 3, 8, 0.96));
+    border-color: rgba(183, 148, 255, 0.22);
+}
+
+.contact-card-main::after {
+    content: "WhatsApp";
+    position: absolute;
+    right: 26px;
+    top: 24px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(245, 241, 232, 0.94);
+    color: #050308;
+    font-size: 0.62rem;
+    font-weight: 950;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.contact-label {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--purple-soft);
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+}
+
+.contact-value {
+    display: block;
+    color: rgba(245, 241, 232, 0.96);
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(1.25rem, 2.2vw, 2.2rem);
+    line-height: 1.04;
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    word-break: break-word;
+}
+
+.contact-card-main .contact-value {
+    font-size: clamp(2rem, 4vw, 4.4rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+}
+
+.contact-note {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 22px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: rgba(245, 241, 232, 0.86);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.contact-card-wide {
+    grid-column: 1 / -1;
+    min-height: 130px;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.contact-card-wide .contact-label {
+    margin-bottom: 10px;
+}
+
+.contact-card-wide .contact-value {
+    font-size: clamp(1.8rem, 3vw, 3rem);
+}
+
+/* Responsive Contáctanos */
+
+@media (max-width: 1100px) {
+    .contacto-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .contacto-heading {
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .contacto-heading p {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 760px) {
+    .contacto-section {
+        padding: 90px 16px 104px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-card-main {
+        grid-row: auto;
+        min-height: 280px;
+    }
+
+    .contact-card {
+        min-height: 145px;
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .contact-card-main .contact-value {
+        font-size: clamp(2rem, 12vw, 3.2rem);
+    }
+
+    .contact-value {
+        font-size: 1.55rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacto-heading h2 {
+        font-size: clamp(2rem, 13vw, 3.2rem);
+    }
+
+    .contact-card-main {
+        min-height: 250px;
+    }
+
+    .contact-card-main::after {
+        right: 18px;
+        top: 18px;
+        font-size: 0.56rem;
+    }
+
+    .contact-value {
+        font-size: 1.35rem;
+    }
+}
+
+/* ================================
+   CONTÁCTANOS - INFO IZQUIERDA / TÍTULO DERECHA
+================================ */
+
+.contacto-inner {
+    grid-template-columns: minmax(0, 1.28fr) minmax(340px, 0.72fr);
+    gap: 82px;
+    align-items: center;
+}
+
+/* Recuadros a la izquierda */
+.contact-grid {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 28px;
+    align-items: stretch;
+}
+
+/* Títulos a la derecha */
+.contacto-heading {
+    grid-column: 2;
+    grid-row: 1;
+    max-width: 480px;
+    justify-self: end;
+    text-align: right;
+}
+
+.contacto-heading p {
+    margin-left: auto;
+}
+
+/* Distribución más limpia de tarjetas */
+.contact-card {
+    min-height: 178px;
+    padding: 32px;
+    border-radius: 32px;
+}
+
+.contact-card-main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    min-height: 260px;
+}
+
+.contact-card-main .contact-value {
+    font-size: clamp(2.2rem, 3.8vw, 4rem);
+}
+
+.contact-card-wide {
+    grid-column: auto;
+    min-height: 178px;
+    text-align: left;
+    display: block;
+}
+
+.contact-card-wide .contact-label {
+    margin-bottom: 16px;
+}
+
+.contact-card-wide .contact-value {
+    font-size: clamp(1.25rem, 2.2vw, 2.2rem);
+}
+
+/* Mejor respiración visual */
+.contact-label {
+    margin-bottom: 18px;
+}
+
+.contact-note {
+    margin-top: 24px;
+}
+
+/* Responsive Contáctanos ajustado */
+
+@media (max-width: 1100px) {
+    .contacto-inner {
+        grid-template-columns: 1fr;
+        gap: 52px;
+    }
+
+    .contacto-heading {
+        grid-column: 1;
+        grid-row: 1;
+        max-width: 720px;
+        justify-self: center;
+        text-align: center;
+    }
+
+    .contacto-heading p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .contact-grid {
+        grid-column: 1;
+        grid-row: 2;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+    }
+}
+
+@media (max-width: 760px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-card,
+    .contact-card-wide {
+        min-height: 150px;
+        padding: 25px;
+    }
+
+    .contact-card-main {
+        min-height: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacto-section {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .contact-card,
+    .contact-card-wide {
+        border-radius: 24px;
+    }
+}
+
+/* ================================
+   CONTÁCTANOS - REDES ARRIBA / HORARIO ABAJO
+================================ */
+
+.contacto-inner {
+    grid-template-columns: minmax(0, 1.18fr) minmax(360px, 0.82fr);
+    gap: 78px;
+    align-items: center;
+}
+
+/* Recuadros a la izquierda */
+.contact-grid {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 26px;
+    align-items: stretch;
+}
+
+/* Texto a la derecha */
+.contacto-heading {
+    grid-column: 2;
+    grid-row: 1;
+    max-width: 500px;
+    justify-self: end;
+    text-align: right;
+}
+
+.contacto-heading p {
+    margin-left: auto;
+}
+
+/* Todas las tarjetas pequeñas iguales */
+.contact-card {
+    min-height: 175px;
+    padding: 30px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Eliminar cualquier estilo viejo de WhatsApp principal */
+.contact-card-main {
+    grid-row: auto;
+    grid-column: auto;
+    min-height: 175px;
+}
+
+.contact-card-main::after {
+    content: none;
+}
+
+/* Horario como recuadro grande inferior */
+.contact-card-schedule {
+    grid-column: 1 / -1;
+    min-height: 250px;
+    justify-content: flex-end;
+    background:
+        radial-gradient(circle at 14% 12%, rgba(183, 148, 255, 0.22), transparent 34%),
+        radial-gradient(circle at 90% 88%, rgba(255, 255, 255, 0.08), transparent 38%),
+        linear-gradient(180deg, rgba(20, 12, 32, 0.92), rgba(5, 3, 8, 0.96));
+    border-color: rgba(183, 148, 255, 0.24);
+}
+
+.contact-card-schedule .contact-value {
+    font-size: clamp(2.5rem, 5vw, 5.2rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+}
+
+.contact-card-schedule .contact-note {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 24px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: rgba(245, 241, 232, 0.86);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Ajustes de lectura */
+.contact-label {
+    margin-bottom: 16px;
+}
+
+.contact-value {
+    font-size: clamp(1.22rem, 2vw, 2rem);
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+    .contacto-inner {
+        grid-template-columns: 1fr;
+        gap: 52px;
+    }
+
+    .contacto-heading {
+        grid-column: 1;
+        grid-row: 1;
+        max-width: 720px;
+        justify-self: center;
+        text-align: center;
+    }
+
+    .contacto-heading p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .contact-grid {
+        grid-column: 1;
+        grid-row: 2;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+    }
+}
+
+@media (max-width: 760px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-card,
+    .contact-card-main {
+        min-height: 150px;
+        padding: 25px;
+    }
+
+    .contact-card-schedule {
+        grid-column: auto;
+        min-height: 240px;
+    }
+
+    .contact-card-schedule .contact-value {
+        font-size: clamp(2.3rem, 13vw, 3.7rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-card,
+    .contact-card-schedule {
+        border-radius: 24px;
+    }
+
+    .contact-card-schedule {
+        min-height: 220px;
+    }
+}
+
+/* ================================
+   CONTÁCTANOS - TEXTO DE RECUADROS MÁS FINO
+================================ */
+
+.contact-value {
+    font-size: clamp(1rem, 1.45vw, 1.45rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.contact-card-schedule .contact-value {
+    font-size: clamp(2rem, 3.6vw, 3.8rem);
+    line-height: 0.95;
+}
+
+.contact-label {
+    font-size: 0.66rem;
+}
+
+.contact-note {
+    font-size: 0.66rem;
+}
+
+/* Responsive */
+@media (max-width: 760px) {
+    .contact-value {
+        font-size: 1.22rem;
+    }
+
+    .contact-card-schedule .contact-value {
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-value {
+        font-size: 1.12rem;
+    }
+
+    .contact-card-schedule .contact-value {
+        font-size: 2.4rem;
+    }
+}
+
+/* ================================
+   CONTÁCTANOS - RECUADROS MÁS COMPACTOS
+================================ */
+
+.contact-grid {
+    gap: 20px;
+}
+
+.contact-card {
+    min-height: 135px;
+    padding: 24px 26px;
+    border-radius: 26px;
+}
+
+.contact-card::before {
+    left: 26px;
+    width: 48px;
+}
+
+.contact-label {
+    margin-bottom: 12px;
+}
+
+.contact-value {
+    line-height: 1.12;
+}
+
+/* Horario sigue siendo grande, pero menos vacío */
+.contact-card-schedule {
+    min-height: 190px;
+    padding: 28px 30px;
+}
+
+.contact-card-schedule .contact-value {
+    font-size: clamp(1.9rem, 3.2vw, 3.3rem);
+}
+
+.contact-card-schedule .contact-note {
+    margin-top: 16px;
+}
+
+/* Responsive */
+@media (max-width: 760px) {
+    .contact-grid {
+        gap: 16px;
+    }
+
+    .contact-card {
+        min-height: 120px;
+        padding: 22px;
+        border-radius: 22px;
+    }
+
+    .contact-card-schedule {
+        min-height: 170px;
+        padding: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-card {
+        min-height: 112px;
+        padding: 20px;
+    }
+
+    .contact-card-schedule {
+        min-height: 160px;
+    }
+}
+
+/* ================================
+   CONTÁCTANOS - MÁS COMPACTO + HORARIO CENTRADO
+================================ */
+
+.contact-grid {
+    gap: 16px;
+}
+
+.contact-card {
+    min-height: 118px;
+    padding: 21px 24px;
+    border-radius: 24px;
+}
+
+.contact-card::before {
+    left: 24px;
+    width: 42px;
+}
+
+.contact-label {
+    margin-bottom: 10px;
+}
+
+.contact-value {
+    font-size: clamp(0.96rem, 1.28vw, 1.32rem);
+    line-height: 1.12;
+}
+
+/* Horario centrado y más compacto */
+.contact-card-schedule {
+    min-height: 155px;
+    padding: 26px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.contact-card-schedule::before {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 58px;
+}
+
+.contact-card-schedule .contact-label {
+    margin-bottom: 12px;
+}
+
+.contact-card-schedule .contact-value {
+    font-size: clamp(1.8rem, 2.8vw, 3rem);
+    line-height: 1;
+    text-align: center;
+}
+
+.contact-card-schedule .contact-note {
+    margin-top: 14px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive */
+@media (max-width: 760px) {
+    .contact-grid {
+        gap: 14px;
+    }
+
+    .contact-card {
+        min-height: 108px;
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .contact-card-schedule {
+        min-height: 145px;
+        padding: 22px;
+    }
+
+    .contact-card-schedule .contact-value {
+        font-size: clamp(1.9rem, 9vw, 2.7rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-card {
+        min-height: 102px;
+        padding: 18px;
+    }
+
+    .contact-card-schedule {
+        min-height: 138px;
+    }
+
+    .contact-value {
+        font-size: 1rem;
+    }
+
+    .contact-card-schedule .contact-value {
+        font-size: 2.2rem;
+    }
+}
+
+/* ================================
+   FOOTER - PREMIUM EDITORIAL
+================================ */
+
+.site-footer {
+    position: relative;
+    width: 100%;
+    padding: 64px 5vw 30px;
+    background:
+        radial-gradient(circle at 18% 0%, rgba(183, 148, 255, 0.10), transparent 30%),
+        radial-gradient(circle at 82% 100%, rgba(255, 255, 255, 0.045), transparent 28%),
+        linear-gradient(180deg, #000 0%, #050308 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: left;
+    overflow: hidden;
+}
+
+.site-footer::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: min(780px, 78vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(183, 148, 255, 0.65),
+        rgba(245, 241, 232, 0.24),
+        rgba(183, 148, 255, 0.65),
+        transparent
+    );
+}
+
+.footer-inner {
+    width: min(100%, 1280px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(260px, 1.05fr) minmax(320px, 1fr) minmax(220px, 0.65fr);
+    gap: 42px;
+    align-items: center;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, rgba(183, 148, 255, 0.11), transparent 64%);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.footer-logo-link:hover {
+    transform: translateY(-2px) scale(1.03);
+    border-color: rgba(183, 148, 255, 0.28);
+    box-shadow: 0 0 24px rgba(183, 148, 255, 0.12);
+}
+
+.footer-logo {
+    width: 70px;
+    margin: 0;
+}
+
+.site-footer h3 {
+    margin: 0 0 8px;
+    color: rgba(245, 241, 232, 0.98);
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    line-height: 0.9;
+    font-weight: 950;
+    letter-spacing: -0.06em;
+}
+
+.footer-brand p {
+    margin: 0;
+    max-width: 34ch;
+    color: rgba(199, 191, 214, 0.76);
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+    margin: 0;
+}
+
+.footer-nav a,
+.footer-contact a {
+    position: relative;
+    color: rgba(245, 241, 232, 0.68);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition:
+        color 0.24s ease,
+        transform 0.24s ease;
+}
+
+.footer-nav a::after,
+.footer-contact a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -7px;
+    width: 0;
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, var(--purple-soft), transparent);
+    transition: width 0.24s ease;
+}
+
+.footer-nav a:hover,
+.footer-contact a:hover {
+    color: rgba(245, 241, 232, 0.96);
+    transform: translateY(-1px);
+}
+
+.footer-nav a:hover::after,
+.footer-contact a:hover::after {
+    width: 100%;
+}
+
+.footer-contact {
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.footer-bottom {
+    width: min(100%, 1280px);
+    margin: 46px auto 0;
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.footer-copy,
+.footer-tagline {
+    margin: 0;
+    color: rgba(199, 191, 214, 0.58);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.footer-tagline {
+    color: rgba(183, 148, 255, 0.72);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+/* Responsive Footer */
+
+@media (max-width: 980px) {
+    .site-footer {
+        padding: 58px 24px 28px;
+        text-align: center;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .footer-brand {
+        justify-content: center;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .footer-brand p {
+        margin: 0 auto;
+    }
+
+    .footer-contact {
+        justify-content: center;
+    }
+
+    .footer-bottom {
+        margin-top: 36px;
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 520px) {
+    .site-footer {
+        padding: 52px 16px 26px;
+    }
+
+    .footer-logo-link {
+        width: 78px;
+        height: 78px;
+    }
+
+    .footer-logo {
+        width: 62px;
+    }
+
+    .footer-nav {
+        gap: 14px 18px;
+    }
+
+    .footer-nav a,
+    .footer-contact a {
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+    }
+}
+
+/* ================================
+   FOOTER - SIN CONTACTOS DIRECTOS
+================================ */
+
+.footer-inner {
+    grid-template-columns: minmax(260px, 1fr) minmax(420px, 1fr);
+    gap: 54px;
+}
+
+.footer-nav {
+    justify-content: flex-end;
+}
+
+.footer-contact {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-nav {
+        justify-content: center;
+    }
+}
+
+/* ================================
+   ARMARIO - BOTÓN ARMARIO COMPLETO VISIBLE
+================================ */
+
+.view-all-button {
+    position: relative;
+    color: rgba(245, 241, 232, 0.96) !important;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.55);
+}
+
+.view-all-button:hover {
+    color: #ffffff !important;
+    text-shadow:
+        0 0 10px rgba(183, 148, 255, 0.28),
+        0 0 18px rgba(0, 0, 0, 0.42);
+}
+
+/* ================================
+   LOADER GLOBAL - ARMARIO / PRODUCTO
+================================ */
+
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.28s ease,
+        visibility 0.28s ease;
+}
+
+.page-loader.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.page-loader-logo {
+    width: min(220px, 42vw);
+    height: auto;
+    display: block;
+    animation: loaderSpin 2.8s linear infinite;
+    filter:
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.10))
+        drop-shadow(0 0 26px rgba(183, 148, 255, 0.14));
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+@keyframes loaderSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .page-loader-logo {
+        width: min(180px, 52vw);
+    }
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* ================================
+   LOADER GLOBAL - GIRO 3D
+================================ */
+
+.page-loader {
+    perspective: 1100px;
+}
+
+.page-loader-logo {
+    animation: loaderSpin3D 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    will-change: transform;
+}
+
+@keyframes loaderSpin3D {
+    0% {
+        transform: rotateY(0deg) rotateX(0deg) scale(1);
+    }
+
+    25% {
+        transform: rotateY(90deg) rotateX(8deg) scale(0.96);
+    }
+
+    50% {
+        transform: rotateY(180deg) rotateX(0deg) scale(1);
+    }
+
+    75% {
+        transform: rotateY(270deg) rotateX(-8deg) scale(0.96);
+    }
+
+    100% {
+        transform: rotateY(360deg) rotateX(0deg) scale(1);
+    }
+}
+
+/* ================================
+   LOADER GLOBAL - GIRO 3D RECTO
+================================ */
+
+.page-loader-logo {
+    animation: loaderSpin3D 2.6s linear infinite;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    will-change: transform;
+}
+
+@keyframes loaderSpin3D {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateY(360deg);
+    }
+}

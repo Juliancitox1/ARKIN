@@ -100,13 +100,11 @@ const products = {
         colors: createColors("D7")
     }
 };
-const newProductIds = [1, 2, 3];
+const newProductIds = [1, 2, 3, 4, 5, 6, 7];
+const wardrobeProductIds = [1, 2, 3, 4];
 
 const siteHeader = document.getElementById("siteHeader");
 const navLinks = [...document.querySelectorAll(".nav-link")];
-const carouselTrack = document.getElementById("filaropa");
-const leftArrow = document.getElementById("flechaIzquierda");
-const rightArrow = document.getElementById("flechaDerecha");
 const toggleArmarioButton = document.getElementById("toggleArmario");
 const armarioCompleto = document.getElementById("armarioCompleto");
 const ropaCompleta = document.getElementById("ropaCompleta");
@@ -132,13 +130,16 @@ const scrollToRelatedButton = document.getElementById("scrollToRelated");
 const newProductsTrack = document.getElementById("loNuevoTrack");
 const newPrevButton = document.getElementById("loNuevoPrev");
 const newNextButton = document.getElementById("loNuevoNext");
+const wardrobeGrid = document.getElementById("wardrobeGrid");
+const pageLoader = document.getElementById("pageLoader");
 
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-let autoScrollInterval = null;
 let newProductsAutoScrollInterval = null;
+let wardrobeImageInterval = null;
 let relatedHoverScrollInterval = null;
 let currentProductId = null;
+let loaderTimeout = null;
 let currentColorName = "";
 let currentSize = "";
 let currentImageIndex = 0;
@@ -147,6 +148,9 @@ let productOpenedFromArmario = false;
 const heroSlides = [...document.querySelectorAll("[data-hero-slide]")];
 const HERO_SLIDE_TIME = 6000;
 const NEW_PRODUCTS_AUTOSCROLL_TIME = 8000;
+const WARDROBE_IMAGE_TIME = 8000;
+const LOADER_OPEN_DELAY = 1100;
+const LOADER_HIDE_DELAY = 180;
 
 let currentHeroSlide = 0;
 let heroSlideInterval = null;
@@ -199,6 +203,98 @@ function createCardMarkup(productId) {
     `;
 }
 
+function getProductPreviewImages(product) {
+    return [...new Set(
+        Object.values(product.colors)
+            .filter((colorData) => colorData.enabled !== false)
+            .flatMap((colorData) => colorData.gallery || [])
+            .filter(Boolean)
+    )];
+}
+
+function createWardrobeCardMarkup(productId) {
+    const product = products[productId];
+
+    if (!product) return "";
+
+    const images = getProductPreviewImages(product);
+    const image = images[0] || getPrimaryImage(product);
+
+    return `
+        <article
+            class="wardrobe-card reveal"
+            data-wardrobe-product-id="${productId}"
+            data-wardrobe-image-index="0"
+            role="button"
+            tabindex="0"
+            aria-label="Ver ${product.name}"
+        >
+            <img class="wardrobe-image" src="${image}" alt="${product.name}" loading="lazy" />
+
+            <div class="wardrobe-card-overlay">
+                <span class="wardrobe-card-title">${product.name}</span>
+            </div>
+        </article>
+    `;
+}
+
+function renderWardrobeProducts() {
+    if (!wardrobeGrid) return;
+
+    wardrobeGrid.innerHTML = wardrobeProductIds
+        .map(createWardrobeCardMarkup)
+        .join("");
+
+    activateReveal();
+}
+
+function rotateWardrobeImages() {
+    if (!wardrobeGrid) return;
+
+    const wardrobeCards = [...wardrobeGrid.querySelectorAll("[data-wardrobe-product-id]")];
+
+    wardrobeCards.forEach((card) => {
+        const productId = card.dataset.wardrobeProductId;
+        const product = products[productId];
+
+        if (!product) return;
+
+        const images = getProductPreviewImages(product);
+
+        if (images.length <= 1) return;
+
+        const imageElement = card.querySelector(".wardrobe-image");
+        if (!imageElement) return;
+
+        const currentIndex = Number(card.dataset.wardrobeImageIndex || 0);
+        const nextIndex = (currentIndex + 1) % images.length;
+
+        card.classList.add("is-changing");
+
+        setTimeout(() => {
+            imageElement.src = images[nextIndex];
+            imageElement.alt = `${product.name} vista ${nextIndex + 1}`;
+            card.dataset.wardrobeImageIndex = String(nextIndex);
+            card.classList.remove("is-changing");
+        }, 220);
+    });
+}
+
+function startWardrobeImageSwap() {
+    if (!wardrobeGrid) return;
+
+    stopWardrobeImageSwap();
+
+    wardrobeImageInterval = setInterval(() => {
+        rotateWardrobeImages();
+    }, WARDROBE_IMAGE_TIME);
+}
+
+function stopWardrobeImageSwap() {
+    clearInterval(wardrobeImageInterval);
+    wardrobeImageInterval = null;
+}
+
 function createNewProductMarkup(productId) {
     const product = products[productId];
 
@@ -226,6 +322,98 @@ function createNewProductMarkup(productId) {
     `;
 }
 
+function getProductPreviewImages(product) {
+    return [...new Set(
+        Object.values(product.colors)
+            .filter((colorData) => colorData.enabled !== false)
+            .flatMap((colorData) => colorData.gallery || [])
+            .filter(Boolean)
+    )];
+}
+
+function createWardrobeCardMarkup(productId) {
+    const product = products[productId];
+
+    if (!product) return "";
+
+    const images = getProductPreviewImages(product);
+    const image = images[0] || getPrimaryImage(product);
+
+    return `
+        <article
+            class="wardrobe-card reveal"
+            data-wardrobe-product-id="${productId}"
+            data-wardrobe-image-index="0"
+            role="button"
+            tabindex="0"
+            aria-label="Ver ${product.name}"
+        >
+            <img class="wardrobe-image" src="${image}" alt="${product.name}" loading="lazy" />
+
+            <div class="wardrobe-card-overlay">
+                <span class="wardrobe-card-title">${product.name}</span>
+            </div>
+        </article>
+    `;
+}
+
+function renderWardrobeProducts() {
+    if (!wardrobeGrid) return;
+
+    wardrobeGrid.innerHTML = wardrobeProductIds
+        .map(createWardrobeCardMarkup)
+        .join("");
+
+    activateReveal();
+}
+
+function rotateWardrobeImages() {
+    if (!wardrobeGrid) return;
+
+    const wardrobeCards = [...wardrobeGrid.querySelectorAll("[data-wardrobe-product-id]")];
+
+    wardrobeCards.forEach((card) => {
+        const productId = card.dataset.wardrobeProductId;
+        const product = products[productId];
+
+        if (!product) return;
+
+        const images = getProductPreviewImages(product);
+
+        if (images.length <= 1) return;
+
+        const imageElement = card.querySelector(".wardrobe-image");
+        if (!imageElement) return;
+
+        const currentIndex = Number(card.dataset.wardrobeImageIndex || 0);
+        const nextIndex = (currentIndex + 1) % images.length;
+
+        card.classList.add("is-changing");
+
+        setTimeout(() => {
+            imageElement.src = images[nextIndex];
+            imageElement.alt = `${product.name} vista ${nextIndex + 1}`;
+            card.dataset.wardrobeImageIndex = String(nextIndex);
+            card.classList.remove("is-changing");
+        }, 220);
+    });
+}
+
+function startWardrobeImageSwap() {
+    if (!wardrobeGrid) return;
+
+    stopWardrobeImageSwap();
+
+    wardrobeImageInterval = setInterval(() => {
+        rotateWardrobeImages();
+    }, WARDROBE_IMAGE_TIME);
+}
+
+function stopWardrobeImageSwap() {
+    clearInterval(wardrobeImageInterval);
+    wardrobeImageInterval = null;
+}
+
 function createRelatedCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
@@ -246,8 +434,9 @@ function createRelatedCardMarkup(productId) {
 
 function renderProducts() {
     const cards = Object.keys(products).map(createCardMarkup).join("");
-    carouselTrack.innerHTML = cards;
+
     ropaCompleta.innerHTML = cards;
+
     activateReveal();
 }
 
@@ -362,76 +551,55 @@ function stopRelatedHoverScroll() {
     relatedHoverScrollInterval = null;
 }
 
-function getScrollAmount() {
-    const firstCard = carouselTrack.querySelector(".product-card");
-    if (!firstCard) return carouselTrack.clientWidth;
+function showPageLoader() {
+    clearTimeout(loaderTimeout);
 
-    const trackStyles = window.getComputedStyle(carouselTrack);
-    const gap = parseFloat(trackStyles.gap) || 0;
-    const cardWidth = firstCard.getBoundingClientRect().width;
+    if (!pageLoader) return;
 
-    const visibleCards = Math.max(
-        1,
-        Math.round((carouselTrack.clientWidth + gap) / (cardWidth + gap))
-    );
-
-    return visibleCards * (cardWidth + gap);
+    pageLoader.classList.add("is-active");
+    pageLoader.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
 }
 
-function moveRight() {
-    const maxScroll = carouselTrack.scrollWidth - carouselTrack.clientWidth;
+function hidePageLoader(delay = 0) {
+    clearTimeout(loaderTimeout);
 
-    if (carouselTrack.scrollLeft >= maxScroll - 8) {
-        carouselTrack.scrollTo({ left: 0, behavior: "smooth" });
-    } else {
-        const nextLeft = Math.min(carouselTrack.scrollLeft + getScrollAmount(), maxScroll);
-        carouselTrack.scrollTo({ left: nextLeft, behavior: "smooth" });
-    }
-}
+    loaderTimeout = setTimeout(() => {
+        if (!pageLoader) return;
 
-function moveLeft() {
-    const maxScroll = carouselTrack.scrollWidth - carouselTrack.clientWidth;
-
-    if (carouselTrack.scrollLeft <= 8) {
-        carouselTrack.scrollTo({
-            left: maxScroll,
-            behavior: "smooth"
-        });
-    } else {
-        const nextLeft = Math.max(carouselTrack.scrollLeft - getScrollAmount(), 0);
-        carouselTrack.scrollTo({
-            left: nextLeft,
-            behavior: "smooth"
-        });
-    }
-}
-
-function startAutoScroll() {
-    stopAutoScroll();
-    autoScrollInterval = setInterval(moveRight, 10000);
-}
-
-function stopAutoScroll() {
-    clearInterval(autoScrollInterval);
+        pageLoader.classList.remove("is-active");
+        pageLoader.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("no-scroll");
+    }, delay);
 }
 
 function openArmarioModal() {
-    armarioCompleto.classList.add("is-open");
-    armarioCompleto.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-    stopAutoScroll();
+    showPageLoader();
 
-    const panel = armarioCompleto.querySelector(".armario-panel");
-    if (panel) {
-        panel.scrollTop = 0;
-    }
+    setTimeout(() => {
+        armarioCompleto.classList.add("is-open");
+        armarioCompleto.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+
+        const panel = armarioCompleto.querySelector(".armario-panel");
+        if (panel) {
+            panel.scrollTop = 0;
+        }
+
+        hidePageLoader(LOADER_HIDE_DELAY);
+    }, LOADER_OPEN_DELAY);
 }
 
 function closeArmarioModal() {
-    armarioCompleto.classList.remove("is-open");
-    armarioCompleto.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-    startAutoScroll();
+    showPageLoader();
+
+    setTimeout(() => {
+        armarioCompleto.classList.remove("is-open");
+        armarioCompleto.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+
+        hidePageLoader(LOADER_HIDE_DELAY);
+    }, LOADER_OPEN_DELAY);
 }
 
 function getSafeGallery(product, colorName) {
@@ -530,7 +698,7 @@ function updateWhatsAppLink() {
     if (!product) return;
 
     const message = encodeURIComponent(
-        `Hola ARK, estoy interesad@ en ${product.name} | ${product.price} | Color: ${currentColorName}${currentSize ? ` | Talla: ${currentSize}` : ""}`
+        `Hola ARKIN, estoy interesad@ en ${product.name} | ${product.price} | Color: ${currentColorName}${currentSize ? ` | Talla: ${currentSize}` : ""}`
     );
 
     whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${message}`;
@@ -553,44 +721,59 @@ function renderModal() {
 
 function openProduct(productId, openedFromArmario = false) {
     const product = products[productId];
-    if (!product) return;
 
-    productOpenedFromArmario = openedFromArmario;
-
-    if (armarioCompleto.classList.contains("is-open") && !openedFromArmario) {
-        closeArmarioModal();
+    if (!product) {
+        hidePageLoader();
+        return;
     }
 
-    currentProductId = productId;
-    currentColorName = getFirstEnabledColor(product);
-    currentSize = product.sizes.find((size) => size.enabled !== false)?.label || "";
-    currentImageIndex = 0;
+    showPageLoader();
 
-    renderModal();
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-    stopAutoScroll();
+    setTimeout(() => {
+        productOpenedFromArmario = openedFromArmario;
 
-    const panel = modal.querySelector(".product-panel");
-    if (panel) {
-        panel.scrollTop = 0;
-    }
+        if (armarioCompleto.classList.contains("is-open") && !openedFromArmario) {
+            closeArmarioModal();
+        }
+
+        currentProductId = productId;
+        currentColorName = getFirstEnabledColor(product);
+        currentSize = product.sizes.find((size) => size.enabled !== false)?.label || "";
+        currentImageIndex = 0;
+
+        renderModal();
+
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+
+        const panel = modal.querySelector(".product-panel");
+        if (panel) {
+            panel.scrollTop = 0;
+        }
+
+        hidePageLoader(LOADER_HIDE_DELAY);
+    }, LOADER_OPEN_DELAY);
 }
 
 function closeProduct() {
-    modal.classList.remove("is-open");
-    modal.setAttribute("aria-hidden", "true");
+    showPageLoader();
     stopRelatedHoverScroll();
 
-    if (productOpenedFromArmario && armarioCompleto.classList.contains("is-open")) {
-        document.body.classList.add("modal-open");
-    } else {
-        document.body.classList.remove("modal-open");
-        startAutoScroll();
-    }
+    setTimeout(() => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
 
-    productOpenedFromArmario = false;
+        if (productOpenedFromArmario && armarioCompleto.classList.contains("is-open")) {
+            document.body.classList.add("modal-open");
+        } else {
+            document.body.classList.remove("modal-open");
+        }
+
+        productOpenedFromArmario = false;
+
+        hidePageLoader(LOADER_HIDE_DELAY);
+    }, LOADER_OPEN_DELAY);
 }
 
 function handleProductClick(event) {
@@ -646,8 +829,6 @@ function activateReveal() {
     revealElements.forEach((element) => observer.observe(element));
 }
 
-rightArrow.addEventListener("click", moveRight);
-leftArrow.addEventListener("click", moveLeft);
 newNextButton.addEventListener("click", () => {
     moveNewProducts(1);
     startNewProductsAutoScroll();
@@ -690,11 +871,24 @@ scrollToRelatedButton.addEventListener("click", () => {
     });
 });
 
-carouselTrack.addEventListener("mouseenter", stopAutoScroll);
-carouselTrack.addEventListener("mouseleave", startAutoScroll);
-
-carouselTrack.addEventListener("click", handleProductClick);
 ropaCompleta.addEventListener("click", handleProductClick);
+
+wardrobeGrid.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-wardrobe-product-id]");
+    if (!card) return;
+
+    openProduct(card.dataset.wardrobeProductId);
+});
+
+wardrobeGrid.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+
+    const card = event.target.closest("[data-wardrobe-product-id]");
+    if (!card) return;
+
+    event.preventDefault();
+    openProduct(card.dataset.wardrobeProductId);
+});
 
 relatedProductsTrack.addEventListener("click", (event) => {
     const card = event.target.closest("[data-related-product-id]");
@@ -801,11 +995,12 @@ window.addEventListener("resize", updateActiveNav);
 
 renderProducts();
 renderNewProducts();
+renderWardrobeProducts();
 updateHeaderState();
 updateActiveNav();
-startAutoScroll();
 startHeroSlider();
 startNewProductsAutoScroll();
+startWardrobeImageSwap();
 
 document.addEventListener("mousemove", (event) => {
     const nearRightEdge = event.clientX >= window.innerWidth - 28;
