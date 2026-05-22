@@ -52,49 +52,50 @@ function createColors(baseName, includeRedBlack = false) {
 const products = {
     1: {
         name: "Heart Cross",
-        description: "Descripción provisional del producto 1. Reemplaza este texto con la información real de la prenda.",
+        description: "Un símbolo afilado que nace del vacío. Una pieza limpia, oscura y elegante para quienes imponen presencia sin decir demasiado.",
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D1", true)
     },
     2: {
         name: "Tribal Cross",
-        description: "Descripción provisional del producto 2. Reemplaza este texto con la información real de la prenda.",
+        description: "Trazos curvos y espinas visuales recorren la prenda como una marca nocturna. Diseñada para destacar con carácter y misterio.",
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D2")
     },
     3: {
         name: "Framing",
-        description: "Descripción provisional del producto 3. Reemplaza este texto con la información real de la prenda.",
+        description: "// Producto 3
+description: "Una composición oscura de energía silenciosa. Su diseño mezcla fuerza, elegancia y una identidad que no busca aprobación.",",
         price: "$85.000",
         sizes: cloneSizes(),
         colors: createColors("D3")
     },
     4: {
         name: "Demonic Flash",
-        description: "Descripción provisional del producto 4. Reemplaza este texto con la información real de la prenda.",
+        description: "Un diseño de presencia intensa, creado para quienes caminan entre lo minimalista y lo agresivo sin perder sofisticación.",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D4")
     },
     5: {
         name: "Chain",
-        description: "Descripción provisional del producto 5. Reemplaza este texto con la información real de la prenda.",
+        description: "Una pieza marcada por el contraste y la sombra. Sutil a primera vista, pero con una esencia rebelde imposible de ignorar.",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D5")
     },
     6: {
         name: "Abyss Beast",
-        description: "Descripción provisional del producto 6. Reemplaza este texto con la información real de la prenda.",
+        description: "Espinas violetas atraviesan la prenda como una herida elegante. Un diseño agresivo, oscuro y dominante nacido desde el abismo.",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D6")
     },
     7: {
         name: "Winged Arcane",
-        description: "Descripción provisional del producto 7. Reemplaza este texto con la información real de la prenda.",
+        description: "Un sello vertical de apariencia mística y ornamental. Una pieza creada para vestir elegancia oscura con aire ceremonial.",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D7")
