@@ -5369,3 +5369,23 @@ body.no-scroll {
         transform: rotateY(360deg);
     }
 }
+
+/* ================================
+   INICIO - IMAGEN COMPLETA SIN RECORTE
+================================ */
+
+.hero {
+    background: #000;
+}
+
+.hero-slider,
+.hero-slide {
+    background: #000;
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+}
