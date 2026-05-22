@@ -5383,9 +5383,16 @@ body.no-scroll {
     background: #000;
 }
 
+/* ================================
+   INICIO - AJUSTE SEGURO IMAGEN HERO
+================================ */
+
 .hero-slide img {
     width: 100%;
     height: 100%;
+    max-width: none;
     object-fit: contain;
     object-position: center center;
+    transform: scale(1.06);
+    transform-origin: center center;
 }

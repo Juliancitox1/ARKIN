@@ -66,8 +66,7 @@ const products = {
     },
     3: {
         name: "Framing",
-        description: "// Producto 3
-description: "Una composición oscura de energía silenciosa. Su diseño mezcla fuerza, elegancia y una identidad que no busca aprobación.",",
+        description: "Una composición oscura de energía silenciosa. Su diseño mezcla fuerza, elegancia y una identidad que no busca aprobación.",
         price: "$85.000",
         sizes: cloneSizes(),
         colors: createColors("D3")
