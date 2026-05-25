@@ -1004,6 +1004,44 @@ window.addEventListener("scroll", () => {
     updateActiveNav();
 });
 
+const navMenuToggle = document.getElementById("navMenuToggle");
+const mobileNavPanel = document.getElementById("mobileNavPanel");
+
+function closeMobileMenu() {
+    if (!navMenuToggle || !mobileNavPanel) return;
+
+    siteHeader.classList.remove("mobile-menu-open");
+    navMenuToggle.setAttribute("aria-expanded", "false");
+    navMenuToggle.setAttribute("aria-label", "Abrir menú");
+    mobileNavPanel.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("nav-open");
+}
+
+function toggleMobileMenu() {
+    if (!navMenuToggle || !mobileNavPanel) return;
+
+    const isOpen = siteHeader.classList.toggle("mobile-menu-open");
+
+    navMenuToggle.setAttribute("aria-expanded", String(isOpen));
+    navMenuToggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+    mobileNavPanel.setAttribute("aria-hidden", String(!isOpen));
+    document.body.classList.toggle("nav-open", isOpen);
+}
+
+if (navMenuToggle && mobileNavPanel) {
+    navMenuToggle.addEventListener("click", toggleMobileMenu);
+
+    mobileNavPanel.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 860) {
+            closeMobileMenu();
+        }
+    });
+}
+
 window.addEventListener("resize", updateActiveNav);
 
 renderProducts();
