@@ -467,6 +467,16 @@ function stopRelatedHoverScroll() {
     relatedHoverScrollInterval = null;
 }
 
+function pauseBackgroundMotion() {
+    stopNewProductsAutoScroll();
+    stopWardrobeImageSwap();
+}
+
+function resumeBackgroundMotion() {
+    startNewProductsAutoScroll();
+    startWardrobeImageSwap();
+}
+
 /* ================================
    LOADER GLOBAL
 ================================ */
@@ -506,6 +516,7 @@ function openArmarioModal() {
 
     isPageTransitioning = true;
     showPageLoader();
+    pauseBackgroundMotion();
 
     setTimeout(() => {
         try {
@@ -517,6 +528,7 @@ function openArmarioModal() {
                 top: 0,
                 behavior: "auto"
             });
+            cerrarArmarioButton?.focus();
         } catch (error) {
             console.error("Error al abrir el armario completo:", error);
         } finally {
@@ -547,6 +559,10 @@ function closeArmarioModal() {
         } finally {
             hidePageLoader(LOADER_HIDE_DELAY);
             releasePageTransition();
+
+            if (!modal?.classList.contains("is-open")) {
+                resumeBackgroundMotion();
+            }
         }
     }, LOADER_OPEN_DELAY);
 }
@@ -683,13 +699,18 @@ function renderModal() {
 function openProduct(productId, openedFromArmario = false) {
     const product = products[productId];
 
-    if (!modal || !product || !isProductAvailable(productId) || isPageTransitioning) {
+    if (isPageTransitioning) {
+        return;
+    }
+
+    if (!modal || !product || !isProductAvailable(productId)) {
         hidePageLoader();
         return;
     }
 
     isPageTransitioning = true;
     showPageLoader();
+    pauseBackgroundMotion();
 
     setTimeout(() => {
         try {
@@ -709,6 +730,7 @@ function openProduct(productId, openedFromArmario = false) {
                 top: 0,
                 behavior: "auto"
             });
+            closeModalButton?.focus();
         } catch (error) {
             console.error("Error al abrir el producto:", error);
         } finally {
@@ -742,6 +764,10 @@ function closeProduct() {
         } finally {
             hidePageLoader(LOADER_HIDE_DELAY);
             releasePageTransition();
+
+            if (!armarioCompleto?.classList.contains("is-open")) {
+                resumeBackgroundMotion();
+            }
         }
     }, LOADER_OPEN_DELAY);
 }
