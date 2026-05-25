@@ -59,6 +59,7 @@ const products = {
     1: {
         name: "Heart Cross",
         description: "Un símbolo afilado que nace del vacío. Una pieza limpia, oscura y elegante para quienes imponen presencia sin decir demasiado.",
+        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D1", true)
@@ -66,6 +67,7 @@ const products = {
     2: {
         name: "Tribal Cross",
         description: "Trazos curvos y espinas visuales recorren la prenda como una marca nocturna. Diseñada para destacar con carácter y misterio.",
+        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D2")
@@ -73,6 +75,7 @@ const products = {
     3: {
         name: "Framing",
         description: "Una composición oscura de energía silenciosa. Su diseño mezcla fuerza, elegancia y una identidad que no busca aprobación.",
+        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
         price: "$85.000",
         sizes: cloneSizes(),
         colors: createColors("D3")
@@ -80,6 +83,7 @@ const products = {
     4: {
         name: "Demonic Flash",
         description: "Un diseño de presencia intensa, creado para quienes caminan entre lo minimalista y lo agresivo sin perder sofisticación.",
+        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D4")
@@ -87,6 +91,7 @@ const products = {
     5: {
         name: "Chain",
         description: "Una pieza marcada por el contraste y la sombra. Sutil a primera vista, pero con una esencia rebelde imposible de ignorar.",
+        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D5")
@@ -95,6 +100,7 @@ const products = {
         name: "Abyss Beast",
         available: false,
         description: "Espinas violetas atraviesan la prenda como una herida elegante. Un diseño agresivo, oscuro y dominante nacido desde el abismo.",
+        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D6")
@@ -102,6 +108,7 @@ const products = {
     7: {
         name: "Winged Arcane",
         description: "Un sello vertical de apariencia mística y ornamental. Una pieza creada para vestir elegancia oscura con aire ceremonial.",
+        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D7")
@@ -138,6 +145,7 @@ const closeModalButton = document.getElementById("cerrarProducto");
 const backdrop = modal.querySelector("[data-close-modal]");
 const modalTitle = document.getElementById("modalTitle");
 const modalDescription = document.getElementById("descripcionProducto");
+const modalMaterial = document.getElementById("materialProducto");
 const modalPrice = document.getElementById("precioProducto");
 const mainImage = document.getElementById("imagenPrincipal");
 const thumbnailsContainer = document.getElementById("miniaturas");
@@ -691,7 +699,12 @@ function renderModal() {
     if (!product) return;
 
     modalTitle.textContent = product.name;
-    modalDescription.textContent = product.description;
+    modalDescription.textContent = product.fullDescription || product.description;
+
+    if (modalMaterial) {
+        modalMaterial.textContent = product.material || "Material por confirmar.";
+    }
+
     modalPrice.textContent = product.price;
 
     renderColorOptions(product);
