@@ -2259,7 +2259,7 @@ section[id] {
 }
 
 #ropaCompleta .product-card::before {
-    content: "ARK";
+    content: "ARKIN";
     position: absolute;
     top: 18px;
     left: 18px;

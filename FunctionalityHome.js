@@ -1,3 +1,6 @@
+/* ================================
+   CONFIGURACIÓN GENERAL
+================================ */
 const whatsappNumber = "573160551532";
 
 const baseSizes = [
@@ -49,6 +52,9 @@ function createColors(baseName, includeRedBlack = false) {
     return colors;
 }
 
+/* ================================
+   PRODUCTOS
+================================ */
 const products = {
     1: {
         name: "Heart Cross",
@@ -105,9 +111,21 @@ function isProductAvailable(productId) {
     const product = products[productId];
     return product && product.available !== false;
 }
+
+/* ================================
+   PRODUCTOS VISIBLES POR SECCIÓN
+   newProductIds controla Lo Nuevo.
+   wardrobeProductIds controla los 4
+   productos principales del Armario.
+================================ */
 const newProductIds = [1, 2, 3, 4, 5, 6, 7];
 const wardrobeProductIds = [1, 2, 3, 4];
 
+/* ================================
+   ELEMENTOS DEL HTML
+   Aquí se conectan los elementos
+   del index.html con JavaScript.
+================================ */
 const siteHeader = document.getElementById("siteHeader");
 const navLinks = [...document.querySelectorAll(".nav-link")];
 const toggleArmarioButton = document.getElementById("toggleArmario");
@@ -140,6 +158,12 @@ const pageLoader = document.getElementById("pageLoader");
 
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 
+/* ================================
+   ESTADO INTERNO
+   Variables que guardan posición,
+   producto actual, color, talla,
+   imagen actual y loader.
+================================ */
 let newProductsAutoScrollInterval = null;
 let wardrobeImageInterval = null;
 let relatedHoverScrollInterval = null;
@@ -150,6 +174,11 @@ let currentSize = "";
 let currentImageIndex = 0;
 let productOpenedFromArmario = false;
 
+/* ================================
+   TIEMPOS Y SLIDER PRINCIPAL
+   Aquí puedes ajustar duración del
+   hero, carruseles, armario y loader.
+================================ */
 const heroSlides = [...document.querySelectorAll("[data-hero-slide]")];
 const HERO_SLIDE_TIME = 6000;
 const NEW_PRODUCTS_AUTOSCROLL_TIME = 8000;
@@ -160,6 +189,9 @@ const LOADER_HIDE_DELAY = 180;
 let currentHeroSlide = 0;
 let heroSlideInterval = null;
 
+/* ================================
+   HERO / IMAGEN PRINCIPAL
+================================ */
 function showHeroSlide(index) {
     if (!heroSlides.length) return;
 
@@ -180,6 +212,11 @@ function startHeroSlider() {
     }, HERO_SLIDE_TIME);
 }
 
+/* ================================
+   UTILIDADES DE PRODUCTOS
+   Funciones para obtener colores,
+   imágenes principales y galerías.
+================================ */
 function getFirstEnabledColor(product) {
     const availableColor = Object.entries(product.colors).find(([, color]) => color.enabled !== false);
     return availableColor ? availableColor[0] : Object.keys(product.colors)[0];
@@ -191,6 +228,12 @@ function getPrimaryImage(product) {
     return gallery[0] || "";
 }
 
+/* ================================
+   CREACIÓN DE CARDS
+   Cards para Armario completo,
+   Lo Nuevo, Armario principal
+   y productos relacionados.
+================================ */
 function createCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
@@ -206,99 +249,6 @@ function createCardMarkup(productId) {
             </div>
         </article>
     `;
-}
-
-function getProductPreviewImages(product) {
-    return [...new Set(
-        Object.values(product.colors)
-            .filter((colorData) => colorData.enabled !== false)
-            .flatMap((colorData) => colorData.gallery || [])
-            .filter(Boolean)
-    )];
-}
-
-function createWardrobeCardMarkup(productId) {
-    const product = products[productId];
-
-    if (!product) return "";
-
-    const images = getProductPreviewImages(product);
-    const image = images[0] || getPrimaryImage(product);
-
-    return `
-        <article
-            class="wardrobe-card reveal"
-            data-wardrobe-product-id="${productId}"
-            data-wardrobe-image-index="0"
-            role="button"
-            tabindex="0"
-            aria-label="Ver ${product.name}"
-        >
-            <img class="wardrobe-image" src="${image}" alt="${product.name}" loading="lazy" />
-
-            <div class="wardrobe-card-overlay">
-                <span class="wardrobe-card-title">${product.name}</span>
-            </div>
-        </article>
-    `;
-}
-
-function renderWardrobeProducts() {
-    if (!wardrobeGrid) return;
-
-    wardrobeGrid.innerHTML = wardrobeProductIds
-        .filter(isProductAvailable)
-        .map(createWardrobeCardMarkup)
-        .join("");
-
-    activateReveal();
-}
-
-function rotateWardrobeImages() {
-    if (!wardrobeGrid) return;
-
-    const wardrobeCards = [...wardrobeGrid.querySelectorAll("[data-wardrobe-product-id]")];
-
-    wardrobeCards.forEach((card) => {
-        const productId = card.dataset.wardrobeProductId;
-        const product = products[productId];
-
-        if (!product) return;
-
-        const images = getProductPreviewImages(product);
-
-        if (images.length <= 1) return;
-
-        const imageElement = card.querySelector(".wardrobe-image");
-        if (!imageElement) return;
-
-        const currentIndex = Number(card.dataset.wardrobeImageIndex || 0);
-        const nextIndex = (currentIndex + 1) % images.length;
-
-        card.classList.add("is-changing");
-
-        setTimeout(() => {
-            imageElement.src = images[nextIndex];
-            imageElement.alt = `${product.name} vista ${nextIndex + 1}`;
-            card.dataset.wardrobeImageIndex = String(nextIndex);
-            card.classList.remove("is-changing");
-        }, 220);
-    });
-}
-
-function startWardrobeImageSwap() {
-    if (!wardrobeGrid) return;
-
-    stopWardrobeImageSwap();
-
-    wardrobeImageInterval = setInterval(() => {
-        rotateWardrobeImages();
-    }, WARDROBE_IMAGE_TIME);
-}
-
-function stopWardrobeImageSwap() {
-    clearInterval(wardrobeImageInterval);
-    wardrobeImageInterval = null;
 }
 
 function createNewProductMarkup(productId) {
@@ -450,6 +400,10 @@ function renderProducts() {
     activateReveal();
 }
 
+/* ================================
+   LO NUEVO
+   Render y movimiento del carrusel.
+================================ */
 function renderNewProducts() {
     if (!newProductsTrack) return;
 
@@ -564,6 +518,11 @@ function stopRelatedHoverScroll() {
     relatedHoverScrollInterval = null;
 }
 
+/* ================================
+   LOADER GLOBAL
+   Pantalla negra con logo giratorio
+   al abrir/cerrar productos y armario.
+================================ */
 function showPageLoader() {
     clearTimeout(loaderTimeout);
 
@@ -586,6 +545,11 @@ function hidePageLoader(delay = 0) {
     }, delay);
 }
 
+/* ================================
+   ARMARIO COMPLETO
+   Apertura y cierre de la ventana
+   independiente del armario.
+================================ */
 function openArmarioModal() {
     showPageLoader();
 
@@ -615,6 +579,11 @@ function closeArmarioModal() {
     }, LOADER_OPEN_DELAY);
 }
 
+/* ================================
+   MODAL DE PRODUCTO
+   Galería, colores, tallas,
+   descripción, precio y WhatsApp.
+================================ */
 function getSafeGallery(product, colorName) {
     const gallery = product.colors[colorName]?.gallery || [];
     if (gallery.length > 0) return gallery;
@@ -799,6 +768,9 @@ function handleProductClick(event) {
     openProduct(productId, openedFromArmario);
 }
 
+/* ================================
+   HEADER Y NAVEGACIÓN
+================================ */
 function updateHeaderState() {
     siteHeader.classList.toggle("is-scrolled", window.scrollY > 10);
 }
@@ -842,6 +814,11 @@ function activateReveal() {
     revealElements.forEach((element) => observer.observe(element));
 }
 
+/* ================================
+   EVENTOS E INTERACCIONES
+   Clicks, carruseles, modales,
+   colores, tallas y teclado.
+================================ */
 newNextButton.addEventListener("click", () => {
     moveNewProducts(1);
     startNewProductsAutoScroll();
@@ -1004,6 +981,9 @@ window.addEventListener("scroll", () => {
     updateActiveNav();
 });
 
+/* ================================
+   MENÚ MÓVIL
+================================ */
 const navMenuToggle = document.getElementById("navMenuToggle");
 const mobileNavPanel = document.getElementById("mobileNavPanel");
 
@@ -1044,6 +1024,11 @@ if (navMenuToggle && mobileNavPanel) {
 
 window.addEventListener("resize", updateActiveNav);
 
+/* ================================
+   INICIALIZACIÓN FINAL
+   Aquí se arranca todo al cargar
+   la página.
+================================ */
 renderProducts();
 renderNewProducts();
 renderWardrobeProducts();
