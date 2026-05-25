@@ -59,7 +59,7 @@ const products = {
     1: {
         name: "Heart Cross",
         description: "Un símbolo afilado que nace del vacío. Una pieza limpia, oscura y elegante para quienes imponen presencia sin decir demasiado.",
-        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
+        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D1", true)
@@ -67,7 +67,7 @@ const products = {
     2: {
         name: "Tribal Cross",
         description: "Trazos curvos y espinas visuales recorren la prenda como una marca nocturna. Diseñada para destacar con carácter y misterio.",
-        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
+        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D2")
@@ -75,7 +75,7 @@ const products = {
     3: {
         name: "Framing",
         description: "Una composición oscura de energía silenciosa. Su diseño mezcla fuerza, elegancia y una identidad que no busca aprobación.",
-        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
+        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
         price: "$85.000",
         sizes: cloneSizes(),
         colors: createColors("D3")
@@ -83,7 +83,7 @@ const products = {
     4: {
         name: "Demonic Flash",
         description: "Un diseño de presencia intensa, creado para quienes caminan entre lo minimalista y lo agresivo sin perder sofisticación.",
-        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
+        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D4")
@@ -91,7 +91,7 @@ const products = {
     5: {
         name: "Chain",
         description: "Una pieza marcada por el contraste y la sombra. Sutil a primera vista, pero con una esencia rebelde imposible de ignorar.",
-        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
+        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D5")
@@ -100,7 +100,7 @@ const products = {
         name: "Abyss Beast",
         available: false,
         description: "Espinas violetas atraviesan la prenda como una herida elegante. Un diseño agresivo, oscuro y dominante nacido desde el abismo.",
-        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
+        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D6")
@@ -108,30 +108,18 @@ const products = {
     7: {
         name: "Winged Arcane",
         description: "Un sello vertical de apariencia mística y ornamental. Una pieza creada para vestir elegancia oscura con aire ceremonial.",
-        material: "Oversize \n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250", 
+        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D7")
     }
 };
-function isProductAvailable(productId) {
-    const product = products[productId];
-    return product && product.available !== false;
-}
 
-/* ================================
-   PRODUCTOS VISIBLES POR SECCIÓN
-   newProductIds controla Lo Nuevo.
-   wardrobeProductIds controla los 4
-   productos principales del Armario.
-================================ */
 const newProductIds = [1, 2, 3, 4, 5, 6, 7];
 const wardrobeProductIds = [1, 2, 3, 4];
 
 /* ================================
    ELEMENTOS DEL HTML
-   Aquí se conectan los elementos
-   del index.html con JavaScript.
 ================================ */
 const siteHeader = document.getElementById("siteHeader");
 const navLinks = [...document.querySelectorAll(".nav-link")];
@@ -139,10 +127,10 @@ const toggleArmarioButton = document.getElementById("toggleArmario");
 const armarioCompleto = document.getElementById("armarioCompleto");
 const ropaCompleta = document.getElementById("ropaCompleta");
 const cerrarArmarioButton = document.getElementById("cerrarArmario");
-const armarioBackdrop = armarioCompleto.querySelector("[data-close-armario]");
+const armarioBackdrop = armarioCompleto?.querySelector("[data-close-armario]");
 const modal = document.getElementById("productModal");
 const closeModalButton = document.getElementById("cerrarProducto");
-const backdrop = modal.querySelector("[data-close-modal]");
+const backdrop = modal?.querySelector("[data-close-modal]");
 const modalTitle = document.getElementById("modalTitle");
 const modalDescription = document.getElementById("descripcionProducto");
 const modalMaterial = document.getElementById("materialProducto");
@@ -163,30 +151,28 @@ const newPrevButton = document.getElementById("loNuevoPrev");
 const newNextButton = document.getElementById("loNuevoNext");
 const wardrobeGrid = document.getElementById("wardrobeGrid");
 const pageLoader = document.getElementById("pageLoader");
+const currentYear = document.getElementById("currentYear");
 
-document.getElementById("currentYear").textContent = new Date().getFullYear();
+if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+}
 
 /* ================================
    ESTADO INTERNO
-   Variables que guardan posición,
-   producto actual, color, talla,
-   imagen actual y loader.
 ================================ */
 let newProductsAutoScrollInterval = null;
 let wardrobeImageInterval = null;
 let relatedHoverScrollInterval = null;
-let currentProductId = null;
 let loaderTimeout = null;
+let currentProductId = null;
 let currentColorName = "";
 let currentSize = "";
 let currentImageIndex = 0;
+let currentHeroSlide = 0;
+let heroSlideInterval = null;
 let productOpenedFromArmario = false;
+let isPageTransitioning = false;
 
-/* ================================
-   TIEMPOS Y SLIDER PRINCIPAL
-   Aquí puedes ajustar duración del
-   hero, carruseles, armario y loader.
-================================ */
 const heroSlides = [...document.querySelectorAll("[data-hero-slide]")];
 const HERO_SLIDE_TIME = 6000;
 const NEW_PRODUCTS_AUTOSCROLL_TIME = 8000;
@@ -194,37 +180,14 @@ const WARDROBE_IMAGE_TIME = 8000;
 const LOADER_OPEN_DELAY = 1100;
 const LOADER_HIDE_DELAY = 180;
 
-let currentHeroSlide = 0;
-let heroSlideInterval = null;
-
 /* ================================
-   HERO / IMAGEN PRINCIPAL
+   UTILIDADES
 ================================ */
-function showHeroSlide(index) {
-    if (!heroSlides.length) return;
-
-    heroSlides[currentHeroSlide].classList.remove("active");
-
-    currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
-
-    heroSlides[currentHeroSlide].classList.add("active");
+function isProductAvailable(productId) {
+    const product = products[productId];
+    return product && product.available !== false;
 }
 
-function startHeroSlider() {
-    if (heroSlides.length <= 1) return;
-
-    clearInterval(heroSlideInterval);
-
-    heroSlideInterval = setInterval(() => {
-        showHeroSlide(currentHeroSlide + 1);
-    }, HERO_SLIDE_TIME);
-}
-
-/* ================================
-   UTILIDADES DE PRODUCTOS
-   Funciones para obtener colores,
-   imágenes principales y galerías.
-================================ */
 function getFirstEnabledColor(product) {
     const availableColor = Object.entries(product.colors).find(([, color]) => color.enabled !== false);
     return availableColor ? availableColor[0] : Object.keys(product.colors)[0];
@@ -236,11 +199,48 @@ function getPrimaryImage(product) {
     return gallery[0] || "";
 }
 
+function getProductPreviewImages(product) {
+    return [...new Set(
+        Object.values(product.colors)
+            .filter((colorData) => colorData.enabled !== false)
+            .flatMap((colorData) => colorData.gallery || [])
+            .filter(Boolean)
+    )];
+}
+
+function getScrollAmount(track, cardSelector) {
+    const firstCard = track?.querySelector(cardSelector);
+    if (!track || !firstCard) return track?.clientWidth || 0;
+
+    const trackStyles = window.getComputedStyle(track);
+    const gap = parseFloat(trackStyles.gap) || 0;
+    const cardWidth = firstCard.getBoundingClientRect().width;
+
+    return cardWidth + gap;
+}
+
 /* ================================
-   CREACIÓN DE CARDS
-   Cards para Armario completo,
-   Lo Nuevo, Armario principal
-   y productos relacionados.
+   HERO
+================================ */
+function showHeroSlide(index) {
+    if (!heroSlides.length) return;
+
+    heroSlides[currentHeroSlide].classList.remove("active");
+    currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
+    heroSlides[currentHeroSlide].classList.add("active");
+}
+
+function startHeroSlider() {
+    if (heroSlides.length <= 1) return;
+
+    clearInterval(heroSlideInterval);
+    heroSlideInterval = setInterval(() => {
+        showHeroSlide(currentHeroSlide + 1);
+    }, HERO_SLIDE_TIME);
+}
+
+/* ================================
+   RENDER DE CARDS
 ================================ */
 function createCardMarkup(productId) {
     const product = products[productId];
@@ -261,7 +261,6 @@ function createCardMarkup(productId) {
 
 function createNewProductMarkup(productId) {
     const product = products[productId];
-
     if (!product) return "";
 
     const image = getPrimaryImage(product);
@@ -271,12 +270,10 @@ function createNewProductMarkup(productId) {
             <div class="new-product-media">
                 <img src="${image}" alt="${product.name}" loading="lazy" />
             </div>
-
             <div class="new-product-content">
                 <span class="new-product-label">Lo Nuevo</span>
                 <h3 class="new-product-name">${product.name}</h3>
                 <p class="new-product-description">${product.description}</p>
-
                 <div class="new-product-footer">
                     <span class="new-product-price">${product.price}</span>
                     <span class="new-product-action">Ver detalle</span>
@@ -286,18 +283,8 @@ function createNewProductMarkup(productId) {
     `;
 }
 
-function getProductPreviewImages(product) {
-    return [...new Set(
-        Object.values(product.colors)
-            .filter((colorData) => colorData.enabled !== false)
-            .flatMap((colorData) => colorData.gallery || [])
-            .filter(Boolean)
-    )];
-}
-
 function createWardrobeCardMarkup(productId) {
     const product = products[productId];
-
     if (!product) return "";
 
     const images = getProductPreviewImages(product);
@@ -313,12 +300,51 @@ function createWardrobeCardMarkup(productId) {
             aria-label="Ver ${product.name}"
         >
             <img class="wardrobe-image" src="${image}" alt="${product.name}" loading="lazy" />
-
             <div class="wardrobe-card-overlay">
                 <span class="wardrobe-card-title">${product.name}</span>
             </div>
         </article>
     `;
+}
+
+function createRelatedCardMarkup(productId) {
+    const product = products[productId];
+    const image = getPrimaryImage(product);
+
+    return `
+        <article class="related-card" data-related-product-id="${productId}">
+            <div class="related-card-media">
+                <img src="${image}" alt="${product.name}" loading="lazy" />
+            </div>
+            <div class="related-card-info">
+                <span class="related-card-name">${product.name}</span>
+                <span class="related-card-price">${product.price}</span>
+            </div>
+        </article>
+    `;
+}
+
+function renderProducts() {
+    if (!ropaCompleta) return;
+
+    ropaCompleta.innerHTML = Object.keys(products)
+        .filter(isProductAvailable)
+        .map(createCardMarkup)
+        .join("");
+
+    activateReveal();
+}
+
+function renderNewProducts() {
+    if (!newProductsTrack) return;
+
+    newProductsTrack.innerHTML = newProductIds
+        .filter(isProductAvailable)
+        .map(createNewProductMarkup)
+        .join("");
+
+    newProductsTrack.scrollTo({ left: 0, behavior: "auto" });
+    activateReveal();
 }
 
 function renderWardrobeProducts() {
@@ -332,6 +358,53 @@ function renderWardrobeProducts() {
     activateReveal();
 }
 
+function renderRelatedProducts() {
+    if (!relatedProductsTrack || !currentProductId) return;
+
+    relatedProductsTrack.innerHTML = Object.keys(products)
+        .filter((productId) => productId !== String(currentProductId) && isProductAvailable(productId))
+        .map(createRelatedCardMarkup)
+        .join("");
+
+    relatedProductsTrack.scrollTo({ left: 0, behavior: "auto" });
+}
+
+/* ================================
+   CARRUSELES Y ROTACIÓN
+================================ */
+function moveNewProducts(direction) {
+    if (!newProductsTrack) return;
+
+    const maxScroll = newProductsTrack.scrollWidth - newProductsTrack.clientWidth;
+    const scrollAmount = getScrollAmount(newProductsTrack, ".new-product-card");
+
+    if (direction > 0 && newProductsTrack.scrollLeft >= maxScroll - 8) {
+        newProductsTrack.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+    }
+
+    if (direction < 0 && newProductsTrack.scrollLeft <= 8) {
+        newProductsTrack.scrollTo({ left: maxScroll, behavior: "smooth" });
+        return;
+    }
+
+    newProductsTrack.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+}
+
+function startNewProductsAutoScroll() {
+    if (!newProductsTrack || newProductsTrack.children.length <= 2) return;
+
+    stopNewProductsAutoScroll();
+    newProductsAutoScrollInterval = setInterval(() => {
+        moveNewProducts(1);
+    }, NEW_PRODUCTS_AUTOSCROLL_TIME);
+}
+
+function stopNewProductsAutoScroll() {
+    clearInterval(newProductsAutoScrollInterval);
+    newProductsAutoScrollInterval = null;
+}
+
 function rotateWardrobeImages() {
     if (!wardrobeGrid) return;
 
@@ -340,11 +413,9 @@ function rotateWardrobeImages() {
     wardrobeCards.forEach((card) => {
         const productId = card.dataset.wardrobeProductId;
         const product = products[productId];
-
         if (!product) return;
 
         const images = getProductPreviewImages(product);
-
         if (images.length <= 1) return;
 
         const imageElement = card.querySelector(".wardrobe-image");
@@ -368,10 +439,7 @@ function startWardrobeImageSwap() {
     if (!wardrobeGrid) return;
 
     stopWardrobeImageSwap();
-
-    wardrobeImageInterval = setInterval(() => {
-        rotateWardrobeImages();
-    }, WARDROBE_IMAGE_TIME);
+    wardrobeImageInterval = setInterval(rotateWardrobeImages, WARDROBE_IMAGE_TIME);
 }
 
 function stopWardrobeImageSwap() {
@@ -379,145 +447,18 @@ function stopWardrobeImageSwap() {
     wardrobeImageInterval = null;
 }
 
-function createRelatedCardMarkup(productId) {
-    const product = products[productId];
-    const image = getPrimaryImage(product);
-
-    return `
-        <article class="related-card" data-related-product-id="${productId}">
-            <div class="related-card-media">
-                <img src="${image}" alt="${product.name}" loading="lazy" />
-            </div>
-
-            <div class="related-card-info">
-                <span class="related-card-name">${product.name}</span>
-                <span class="related-card-price">${product.price}</span>
-            </div>
-        </article>
-    `;
-}
-
-function renderProducts() {
-    const cards = Object.keys(products)
-        .filter(isProductAvailable)
-        .map(createCardMarkup)
-        .join("");
-
-    ropaCompleta.innerHTML = cards;
-
-    activateReveal();
-}
-
-/* ================================
-   LO NUEVO
-   Render y movimiento del carrusel.
-================================ */
-function renderNewProducts() {
-    if (!newProductsTrack) return;
-
-    const newCards = newProductIds
-        .filter(isProductAvailable)
-        .map(createNewProductMarkup)
-        .join("");
-
-    newProductsTrack.innerHTML = newCards;
-    newProductsTrack.scrollTo({ left: 0, behavior: "auto" });
-    activateReveal();
-}
-
-function getNewProductsScrollAmount() {
-    const firstCard = newProductsTrack.querySelector(".new-product-card");
-
-    if (!firstCard) return newProductsTrack.clientWidth;
-
-    const trackStyles = window.getComputedStyle(newProductsTrack);
-    const gap = parseFloat(trackStyles.gap) || 0;
-    const cardWidth = firstCard.getBoundingClientRect().width;
-
-    return cardWidth + gap;
-}
-
-function moveNewProducts(direction) {
-    if (!newProductsTrack) return;
-
-    const maxScroll = newProductsTrack.scrollWidth - newProductsTrack.clientWidth;
-    const scrollAmount = getNewProductsScrollAmount();
-
-    if (direction > 0 && newProductsTrack.scrollLeft >= maxScroll - 8) {
-        newProductsTrack.scrollTo({ left: 0, behavior: "smooth" });
-        return;
-    }
-
-    if (direction < 0 && newProductsTrack.scrollLeft <= 8) {
-        newProductsTrack.scrollTo({ left: maxScroll, behavior: "smooth" });
-        return;
-    }
-
-    newProductsTrack.scrollBy({
-        left: direction * scrollAmount,
-        behavior: "smooth"
-    });
-}
-
-function startNewProductsAutoScroll() {
-    if (!newProductsTrack || newProductIds.length <= 2) return;
-
-    stopNewProductsAutoScroll();
-
-    newProductsAutoScrollInterval = setInterval(() => {
-        moveNewProducts(1);
-    }, NEW_PRODUCTS_AUTOSCROLL_TIME);
-}
-
-function stopNewProductsAutoScroll() {
-    clearInterval(newProductsAutoScrollInterval);
-    newProductsAutoScrollInterval = null;
-}
-
-function renderRelatedProducts() {
-    if (!relatedProductsTrack || !currentProductId) return;
-
-    const relatedCards = Object.keys(products)
-        .filter((productId) => productId !== String(currentProductId) && isProductAvailable(productId))
-        .map(createRelatedCardMarkup)
-        .join("");
-
-    relatedProductsTrack.innerHTML = relatedCards;
-    relatedProductsTrack.scrollTo({ left: 0, behavior: "auto" });
-}
-
-function getRelatedScrollAmount() {
-    const firstCard = relatedProductsTrack.querySelector(".related-card");
-    if (!firstCard) return relatedProductsTrack.clientWidth;
-
-    const trackStyles = window.getComputedStyle(relatedProductsTrack);
-    const gap = parseFloat(trackStyles.gap) || 0;
-    const cardWidth = firstCard.getBoundingClientRect().width;
-
-    return cardWidth + gap;
-}
-
 function moveRelatedProducts(direction) {
     if (!relatedProductsTrack) return;
 
-    const scrollAmount = getRelatedScrollAmount();
-
-    relatedProductsTrack.scrollBy({
-        left: direction * scrollAmount,
-        behavior: "smooth"
-    });
+    const scrollAmount = getScrollAmount(relatedProductsTrack, ".related-card");
+    relatedProductsTrack.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
 function startRelatedHoverScroll(direction) {
     stopRelatedHoverScroll();
 
     relatedHoverScrollInterval = setInterval(() => {
-        if (!relatedProductsTrack) return;
-
-        relatedProductsTrack.scrollBy({
-            left: direction * 14,
-            behavior: "auto"
-        });
+        relatedProductsTrack?.scrollBy({ left: direction * 14, behavior: "auto" });
     }, 16);
 }
 
@@ -528,8 +469,6 @@ function stopRelatedHoverScroll() {
 
 /* ================================
    LOADER GLOBAL
-   Pantalla negra con logo giratorio
-   al abrir/cerrar productos y armario.
 ================================ */
 function showPageLoader() {
     clearTimeout(loaderTimeout);
@@ -553,51 +492,68 @@ function hidePageLoader(delay = 0) {
     }, delay);
 }
 
+function releasePageTransition() {
+    setTimeout(() => {
+        isPageTransitioning = false;
+    }, LOADER_HIDE_DELAY + 120);
+}
+
 /* ================================
    ARMARIO COMPLETO
-   Apertura y cierre de la ventana
-   independiente del armario.
 ================================ */
 function openArmarioModal() {
+    if (!armarioCompleto || isPageTransitioning) return;
+
+    isPageTransitioning = true;
     showPageLoader();
 
     setTimeout(() => {
-        armarioCompleto.classList.add("is-open");
-        armarioCompleto.setAttribute("aria-hidden", "false");
-        document.body.classList.add("modal-open");
+        try {
+            armarioCompleto.classList.add("is-open");
+            armarioCompleto.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-open");
 
-        const panel = armarioCompleto.querySelector(".armario-panel");
-        if (panel) {
-            panel.scrollTop = 0;
+            armarioCompleto.querySelector(".armario-panel")?.scrollTo({
+                top: 0,
+                behavior: "auto"
+            });
+        } catch (error) {
+            console.error("Error al abrir el armario completo:", error);
+        } finally {
+            hidePageLoader(LOADER_HIDE_DELAY);
+            releasePageTransition();
         }
-
-        hidePageLoader(LOADER_HIDE_DELAY);
     }, LOADER_OPEN_DELAY);
 }
 
 function closeArmarioModal() {
+    if (!armarioCompleto || isPageTransitioning) return;
+
+    isPageTransitioning = true;
     showPageLoader();
 
     setTimeout(() => {
-        armarioCompleto.classList.remove("is-open");
-        armarioCompleto.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("modal-open");
+        try {
+            armarioCompleto.classList.remove("is-open");
+            armarioCompleto.setAttribute("aria-hidden", "true");
 
-        hidePageLoader(LOADER_HIDE_DELAY);
+            if (modal?.classList.contains("is-open")) {
+                document.body.classList.add("modal-open");
+            } else {
+                document.body.classList.remove("modal-open");
+            }
+        } catch (error) {
+            console.error("Error al cerrar el armario completo:", error);
+        } finally {
+            hidePageLoader(LOADER_HIDE_DELAY);
+            releasePageTransition();
+        }
     }, LOADER_OPEN_DELAY);
 }
 
 /* ================================
    MODAL DE PRODUCTO
-   Galería, colores, tallas,
-   descripción, precio y WhatsApp.
 ================================ */
-function getSafeGallery(product, colorName) {
-    const gallery = product.colors[colorName]?.gallery || [];
-    if (gallery.length > 0) return gallery;
-    return [getPrimaryImage(product)];
-}
-
 function getModalImages(product) {
     return Object.entries(product.colors)
         .filter(([, colorData]) => colorData.enabled !== false)
@@ -609,7 +565,8 @@ function getModalImages(product) {
 }
 
 function renderModalGallery(product) {
-    
+    if (!mainImage || !thumbnailsContainer) return;
+
     const modalImages = getModalImages(product);
     if (!modalImages.length) return;
 
@@ -623,29 +580,28 @@ function renderModalGallery(product) {
     currentImageIndex = imageIndex;
 
     const activeImage = modalImages[currentImageIndex];
-
     mainImage.src = activeImage.image;
     mainImage.alt = `${product.name} ${activeImage.colorName}`;
 
     thumbnailsContainer.innerHTML = modalImages
-        .map(
-            (item, index) => `
-                <button
-                    class="thumb-button ${index === currentImageIndex ? "active" : ""}"
-                    data-image-index="${index}"
-                    data-color="${item.colorName}"
-                    aria-label="${item.colorName}"
-                    title="${item.colorName}"
-                    type="button"
-                >
-                    <img src="${item.image}" alt="${item.colorName}" loading="lazy" />
-                </button>
-            `
-        )
+        .map((item, index) => `
+            <button
+                class="thumb-button ${index === currentImageIndex ? "active" : ""}"
+                data-image-index="${index}"
+                data-color="${item.colorName}"
+                aria-label="${item.colorName}"
+                title="${item.colorName}"
+                type="button"
+            >
+                <img src="${item.image}" alt="${item.colorName}" loading="lazy" />
+            </button>
+        `)
         .join("");
 }
 
 function renderColorOptions(product) {
+    if (!colorsContainer) return;
+
     colorsContainer.innerHTML = Object.entries(product.colors)
         .map(([colorName, colorData]) => {
             const disabledClass = colorData.enabled === false ? "is-disabled" : "";
@@ -658,6 +614,7 @@ function renderColorOptions(product) {
                     title="${colorName}"
                     aria-label="${colorName}"
                     style="background: ${colorData.swatch};"
+                    type="button"
                 ></button>
             `;
         })
@@ -665,6 +622,8 @@ function renderColorOptions(product) {
 }
 
 function renderSizeOptions(product) {
+    if (!sizesContainer) return;
+
     sizesContainer.innerHTML = product.sizes
         .map((size) => {
             const disabledClass = size.enabled === false ? "is-disabled" : "";
@@ -685,7 +644,7 @@ function renderSizeOptions(product) {
 
 function updateWhatsAppLink() {
     const product = products[currentProductId];
-    if (!product) return;
+    if (!product || !whatsappLink) return;
 
     const message = encodeURIComponent(
         `Hola ARKIN, estoy interesad@ en ${product.name} | ${product.price} | Color: ${currentColorName}${currentSize ? ` | Talla: ${currentSize}` : ""}`
@@ -698,14 +657,21 @@ function renderModal() {
     const product = products[currentProductId];
     if (!product) return;
 
-    modalTitle.textContent = product.name;
-    modalDescription.textContent = product.fullDescription || product.description;
+    if (modalTitle) {
+        modalTitle.textContent = product.name;
+    }
+
+    if (modalDescription) {
+        modalDescription.textContent = product.fullDescription || product.description || "";
+    }
 
     if (modalMaterial) {
         modalMaterial.textContent = product.material || "Material por confirmar.";
     }
 
-    modalPrice.textContent = product.price;
+    if (modalPrice) {
+        modalPrice.textContent = product.price || "";
+    }
 
     renderColorOptions(product);
     renderSizeOptions(product);
@@ -717,57 +683,66 @@ function renderModal() {
 function openProduct(productId, openedFromArmario = false) {
     const product = products[productId];
 
-    if (!product || !isProductAvailable(productId)) {
+    if (!modal || !product || !isProductAvailable(productId) || isPageTransitioning) {
         hidePageLoader();
         return;
     }
 
+    isPageTransitioning = true;
     showPageLoader();
 
     setTimeout(() => {
-        productOpenedFromArmario = openedFromArmario;
+        try {
+            productOpenedFromArmario = openedFromArmario;
+            currentProductId = productId;
+            currentColorName = getFirstEnabledColor(product);
+            currentSize = product.sizes.find((size) => size.enabled !== false)?.label || "";
+            currentImageIndex = 0;
 
-        if (armarioCompleto.classList.contains("is-open") && !openedFromArmario) {
-            closeArmarioModal();
+            renderModal();
+
+            modal.classList.add("is-open");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-open");
+
+            modal.querySelector(".product-panel")?.scrollTo({
+                top: 0,
+                behavior: "auto"
+            });
+        } catch (error) {
+            console.error("Error al abrir el producto:", error);
+        } finally {
+            hidePageLoader(LOADER_HIDE_DELAY);
+            releasePageTransition();
         }
-
-        currentProductId = productId;
-        currentColorName = getFirstEnabledColor(product);
-        currentSize = product.sizes.find((size) => size.enabled !== false)?.label || "";
-        currentImageIndex = 0;
-
-        renderModal();
-
-        modal.classList.add("is-open");
-        modal.setAttribute("aria-hidden", "false");
-        document.body.classList.add("modal-open");
-
-        const panel = modal.querySelector(".product-panel");
-        if (panel) {
-            panel.scrollTop = 0;
-        }
-
-        hidePageLoader(LOADER_HIDE_DELAY);
     }, LOADER_OPEN_DELAY);
 }
 
 function closeProduct() {
+    if (!modal || isPageTransitioning) return;
+
+    isPageTransitioning = true;
     showPageLoader();
     stopRelatedHoverScroll();
 
     setTimeout(() => {
-        modal.classList.remove("is-open");
-        modal.setAttribute("aria-hidden", "true");
+        try {
+            modal.classList.remove("is-open");
+            modal.setAttribute("aria-hidden", "true");
 
-        if (productOpenedFromArmario && armarioCompleto.classList.contains("is-open")) {
-            document.body.classList.add("modal-open");
-        } else {
-            document.body.classList.remove("modal-open");
+            if (productOpenedFromArmario && armarioCompleto?.classList.contains("is-open")) {
+                document.body.classList.add("modal-open");
+            } else {
+                document.body.classList.remove("modal-open");
+            }
+
+            productOpenedFromArmario = false;
+        } catch (error) {
+            console.error("Error al cerrar el producto:", error);
+        } finally {
+            hidePageLoader(LOADER_HIDE_DELAY);
+            releasePageTransition();
         }
-
-        productOpenedFromArmario = false;
-
-        hidePageLoader(LOADER_HIDE_DELAY);
     }, LOADER_OPEN_DELAY);
 }
 
@@ -777,35 +752,34 @@ function handleProductClick(event) {
 
     const productId = card.dataset.productId;
     const openedFromArmario = Boolean(card.closest("#ropaCompleta"));
-
     openProduct(productId, openedFromArmario);
 }
 
 /* ================================
-   HEADER Y NAVEGACIÓN
+   HEADER Y REVEAL
 ================================ */
 function updateHeaderState() {
-    siteHeader.classList.toggle("is-scrolled", window.scrollY > 10);
+    siteHeader?.classList.toggle("is-scrolled", window.scrollY > 10);
 }
 
 function updateActiveNav() {
+    if (!siteHeader) return;
+
     const sections = [...document.querySelectorAll("section[id]")];
     const scrollPosition = window.scrollY + siteHeader.offsetHeight + 120;
-
     let currentSectionId = "inicio";
 
     sections.forEach((section) => {
-        if (
-            scrollPosition >= section.offsetTop &&
-            scrollPosition < section.offsetTop + section.offsetHeight
-        ) {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
             currentSectionId = section.id;
         }
     });
 
     navLinks.forEach((link) => {
-        const isActive = link.getAttribute("href") === `#${currentSectionId}`;
-        link.classList.toggle("active", isActive);
+        link.classList.toggle("active", link.getAttribute("href") === `#${currentSectionId}`);
     });
 }
 
@@ -828,62 +802,87 @@ function activateReveal() {
 }
 
 /* ================================
-   EVENTOS E INTERACCIONES
-   Clicks, carruseles, modales,
-   colores, tallas y teclado.
+   MENÚ MÓVIL
 ================================ */
-newNextButton.addEventListener("click", () => {
+const navMenuToggle = document.getElementById("navMenuToggle");
+const mobileNavPanel = document.getElementById("mobileNavPanel");
+
+function closeMobileMenu() {
+    if (!navMenuToggle || !mobileNavPanel || !siteHeader) return;
+
+    siteHeader.classList.remove("mobile-menu-open");
+    navMenuToggle.setAttribute("aria-expanded", "false");
+    navMenuToggle.setAttribute("aria-label", "Abrir menú");
+    mobileNavPanel.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("nav-open");
+}
+
+function toggleMobileMenu() {
+    if (!navMenuToggle || !mobileNavPanel || !siteHeader) return;
+
+    const isOpen = siteHeader.classList.toggle("mobile-menu-open");
+
+    navMenuToggle.setAttribute("aria-expanded", String(isOpen));
+    navMenuToggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+    mobileNavPanel.setAttribute("aria-hidden", String(!isOpen));
+    document.body.classList.toggle("nav-open", isOpen);
+}
+
+/* ================================
+   EVENTOS
+================================ */
+newNextButton?.addEventListener("click", () => {
     moveNewProducts(1);
     startNewProductsAutoScroll();
 });
 
-newPrevButton.addEventListener("click", () => {
+newPrevButton?.addEventListener("click", () => {
     moveNewProducts(-1);
     startNewProductsAutoScroll();
 });
 
-newProductsTrack.addEventListener("mouseenter", stopNewProductsAutoScroll);
-newProductsTrack.addEventListener("mouseleave", startNewProductsAutoScroll);
+newProductsTrack?.addEventListener("mouseenter", stopNewProductsAutoScroll);
+newProductsTrack?.addEventListener("mouseleave", startNewProductsAutoScroll);
 
-newProductsTrack.addEventListener("click", (event) => {
+newProductsTrack?.addEventListener("click", (event) => {
     const card = event.target.closest("[data-new-product-id]");
     if (!card) return;
 
     openProduct(card.dataset.newProductId);
 });
-relatedNextButton.addEventListener("click", () => moveRelatedProducts(1));
-relatedPrevButton.addEventListener("click", () => moveRelatedProducts(-1));
 
-relatedNextButton.addEventListener("mouseenter", () => startRelatedHoverScroll(1));
-relatedPrevButton.addEventListener("mouseenter", () => startRelatedHoverScroll(-1));
+relatedNextButton?.addEventListener("click", () => moveRelatedProducts(1));
+relatedPrevButton?.addEventListener("click", () => moveRelatedProducts(-1));
+relatedNextButton?.addEventListener("mouseenter", () => startRelatedHoverScroll(1));
+relatedPrevButton?.addEventListener("mouseenter", () => startRelatedHoverScroll(-1));
+relatedNextButton?.addEventListener("mouseleave", stopRelatedHoverScroll);
+relatedPrevButton?.addEventListener("mouseleave", stopRelatedHoverScroll);
+relatedNextButton?.addEventListener("blur", stopRelatedHoverScroll);
+relatedPrevButton?.addEventListener("blur", stopRelatedHoverScroll);
 
-relatedNextButton.addEventListener("mouseleave", stopRelatedHoverScroll);
-relatedPrevButton.addEventListener("mouseleave", stopRelatedHoverScroll);
-
-relatedNextButton.addEventListener("blur", stopRelatedHoverScroll);
-relatedPrevButton.addEventListener("blur", stopRelatedHoverScroll);
-
-scrollToRelatedButton.addEventListener("click", () => {
-    const relatedSection = document.querySelector(".related-products");
-
-    if (!relatedSection) return;
-
-    relatedSection.scrollIntoView({
+scrollToRelatedButton?.addEventListener("click", () => {
+    document.querySelector(".related-products")?.scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
 });
 
-ropaCompleta.addEventListener("click", handleProductClick);
+ropaCompleta?.addEventListener("click", handleProductClick);
 
-wardrobeGrid.addEventListener("click", (event) => {
+toggleArmarioButton?.addEventListener("click", openArmarioModal);
+cerrarArmarioButton?.addEventListener("click", closeArmarioModal);
+armarioBackdrop?.addEventListener("click", closeArmarioModal);
+closeModalButton?.addEventListener("click", closeProduct);
+backdrop?.addEventListener("click", closeProduct);
+
+wardrobeGrid?.addEventListener("click", (event) => {
     const card = event.target.closest("[data-wardrobe-product-id]");
     if (!card) return;
 
     openProduct(card.dataset.wardrobeProductId);
 });
 
-wardrobeGrid.addEventListener("keydown", (event) => {
+wardrobeGrid?.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
 
     const card = event.target.closest("[data-wardrobe-product-id]");
@@ -893,33 +892,14 @@ wardrobeGrid.addEventListener("keydown", (event) => {
     openProduct(card.dataset.wardrobeProductId);
 });
 
-relatedProductsTrack.addEventListener("click", (event) => {
+relatedProductsTrack?.addEventListener("click", (event) => {
     const card = event.target.closest("[data-related-product-id]");
     if (!card) return;
 
     openProduct(card.dataset.relatedProductId, productOpenedFromArmario);
 });
 
-toggleArmarioButton.addEventListener("click", openArmarioModal);
-cerrarArmarioButton.addEventListener("click", closeArmarioModal);
-armarioBackdrop.addEventListener("click", closeArmarioModal);
-closeModalButton.addEventListener("click", closeProduct);
-backdrop.addEventListener("click", closeProduct);
-
-document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-
-    if (modal.classList.contains("is-open")) {
-        closeProduct();
-        return;
-    }
-
-    if (armarioCompleto.classList.contains("is-open")) {
-        closeArmarioModal();
-    }
-});
-
-colorsContainer.addEventListener("click", (event) => {
+colorsContainer?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-color]");
     if (!button || !currentProductId) return;
 
@@ -930,12 +910,10 @@ colorsContainer.addEventListener("click", (event) => {
     if (!colorData || colorData.enabled === false) return;
 
     currentColorName = selectedColor;
-
-
     renderModal();
 });
 
-sizesContainer.addEventListener("click", (event) => {
+sizesContainer?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-size]");
     if (!button || !currentProductId) return;
 
@@ -949,21 +927,22 @@ sizesContainer.addEventListener("click", (event) => {
     renderModal();
 });
 
-thumbnailsContainer.addEventListener("click", (event) => {
+thumbnailsContainer?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-image-index]");
     if (!button || !currentProductId) return;
 
-
     const product = products[currentProductId];
     const modalImages = getModalImages(product);
+    const selectedIndex = Number(button.dataset.imageIndex);
 
-    currentImageIndex = Number(button.dataset.imageIndex);
+    if (!modalImages[selectedIndex]) return;
+
+    currentImageIndex = selectedIndex;
     currentColorName = modalImages[currentImageIndex].colorName;
-
     renderModal();
 });
 
-prevImageButton.addEventListener("click", () => {
+prevImageButton?.addEventListener("click", () => {
     if (!currentProductId) return;
 
     const product = products[currentProductId];
@@ -972,11 +951,10 @@ prevImageButton.addEventListener("click", () => {
 
     currentImageIndex = (currentImageIndex - 1 + modalImages.length) % modalImages.length;
     currentColorName = modalImages[currentImageIndex].colorName;
-
     renderModal();
 });
 
-nextImageButton.addEventListener("click", () => {
+nextImageButton?.addEventListener("click", () => {
     if (!currentProductId) return;
 
     const product = products[currentProductId];
@@ -985,8 +963,25 @@ nextImageButton.addEventListener("click", () => {
 
     currentImageIndex = (currentImageIndex + 1) % modalImages.length;
     currentColorName = modalImages[currentImageIndex].colorName;
-
     renderModal();
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+
+    if (modal?.classList.contains("is-open")) {
+        closeProduct();
+        return;
+    }
+
+    if (armarioCompleto?.classList.contains("is-open")) {
+        closeArmarioModal();
+    }
+});
+
+navMenuToggle?.addEventListener("click", toggleMobileMenu);
+mobileNavPanel?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMobileMenu);
 });
 
 window.addEventListener("scroll", () => {
@@ -994,53 +989,16 @@ window.addEventListener("scroll", () => {
     updateActiveNav();
 });
 
-/* ================================
-   MENÚ MÓVIL
-================================ */
-const navMenuToggle = document.getElementById("navMenuToggle");
-const mobileNavPanel = document.getElementById("mobileNavPanel");
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 860) {
+        closeMobileMenu();
+    }
 
-function closeMobileMenu() {
-    if (!navMenuToggle || !mobileNavPanel) return;
-
-    siteHeader.classList.remove("mobile-menu-open");
-    navMenuToggle.setAttribute("aria-expanded", "false");
-    navMenuToggle.setAttribute("aria-label", "Abrir menú");
-    mobileNavPanel.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("nav-open");
-}
-
-function toggleMobileMenu() {
-    if (!navMenuToggle || !mobileNavPanel) return;
-
-    const isOpen = siteHeader.classList.toggle("mobile-menu-open");
-
-    navMenuToggle.setAttribute("aria-expanded", String(isOpen));
-    navMenuToggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
-    mobileNavPanel.setAttribute("aria-hidden", String(!isOpen));
-    document.body.classList.toggle("nav-open", isOpen);
-}
-
-if (navMenuToggle && mobileNavPanel) {
-    navMenuToggle.addEventListener("click", toggleMobileMenu);
-
-    mobileNavPanel.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", closeMobileMenu);
-    });
-
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 860) {
-            closeMobileMenu();
-        }
-    });
-}
-
-window.addEventListener("resize", updateActiveNav);
+    updateActiveNav();
+});
 
 /* ================================
-   INICIALIZACIÓN FINAL
-   Aquí se arranca todo al cargar
-   la página.
+   INICIALIZACIÓN
 ================================ */
 renderProducts();
 renderNewProducts();
@@ -1050,8 +1008,3 @@ updateActiveNav();
 startHeroSlider();
 startNewProductsAutoScroll();
 startWardrobeImageSwap();
-
-document.addEventListener("mousemove", (event) => {
-    const nearRightEdge = event.clientX >= window.innerWidth - 28;
-    document.documentElement.classList.toggle("show-scrollbar", nearRightEdge);
-});

@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ARKIN</title>
     <meta name="theme-color" content="#050308" />
-
     <link rel="stylesheet" href="StyleHome.css" />
 </head>
 
 <body>
-    <!-- ================================
-        HEADER / MENÚ PRINCIPAL
-    ================================ -->
+    <!-- HEADER / MENÚ PRINCIPAL -->
     <header class="site-header" id="siteHeader">
-        <nav class="nav">
+        <nav class="nav" aria-label="Navegación principal">
             <div class="nav-links nav-links-left">
                 <a href="#inicio" class="nav-link active">Inicio</a>
                 <a href="#loNuevo" class="nav-link">Lo Nuevo</a>
@@ -45,32 +42,27 @@
         </nav>
     </header>
 
-    <!-- ================================
-        CONTENIDO PRINCIPAL
-    ================================ -->
     <main>
-        <!-- ================================
-            INICIO / HERO PRINCIPAL
-        ================================ -->
+        <!-- INICIO / HERO PRINCIPAL -->
         <section class="hero" id="inicio" aria-label="Inicio">
             <div class="hero-slider" id="heroSlider">
                 <div class="hero-slide active" data-hero-slide>
-                    <img src="Images/FondoPrincipal_3.png" alt="Imagen principal de la marca 1" />
+                    <img src="Images/FondoPrincipal_3.png" alt="Imagen principal de ARKIN" />
                 </div>
 
-                <!-- <div class="hero-slide" data-hero-slide>
-                    <img src="Images/FondoPrincipal_2.jpg" alt="Imagen principal de la marca 2" />
+                <!-- Espacios reservados para futuras imágenes del hero.
+                <div class="hero-slide" data-hero-slide>
+                    <img src="Images/FondoPrincipal_2.jpg" alt="Imagen principal de ARKIN 2" />
                 </div>
 
                 <div class="hero-slide" data-hero-slide>
-                    <img src="Images/FondoPrincipal_3.jpg" alt="Imagen principal de la marca 3" />
-                </div> -->
+                    <img src="Images/FondoPrincipal_3.jpg" alt="Imagen principal de ARKIN 3" />
+                </div>
+                -->
             </div>
         </section>
 
-        <!-- ================================
-            SECCIÓN LO NUEVO
-        ================================ -->
+        <!-- LO NUEVO -->
         <section class="lo-nuevo-section" id="loNuevo" aria-labelledby="loNuevoTitle">
             <div class="section-heading lo-nuevo-heading">
                 <span class="eyebrow">ARKIN</span>
@@ -90,9 +82,7 @@
             </div>
         </section>
 
-        <!-- ================================
-            SECCIÓN ARMARIO
-        ================================ -->
+        <!-- ARMARIO -->
         <section class="armario-section" id="armario" aria-labelledby="armarioTitle">
             <div class="armario-editorial-header">
                 <span class="eyebrow">ARKIN</span>
@@ -111,7 +101,7 @@
                 <div class="armario-backdrop" data-close-armario></div>
 
                 <div class="armario-panel" role="dialog" aria-modal="true" aria-labelledby="armarioTitulo">
-                    <button class="armario-close" id="cerrarArmario" aria-label="Cerrar armario">
+                    <button class="armario-close" id="cerrarArmario" type="button" aria-label="Cerrar armario">
                         &times;
                     </button>
 
@@ -125,12 +115,10 @@
             </div>
         </section>
 
-        <!-- ================================
-            SECCIÓN NOSOTROS
-        ================================ -->
+        <!-- NOSOTROS -->
         <section class="nosotros-section" id="nosotros" aria-labelledby="nosotrosTitle">
             <div class="nosotros-content">
-                <span class="eyebrow">Nosotros</span>
+                <span class="eyebrow" id="nosotrosTitle">Nosotros</span>
 
                 <p class="nosotros-intro">
                     ARKIN nace como una contrapropuesta a la cotidianidad de la industria textil en Colombia y a la necesidad de una marca oscura y elegante, donde las personas se sientan únicas, identificadas y cómodas por medio de diseños y prendas de alta calidad, capaces de conectar con un público amplio.
@@ -164,9 +152,7 @@
             </div>
         </section>
 
-        <!-- ================================
-            SECCIÓN CONTÁCTANOS
-        ================================ -->
+        <!-- CONTÁCTANOS -->
         <section class="contacto-section" id="contacto" aria-labelledby="contactoTitle">
             <div class="contacto-inner">
                 <div class="contacto-heading">
@@ -200,13 +186,7 @@
                     </article>
                 </div>
 
-                <a
-                    href="https://maps.app.goo.gl/NboyEygqY7zFj8oW8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contact-map-card"
-                    aria-label="Abrir ubicación de ARKIN en Google Maps"
-                >
+                <div class="contact-map-card">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.614587593867!2d-75.59871869999999!3d6.1823089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e46823f4aa37fdb%3A0xcdee6404a08c7a5a!2zQ3JhLiA1MiAjNjgtNDksIEVsIENhcm1lbG8sIEl0YWfDvMOtLCBNZWRlbGzDrW4sIEFudGlvcXVpYQ!5e0!3m2!1ses!2sco!4v1779692394250!5m2!1ses!2sco"
                         loading="lazy"
@@ -218,14 +198,20 @@
                         <span>Ubicación</span>
                         <strong>Te esperamos en el local</strong>
                     </div>
-                </a>
+
+                    <a
+                        href="https://maps.app.goo.gl/NboyEygqY7zFj8oW8"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="contact-map-link"
+                        aria-label="Abrir ubicación de ARKIN en Google Maps"
+                    ></a>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- ================================
-        FOOTER
-    ================================ -->
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-brand">
@@ -254,27 +240,25 @@
         </div>
     </footer>
 
-    <!-- ================================
-        MODAL DE PRODUCTO
-    ================================ -->
+    <!-- MODAL DE PRODUCTO -->
     <div class="product-modal" id="productModal" aria-hidden="true">
         <div class="product-backdrop" data-close-modal></div>
 
         <div class="product-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <button class="modal-close" id="cerrarProducto" aria-label="Cerrar ventana">
+            <button class="modal-close" id="cerrarProducto" type="button" aria-label="Cerrar ventana">
                 &times;
             </button>
 
             <div class="product-layout">
                 <div class="product-gallery">
                     <div class="product-main-frame">
-                        <button class="gallery-arrow gallery-arrow-left" id="modalPrevImage" aria-label="Imagen anterior">
+                        <button class="gallery-arrow gallery-arrow-left" id="modalPrevImage" type="button" aria-label="Imagen anterior">
                             &#10094;
                         </button>
 
                         <img id="imagenPrincipal" class="product-main-image" src="" alt="" />
 
-                        <button class="gallery-arrow gallery-arrow-right" id="modalNextImage" aria-label="Imagen siguiente">
+                        <button class="gallery-arrow gallery-arrow-right" id="modalNextImage" type="button" aria-label="Imagen siguiente">
                             &#10095;
                         </button>
                     </div>
@@ -314,9 +298,9 @@
                     </a>
                 </div>
             </div>
-            
+
             <section class="related-products" aria-labelledby="relatedProductsTitle">
-                <button class="modal-scroll-hint" id="scrollToRelated" aria-label="Ir a productos relacionados" type="button">
+                <button class="modal-scroll-hint" id="scrollToRelated" type="button" aria-label="Ir a productos relacionados">
                     <span>&#8964;</span>
                 </button>
 
@@ -325,13 +309,13 @@
                 </div>
 
                 <div class="related-carousel-shell">
-                    <button class="related-arrow related-arrow-left" id="relatedPrev" aria-label="Ver productos anteriores" type="button">
+                    <button class="related-arrow related-arrow-left" id="relatedPrev" type="button" aria-label="Ver productos anteriores">
                         &#10094;
                     </button>
 
                     <div class="related-track" id="relatedProductsTrack"></div>
 
-                    <button class="related-arrow related-arrow-right" id="relatedNext" aria-label="Ver más productos" type="button">
+                    <button class="related-arrow related-arrow-right" id="relatedNext" type="button" aria-label="Ver más productos">
                         &#10095;
                     </button>
                 </div>
@@ -339,16 +323,11 @@
         </div>
     </div>
 
-    <!-- ================================
-        LOADER GLOBAL
-    ================================ -->
+    <!-- LOADER GLOBAL -->
     <div class="page-loader" id="pageLoader" aria-hidden="true">
         <img src="Images/LogoLoader.png" alt="Cargando" class="page-loader-logo" />
     </div>
 
-    <!-- ================================
-        JAVASCRIPT PRINCIPAL
-    ================================ -->
     <script src="FunctionalityHome.js"></script>
 </body>
 </html>
