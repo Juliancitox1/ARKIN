@@ -141,8 +141,8 @@ section {
 }
 
 .nav-logo {
-    width: 66px;
-    height: 66px;
+    width: 78px;
+    height: 78px;
     justify-self: center;
     display: inline-flex;
     align-items: center;
@@ -159,13 +159,13 @@ section {
 }
 
 .nav-logo img {
-    width: 56px;
+    width: 66px;
     height: auto;
     transition: width 0.28s ease;
 }
 
 .site-header.is-scrolled .nav-logo img {
-    width: 50px;
+    width: 60px;
 }
 
 .hero {
@@ -1310,14 +1310,14 @@ body.modal-open {
 }
 
 /* ================================
-   INICIO / HERO - SLIDER PRINCIPAL
+   INICIO / HERO PRINCIPAL
 ================================ */
 
 .hero {
     position: relative;
     width: 100%;
     height: 100vh;
-    min-height: 680px;
+    min-height: 100svh;
     padding: 0;
     overflow: hidden;
     isolation: isolate;
@@ -1329,6 +1329,7 @@ body.modal-open {
     inset: 0;
     width: 100%;
     height: 100%;
+    background: #000;
 }
 
 .hero-slide {
@@ -1336,6 +1337,7 @@ body.modal-open {
     inset: 0;
     width: 100%;
     height: 100%;
+    background: #000;
     opacity: 0;
     visibility: hidden;
     transform: scale(1.035);
@@ -1354,8 +1356,11 @@ body.modal-open {
 .hero-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+    max-width: none;
+    object-fit: contain;
+    object-position: center center;
+    transform: scale(1.06);
+    transform-origin: center center;
 }
 
 /* Capa oscura sutil para que el header siempre se lea bien */
@@ -1374,27 +1379,36 @@ body.modal-open {
         );
 }
 
-@media (max-width: 1100px) {
+/* Responsive Hero */
+
+@media (max-width: 1024px) {
     .hero {
-        height: 100vh;
+        height: 100svh;
         min-height: 620px;
-        padding: 0;
     }
 
     .hero-slide img {
-        object-position: center;
+        transform: scale(1.04);
     }
 }
 
 @media (max-width: 768px) {
     .hero {
-        height: 100svh;
         min-height: 560px;
-        padding: 0;
     }
 
     .hero-slide img {
-        object-position: center;
+        transform: scale(1.02);
+    }
+
+    .hero::after {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0.48) 0%,
+                rgba(0, 0, 0, 0.08) 42%,
+                rgba(0, 0, 0, 0.52) 100%
+            );
     }
 }
 
@@ -1402,24 +1416,15 @@ body.modal-open {
     .hero {
         min-height: 520px;
     }
+
+    .hero-slide img {
+        transform: scale(1);
+    }
 }
 
 /* ================================
-   HEADER - AJUSTE LOGO + LO NUEVO
+   AJUSTE GENERAL DE SCROLL POR HEADER
 ================================ */
-
-.nav-logo {
-    width: 78px;
-    height: 78px;
-}
-
-.nav-logo img {
-    width: 66px;
-}
-
-.site-header.is-scrolled .nav-logo img {
-    width: 60px;
-}
 
 section[id] {
     scroll-margin-top: 96px;
@@ -1433,27 +1438,18 @@ section[id] {
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    padding: 104px 34px 104px;
+    padding: 104px 34px;
     position: relative;
 }
 
 .lo-nuevo-heading {
-    text-align: center;
     max-width: 760px;
     margin: 0 auto 42px;
-}
-
-.lo-nuevo-heading p {
-    margin-left: auto;
-    margin-right: auto;
+    text-align: center;
 }
 
 .lo-nuevo-heading h2 {
     margin-bottom: 14px;
-}
-
-.lo-nuevo-heading p {
-    max-width: 58ch;
 }
 
 .lo-nuevo-carousel-shell {
@@ -1520,6 +1516,7 @@ section[id] {
         0 0 0 1px rgba(255, 255, 255, 0.018) inset;
     cursor: pointer;
     isolation: isolate;
+    scroll-snap-align: start;
     transition:
         transform 0.32s ease,
         border-color 0.32s ease,
@@ -1631,68 +1628,55 @@ section[id] {
 /* Responsive Lo Nuevo */
 
 @media (max-width: 1100px) {
-    .nav-logo {
-        width: 72px;
-        height: 72px;
-    }
-
-    .nav-logo img {
-        width: 60px;
-    }
-
-    .site-header.is-scrolled .nav-logo img {
-        width: 56px;
-    }
-
     .lo-nuevo-section {
-        padding: 88px 24px;
+        padding: 90px 24px;
     }
 
     .new-product-card {
-    flex: 0 0 calc((100% - 22px) / 2);
-    min-height: 560px;
+        min-height: 580px;
     }
 }
 
-@media (max-width: 768px) {
-    .nav-logo {
-        width: 62px;
-        height: 62px;
-    }
-
-    .nav-logo img {
-        width: 52px;
-    }
-
-    .site-header.is-scrolled .nav-logo img {
-        width: 48px;
-    }
-
+@media (max-width: 860px) {
     .lo-nuevo-section {
-    padding: 76px 16px;
-    max-width: 100%;
+        max-width: 100%;
+        padding: 78px 16px 86px;
     }
 
     .lo-nuevo-heading {
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
+        margin-bottom: 30px;
     }
 
     .lo-nuevo-carousel-shell {
-        gap: 8px;
+        gap: 0;
     }
 
     .lo-nuevo-track {
-        gap: 0;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 4px 0 14px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .lo-nuevo-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    .new-product-card {
+        flex: 0 0 86vw;
+        min-width: 86vw;
+        min-height: 560px;
     }
 
     .lo-nuevo-arrow {
         position: absolute;
-        z-index: 5;
+        top: 50%;
+        z-index: 8;
         width: 38px;
         height: 38px;
-        font-size: 0.95rem;
+        transform: translateY(-50%);
     }
 
     .lo-nuevo-arrow-left {
@@ -1702,43 +1686,35 @@ section[id] {
     .lo-nuevo-arrow-right {
         right: 10px;
     }
+}
 
+@media (max-width: 560px) {
     .new-product-card {
-        flex: 0 0 100%;
+        flex-basis: 100%;
         min-width: 100%;
-        min-height: 520px;
-        border-radius: 28px;
+        min-height: 500px;
+        border-radius: 26px;
     }
 
     .new-product-content {
-        left: 22px;
-        right: 22px;
+        left: 20px;
+        right: 20px;
         bottom: 24px;
     }
 
     .new-product-name {
-        font-size: clamp(2rem, 12vw, 3.2rem);
+        font-size: clamp(2rem, 13vw, 3.3rem);
     }
 
     .new-product-description {
-        font-size: 0.92rem;
+        font-size: 0.9rem;
+        line-height: 1.55;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
     .new-product-card {
-        min-height: 480px;
-        border-radius: 24px;
-    }
-
-    .new-product-content {
-        left: 18px;
-        right: 18px;
-        bottom: 22px;
-    }
-
-    .new-product-label {
-        font-size: 0.62rem;
+        min-height: 460px;
     }
 
     .new-product-description {
@@ -1878,10 +1854,16 @@ section[id] {
     padding: 0 24px;
 }
 
+/* Responsive Armario principal */
+
 @media (max-width: 900px) {
+    .armario-section {
+        padding: 78px 0 64px;
+    }
+
     .wardrobe-grid {
-        min-height: auto;
         grid-template-columns: 1fr;
+        min-height: auto;
     }
 
     .wardrobe-card {
@@ -1889,11 +1871,15 @@ section[id] {
         border-right: 0 !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.075);
     }
+
+    .wardrobe-card-title {
+        font-size: clamp(2.2rem, 12vw, 4rem);
+    }
 }
 
 @media (max-width: 480px) {
     .armario-section {
-        padding-top: 76px;
+        padding-top: 70px;
     }
 
     .wardrobe-card {
@@ -1902,6 +1888,12 @@ section[id] {
 
     .wardrobe-card-title {
         font-size: clamp(2rem, 12vw, 3.2rem);
+    }
+
+    .view-all-button {
+        width: min(100%, 260px);
+        padding: 14px 18px;
+        font-size: 0.72rem;
     }
 }
 
@@ -5012,8 +5004,8 @@ section[id] {
     width: min(100%, 1280px);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(260px, 1.05fr) minmax(320px, 1fr) minmax(220px, 0.65fr);
-    gap: 42px;
+    grid-template-columns: minmax(260px, 1fr) minmax(420px, 1fr);
+    gap: 54px;
     align-items: center;
 }
 
@@ -5071,14 +5063,13 @@ section[id] {
 
 .footer-nav {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 12px 22px;
     margin: 0;
 }
 
-.footer-nav a,
-.footer-contact a {
+.footer-nav a {
     position: relative;
     color: rgba(245, 241, 232, 0.68);
     font-size: 0.72rem;
@@ -5090,8 +5081,7 @@ section[id] {
         transform 0.24s ease;
 }
 
-.footer-nav a::after,
-.footer-contact a::after {
+.footer-nav a::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -5103,22 +5093,13 @@ section[id] {
     transition: width 0.24s ease;
 }
 
-.footer-nav a:hover,
-.footer-contact a:hover {
+.footer-nav a:hover {
     color: rgba(245, 241, 232, 0.96);
     transform: translateY(-1px);
 }
 
-.footer-nav a:hover::after,
-.footer-contact a:hover::after {
+.footer-nav a:hover::after {
     width: 100%;
-}
-
-.footer-contact {
-    display: flex;
-    justify-content: flex-end;
-    gap: 18px;
-    flex-wrap: wrap;
 }
 
 .footer-bottom {
@@ -5156,7 +5137,7 @@ section[id] {
 
     .footer-inner {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 30px;
     }
 
     .footer-brand {
@@ -5169,7 +5150,7 @@ section[id] {
         margin: 0 auto;
     }
 
-    .footer-contact {
+    .footer-nav {
         justify-content: center;
     }
 
@@ -5199,39 +5180,9 @@ section[id] {
         gap: 14px 18px;
     }
 
-    .footer-nav a,
-    .footer-contact a {
+    .footer-nav a {
         font-size: 0.66rem;
         letter-spacing: 0.14em;
-    }
-}
-
-/* ================================
-   FOOTER - SIN CONTACTOS DIRECTOS
-================================ */
-
-.footer-inner {
-    grid-template-columns: minmax(260px, 1fr) minmax(420px, 1fr);
-    gap: 54px;
-}
-
-.footer-nav {
-    justify-content: flex-end;
-}
-
-.footer-contact {
-    display: none;
-}
-
-/* Responsive */
-@media (max-width: 980px) {
-    .footer-inner {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .footer-nav {
-        justify-content: center;
     }
 }
 
@@ -5270,6 +5221,7 @@ section[id] {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    perspective: 1100px;
     transition:
         opacity 0.28s ease,
         visibility 0.28s ease;
@@ -5285,79 +5237,15 @@ section[id] {
     width: min(220px, 42vw);
     height: auto;
     display: block;
-    animation: loaderSpin 2.8s linear infinite;
+    animation: loaderSpin3D 2.6s linear infinite;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    will-change: transform;
     filter:
         drop-shadow(0 0 18px rgba(255, 255, 255, 0.10))
         drop-shadow(0 0 26px rgba(183, 148, 255, 0.14));
     user-select: none;
     -webkit-user-drag: none;
-}
-
-@keyframes loaderSpin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@media (max-width: 768px) {
-    .page-loader-logo {
-        width: min(180px, 52vw);
-    }
-}
-
-body.no-scroll {
-    overflow: hidden;
-}
-
-/* ================================
-   LOADER GLOBAL - GIRO 3D
-================================ */
-
-.page-loader {
-    perspective: 1100px;
-}
-
-.page-loader-logo {
-    animation: loaderSpin3D 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-    transform-style: preserve-3d;
-    backface-visibility: visible;
-    will-change: transform;
-}
-
-@keyframes loaderSpin3D {
-    0% {
-        transform: rotateY(0deg) rotateX(0deg) scale(1);
-    }
-
-    25% {
-        transform: rotateY(90deg) rotateX(8deg) scale(0.96);
-    }
-
-    50% {
-        transform: rotateY(180deg) rotateX(0deg) scale(1);
-    }
-
-    75% {
-        transform: rotateY(270deg) rotateX(-8deg) scale(0.96);
-    }
-
-    100% {
-        transform: rotateY(360deg) rotateX(0deg) scale(1);
-    }
-}
-
-/* ================================
-   LOADER GLOBAL - GIRO 3D RECTO
-================================ */
-
-.page-loader-logo {
-    animation: loaderSpin3D 2.6s linear infinite;
-    transform-style: preserve-3d;
-    backface-visibility: visible;
-    will-change: transform;
 }
 
 @keyframes loaderSpin3D {
@@ -5370,31 +5258,20 @@ body.no-scroll {
     }
 }
 
-/* ================================
-   INICIO - IMAGEN COMPLETA SIN RECORTE
-================================ */
-
-.hero {
-    background: #000;
+@media (max-width: 768px) {
+    .page-loader-logo {
+        width: min(180px, 52vw);
+    }
 }
 
-.hero-slider,
-.hero-slide {
-    background: #000;
+@media (max-width: 420px) {
+    .page-loader-logo {
+        width: min(145px, 52vw);
+    }
 }
 
-/* ================================
-   INICIO - AJUSTE SEGURO IMAGEN HERO
-================================ */
-
-.hero-slide img {
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: contain;
-    object-position: center center;
-    transform: scale(1.06);
-    transform-origin: center center;
+body.no-scroll {
+    overflow: hidden;
 }
 
 /* ================================
@@ -5607,211 +5484,6 @@ body.nav-open {
         left: 12px;
         right: 12px;
         border-radius: 22px;
-    }
-}
-
-/* ================================
-   HERO RESPONSIVE
-================================ */
-
-.hero {
-    min-height: 100vh;
-    min-height: 100svh;
-}
-
-.hero-slide img {
-    object-fit: contain;
-    object-position: center center;
-    transform: scale(1.06);
-}
-
-@media (max-width: 1024px) {
-    .hero {
-        height: 100svh;
-        min-height: 620px;
-    }
-
-    .hero-slide img {
-        transform: scale(1.04);
-    }
-}
-
-@media (max-width: 768px) {
-    .hero {
-        min-height: 560px;
-    }
-
-    .hero-slide img {
-        transform: scale(1.02);
-    }
-
-    .hero::after {
-        background:
-            linear-gradient(
-                180deg,
-                rgba(0, 0, 0, 0.48) 0%,
-                rgba(0, 0, 0, 0.08) 42%,
-                rgba(0, 0, 0, 0.52) 100%
-            );
-    }
-}
-
-@media (max-width: 480px) {
-    .hero {
-        min-height: 520px;
-    }
-
-    .hero-slide img {
-        transform: scale(1);
-    }
-}
-
-/* ================================
-   LO NUEVO RESPONSIVE
-================================ */
-
-.lo-nuevo-track {
-    scroll-snap-type: x mandatory;
-}
-
-.new-product-card {
-    scroll-snap-align: start;
-}
-
-@media (max-width: 1100px) {
-    .lo-nuevo-section {
-        padding: 90px 24px;
-    }
-
-    .new-product-card {
-        min-height: 580px;
-    }
-}
-
-@media (max-width: 860px) {
-    .lo-nuevo-section {
-        padding: 78px 16px 86px;
-    }
-
-    .lo-nuevo-heading {
-        margin-bottom: 30px;
-    }
-
-    .lo-nuevo-carousel-shell {
-        gap: 0;
-    }
-
-    .lo-nuevo-track {
-        overflow-x: auto;
-        gap: 16px;
-        padding: 4px 0 14px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    .lo-nuevo-track::-webkit-scrollbar {
-        display: none;
-    }
-
-    .new-product-card {
-        flex: 0 0 86vw;
-        min-width: 86vw;
-        min-height: 560px;
-    }
-
-    .lo-nuevo-arrow {
-        width: 38px;
-        height: 38px;
-        position: absolute;
-        top: 50%;
-        z-index: 8;
-        transform: translateY(-50%);
-    }
-
-    .lo-nuevo-arrow-left {
-        left: 10px;
-    }
-
-    .lo-nuevo-arrow-right {
-        right: 10px;
-    }
-}
-
-@media (max-width: 560px) {
-    .new-product-card {
-        flex-basis: 100%;
-        min-width: 100%;
-        min-height: 500px;
-        border-radius: 26px;
-    }
-
-    .new-product-content {
-        left: 20px;
-        right: 20px;
-        bottom: 24px;
-    }
-
-    .new-product-name {
-        font-size: clamp(2rem, 13vw, 3.3rem);
-    }
-
-    .new-product-description {
-        font-size: 0.9rem;
-        line-height: 1.55;
-    }
-}
-
-@media (max-width: 420px) {
-    .new-product-card {
-        min-height: 460px;
-    }
-
-    .new-product-description {
-        display: none;
-    }
-}
-
-/* ================================
-   ARMARIO RESPONSIVE
-================================ */
-
-@media (max-width: 900px) {
-    .armario-section {
-        padding: 78px 0 64px;
-    }
-
-    .wardrobe-grid {
-        grid-template-columns: 1fr;
-        min-height: auto;
-    }
-
-    .wardrobe-card {
-        min-height: 72svh;
-        border-right: 0 !important;
-    }
-
-    .wardrobe-card:nth-child(-n + 2) {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.075);
-    }
-
-    .wardrobe-card-title {
-        font-size: clamp(2.2rem, 12vw, 4rem);
-    }
-}
-
-@media (max-width: 480px) {
-    .armario-section {
-        padding-top: 70px;
-    }
-
-    .wardrobe-card {
-        min-height: 64svh;
-    }
-
-    .view-all-button {
-        width: min(100%, 260px);
-        padding: 14px 18px;
-        font-size: 0.72rem;
     }
 }
 
