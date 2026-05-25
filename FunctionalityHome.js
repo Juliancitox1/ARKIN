@@ -152,6 +152,9 @@ const newNextButton = document.getElementById("loNuevoNext");
 const wardrobeGrid = document.getElementById("wardrobeGrid");
 const pageLoader = document.getElementById("pageLoader");
 const currentYear = document.getElementById("currentYear");
+const themeToggles = [...document.querySelectorAll("[data-theme-toggle]")];
+const themeToggleTexts = [...document.querySelectorAll("[data-theme-toggle-text]")];
+const themeColorMeta = document.getElementById("themeColorMeta");
 
 if (currentYear) {
     currentYear.textContent = new Date().getFullYear();
@@ -179,6 +182,11 @@ const NEW_PRODUCTS_AUTOSCROLL_TIME = 8000;
 const WARDROBE_IMAGE_TIME = 8000;
 const LOADER_OPEN_DELAY = 1100;
 const LOADER_HIDE_DELAY = 180;
+const THEME_STORAGE_KEY = "arkinThemePreference";
+const THEME_COLORS = {
+    dark: "#050308",
+    angelic: "#fffaf1"
+};
 
 /* ================================
    UTILIDADES
@@ -217,6 +225,45 @@ function getScrollAmount(track, cardSelector) {
     const cardWidth = firstCard.getBoundingClientRect().width;
 
     return cardWidth + gap;
+}
+
+function getSavedTheme() {
+    try {
+        const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        return savedTheme === "angelic" ? "angelic" : "dark";
+    } catch (error) {
+        return "dark";
+    }
+}
+
+function setTheme(theme, savePreference = true) {
+    const activeTheme = theme === "angelic" ? "angelic" : "dark";
+    const isAngelic = activeTheme === "angelic";
+
+    document.body.dataset.theme = activeTheme;
+    themeColorMeta?.setAttribute("content", THEME_COLORS[activeTheme]);
+
+    themeToggles.forEach((button) => {
+        button.setAttribute("aria-pressed", String(isAngelic));
+        button.setAttribute("title", isAngelic ? "Cambiar a Dark" : "Cambiar a Angelic");
+    });
+
+    themeToggleTexts.forEach((textElement) => {
+        textElement.textContent = isAngelic ? "Angelic / Dark" : "Dark / Angelic";
+    });
+
+    if (!savePreference) return;
+
+    try {
+        localStorage.setItem(THEME_STORAGE_KEY, activeTheme);
+    } catch (error) {
+        console.warn("No se pudo guardar la preferencia de tema:", error);
+    }
+}
+
+function toggleTheme() {
+    const nextTheme = document.body.dataset.theme === "angelic" ? "dark" : "angelic";
+    setTheme(nextTheme);
 }
 
 /* ================================
@@ -857,6 +904,10 @@ function toggleMobileMenu() {
 /* ================================
    EVENTOS
 ================================ */
+themeToggles.forEach((button) => {
+    button.addEventListener("click", toggleTheme);
+});
+
 newNextButton?.addEventListener("click", () => {
     moveNewProducts(1);
     startNewProductsAutoScroll();
@@ -1026,6 +1077,7 @@ window.addEventListener("resize", () => {
 /* ================================
    INICIALIZACIÓN
 ================================ */
+setTheme(getSavedTheme(), false);
 renderProducts();
 renderNewProducts();
 renderWardrobeProducts();

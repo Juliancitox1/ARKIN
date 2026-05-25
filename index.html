@@ -4,13 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ARKIN</title>
-    <meta name="theme-color" content="#050308" />
+    <meta name="theme-color" content="#050308" id="themeColorMeta" />
     <link rel="stylesheet" href="StyleHome.css" />
 </head>
 
-<body>
+<body data-theme="dark">
     <!-- HEADER / MENÚ PRINCIPAL -->
     <header class="site-header" id="siteHeader">
+        <button class="theme-toggle header-theme-toggle" type="button" data-theme-toggle aria-label="Cambiar entre tema Dark y Angelic" aria-pressed="false">
+            <span class="theme-toggle-text" data-theme-toggle-text>Dark / Angelic</span>
+            <span class="theme-toggle-orb" aria-hidden="true"></span>
+        </button>
+
         <nav class="nav" aria-label="Navegación principal">
             <div class="nav-links nav-links-left">
                 <a href="#inicio" class="nav-link active">Inicio</a>
@@ -33,6 +38,10 @@
             </div>
 
             <div class="mobile-nav-panel" id="mobileNavPanel" aria-hidden="true">
+                <button class="theme-toggle mobile-theme-toggle" type="button" data-theme-toggle aria-label="Cambiar entre tema Dark y Angelic" aria-pressed="false">
+                    <span class="theme-toggle-text" data-theme-toggle-text>Dark / Angelic</span>
+                    <span class="theme-toggle-orb" aria-hidden="true"></span>
+                </button>
                 <a href="#inicio" class="mobile-nav-link">Inicio</a>
                 <a href="#loNuevo" class="mobile-nav-link">Lo Nuevo</a>
                 <a href="#armario" class="mobile-nav-link">Armario</a>
