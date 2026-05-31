@@ -4098,3 +4098,72 @@ body[data-theme="angelic"] .site-header.mobile-menu-open .nav-menu-toggle {
         object-position: center;
     }
 }
+
+/* ================================
+   COLECCIÓN NOX
+================================ */
+
+.collection-title {
+    margin: 14px 0 0;
+    font-family: "Darkhusk", "Manrope", system-ui, sans-serif;
+    font-size: clamp(2.4rem, 5vw, 5.8rem);
+    line-height: 1;
+    letter-spacing: 0.12em;
+    word-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-shadow:
+        0 0 18px rgba(183, 148, 255, 0.22),
+        0 0 34px rgba(183, 148, 255, 0.12);
+}
+
+.collection-title-modal {
+    margin-top: 12px;
+    font-size: clamp(1.6rem, 3vw, 3.4rem);
+    letter-spacing: 0.12em;
+}
+
+/* Tema Angelic */
+body[data-theme="angelic"] .collection-title {
+    color: rgba(32, 23, 37, 0.96);
+    text-shadow:
+        0 0 18px rgba(203, 167, 106, 0.18),
+        0 0 30px rgba(141, 99, 207, 0.10);
+}
+
+/* ================================
+   FONDOS SEGÚN COLOR DE CAMISETA
+   Blancas: fondo negro / Negras: fondo blanco
+================================ */
+
+.garment-bg-dark,
+.garment-bg-dark img {
+    background: #050308 !important;
+}
+
+.garment-bg-light,
+.garment-bg-light img {
+    background: #f5f1e8 !important;
+}
+
+/* Ajuste específico para el modal */
+.product-main-frame.garment-bg-dark,
+.product-main-image.garment-bg-dark {
+    background: #050308 !important;
+}
+
+.product-main-frame.garment-bg-light,
+.product-main-image.garment-bg-light {
+    background: #f5f1e8 !important;
+}
+
+/* En tema Angelic se respeta la regla de contraste */
+body[data-theme="angelic"] .garment-bg-dark,
+body[data-theme="angelic"] .garment-bg-dark img {
+    background: #050308 !important;
+}
+
+body[data-theme="angelic"] .garment-bg-light,
+body[data-theme="angelic"] .garment-bg-light img {
+    background: #fffaf1 !important;
+}

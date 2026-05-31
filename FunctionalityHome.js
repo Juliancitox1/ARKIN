@@ -207,6 +207,20 @@ function getPrimaryImage(product) {
     return gallery[0] || "";
 }
 
+function getGarmentBackgroundClass(value = "") {
+    const normalizedValue = value.toLowerCase();
+
+    if (normalizedValue.includes("_blanco") || normalizedValue.includes("blanco ")) {
+        return "garment-bg-dark";
+    }
+
+    if (normalizedValue.includes("_negro") || normalizedValue.includes("negro ")) {
+        return "garment-bg-light";
+    }
+
+    return "garment-bg-dark";
+}
+
 function getProductPreviewImages(product) {
     return [...new Set(
         Object.values(product.colors)
@@ -295,7 +309,7 @@ function createCardMarkup(productId) {
 
     return `
         <article class="product-card reveal" data-product-id="${productId}">
-            <div class="product-card-media">
+            <div class="product-card-media ${getGarmentBackgroundClass(image)}">
                 <img src="${image}" alt="${product.name}" loading="lazy" />
             </div>
             <div class="product-card-info">
@@ -314,7 +328,7 @@ function createNewProductMarkup(productId) {
 
     return `
         <article class="new-product-card reveal" data-new-product-id="${productId}">
-            <div class="new-product-media">
+            <div class="new-product-media ${getGarmentBackgroundClass(image)}">
                 <img src="${image}" alt="${product.name}" loading="lazy" />
             </div>
             <div class="new-product-content">
@@ -338,7 +352,7 @@ function createWardrobeCardMarkup(productId) {
 
     return `
         <article
-            class="wardrobe-card reveal"
+            class="wardrobe-card reveal ${getGarmentBackgroundClass(image)}"
             data-wardrobe-product-id="${productId}"
             data-wardrobe-image-index="0"
             role="button"
@@ -359,7 +373,7 @@ function createRelatedCardMarkup(productId) {
 
     return `
         <article class="related-card" data-related-product-id="${productId}">
-            <div class="related-card-media">
+            <div class="related-card-media ${getGarmentBackgroundClass(image)}">
                 <img src="${image}" alt="${product.name}" loading="lazy" />
             </div>
             <div class="related-card-info">
@@ -475,6 +489,10 @@ function rotateWardrobeImages() {
         setTimeout(() => {
             imageElement.src = images[nextIndex];
             imageElement.alt = `${product.name} vista ${nextIndex + 1}`;
+
+            card.classList.remove("garment-bg-dark", "garment-bg-light");
+            card.classList.add(getGarmentBackgroundClass(images[nextIndex]));
+
             card.dataset.wardrobeImageIndex = String(nextIndex);
             card.classList.remove("is-changing");
         }, 220);
@@ -642,8 +660,16 @@ function renderModalGallery(product) {
     currentImageIndex = imageIndex;
 
     const activeImage = modalImages[currentImageIndex];
+    const activeBackgroundClass = getGarmentBackgroundClass(activeImage.image || activeImage.colorName);
+
     mainImage.src = activeImage.image;
     mainImage.alt = `${product.name} ${activeImage.colorName}`;
+
+    mainImage.classList.remove("garment-bg-dark", "garment-bg-light");
+    mainImage.classList.add(activeBackgroundClass);
+
+    mainImage.closest(".product-main-frame")?.classList.remove("garment-bg-dark", "garment-bg-light");
+    mainImage.closest(".product-main-frame")?.classList.add(activeBackgroundClass);
 
     thumbnailsContainer.innerHTML = modalImages
         .map((item, index) => `
