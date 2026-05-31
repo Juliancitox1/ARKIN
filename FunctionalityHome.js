@@ -322,7 +322,6 @@ function createNewProductMarkup(productId) {
                 <h3 class="new-product-name">${product.name}</h3>
                 <p class="new-product-description">${product.description}</p>
                 <div class="new-product-footer">
-                    <span class="new-product-price">${product.price}</span>
                     <span class="new-product-action">Ver detalle</span>
                 </div>
             </div>
