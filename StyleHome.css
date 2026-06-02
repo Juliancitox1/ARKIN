@@ -5562,3 +5562,490 @@ body:has(.armario-modal.is-open)::-webkit-scrollbar {
         flex-basis: 70vw;
     }
 }
+
+/* ================================
+   AJUSTES V8 - MODAL Y CARDS
+   Titulos centrados, imagenes mejor contenidas y responsive
+================================ */
+.product-description-block,
+.product-price-block,
+.selector-block-luxury,
+.product-video-card,
+.product-material-card {
+    text-align: center;
+}
+
+.product-description-block .product-section-label,
+.product-price-block .product-section-label,
+.selector-block-luxury p,
+.product-video-card .product-section-label,
+.product-material-card .product-section-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.product-description-block .modal-description {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.product-material-card .modal-material {
+    max-width: 46ch;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.product-price-block .modal-price {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product-purchase-card .option-row {
+    justify-content: center;
+}
+
+.product-purchase-card .whatsapp-button {
+    text-align: center;
+}
+
+.lo-nuevo-track .new-product-media,
+.related-products-luxury .related-card-media,
+.product-card-media {
+    display: grid;
+    place-items: center;
+}
+
+.lo-nuevo-track .new-product-media img,
+.related-products-luxury .related-card-media img,
+.product-card-media img {
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    object-fit: contain;
+    object-position: center;
+}
+
+.lo-nuevo-track .new-product-media img {
+    transform: scale(1.08) !important;
+}
+
+.lo-nuevo-track .new-product-card:hover .new-product-media img {
+    transform: scale(1.11) !important;
+}
+
+.related-products-luxury .related-card-media img,
+.product-card-media img {
+    transform: scale(1.06) !important;
+}
+
+.related-products-luxury .related-card:hover .related-card-media img,
+.product-card:hover .product-card-media img {
+    transform: scale(1.09) !important;
+}
+
+@media (max-width: 860px) {
+    .product-description-block,
+    .product-description-block .modal-description,
+    .product-material-card,
+    .product-material-card .modal-material {
+        text-align: center;
+    }
+
+    .lo-nuevo-track .new-product-media img {
+        padding: 10px;
+        transform: scale(1.04) !important;
+    }
+
+    .lo-nuevo-track .new-product-card:hover .new-product-media img {
+        transform: scale(1.06) !important;
+    }
+
+    .related-products-luxury .related-card-media img,
+    .product-card-media img {
+        padding: 10px;
+        transform: scale(1.03) !important;
+    }
+
+    .related-products-luxury .related-card:hover .related-card-media img,
+    .product-card:hover .product-card-media img {
+        transform: scale(1.05) !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .product-material-card .modal-material {
+        max-width: 100%;
+    }
+
+    .lo-nuevo-track .new-product-media img,
+    .related-products-luxury .related-card-media img,
+    .product-card-media img {
+        padding: 8px;
+    }
+}
+
+/* ================================
+   AJUSTES V9 - BOTON TEMA, VIDEO Y CARGA
+   Boton mas discreto y carga mas liviana
+================================ */
+.header-theme-toggle {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
+    justify-content: center;
+    border-color: rgba(255, 255, 255, 0.09);
+    background: rgba(5, 3, 8, 0.38);
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.18),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    opacity: 0.76;
+}
+
+.header-theme-toggle::before {
+    display: none;
+}
+
+.header-theme-toggle .theme-toggle-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.header-theme-toggle .theme-toggle-orb {
+    right: 50%;
+    width: 22px;
+    height: 22px;
+    transform: translate(50%, -50%);
+    box-shadow:
+        0 0 10px rgba(183, 148, 255, 0.24),
+        0 0 0 1px rgba(255, 255, 255, 0.14) inset;
+}
+
+.header-theme-toggle:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.03);
+    border-color: rgba(183, 148, 255, 0.25);
+    background: rgba(5, 3, 8, 0.56);
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.24),
+        0 0 16px rgba(183, 148, 255, 0.10);
+}
+
+body[data-theme="angelic"] .header-theme-toggle {
+    background: rgba(255, 250, 241, 0.58);
+    border-color: rgba(45, 31, 58, 0.10);
+    box-shadow:
+        0 10px 22px rgba(83, 61, 109, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.58) inset;
+}
+
+body[data-theme="angelic"] .header-theme-toggle:hover {
+    background: rgba(255, 250, 241, 0.82);
+    border-color: rgba(141, 99, 207, 0.20);
+}
+
+.mobile-theme-toggle {
+    height: 40px;
+    min-width: 100%;
+    opacity: 0.86;
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.product-360-video {
+    background: #050308;
+    object-fit: cover;
+}
+
+.product-modal.is-open,
+.armario-modal.is-open {
+    scrollbar-width: none;
+}
+
+.product-modal.is-open::-webkit-scrollbar,
+.armario-modal.is-open::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 860px) {
+    .mobile-theme-toggle {
+        height: 38px;
+        font-size: 0.56rem;
+        letter-spacing: 0.13em;
+    }
+
+    .product-360-video {
+        min-height: 240px;
+    }
+}
+
+
+.product-video-card {
+    gap: 14px;
+}
+
+.product-360-stage {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 26px;
+    perspective: 1400px;
+    background:
+        radial-gradient(circle at 50% 18%, rgba(183, 148, 255, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        #050308;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 22px 48px rgba(0, 0, 0, 0.28);
+}
+
+.product-360-stage::before {
+    content: "";
+    position: absolute;
+    inset: auto 16% 10% 16%;
+    height: 44px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(183, 148, 255, 0.22), transparent 72%);
+    filter: blur(18px);
+    pointer-events: none;
+}
+
+.product-360-shirt {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 320px);
+    max-height: 320px;
+    object-fit: contain;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    will-change: transform;
+    animation: productShirtSpin 6.2s ease-in-out infinite;
+    filter:
+        drop-shadow(0 22px 30px rgba(0, 0, 0, 0.38))
+        drop-shadow(0 0 20px rgba(183, 148, 255, 0.08));
+    background: transparent !important;
+}
+
+
+.product-360-stage.garment-bg-dark {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(183, 148, 255, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        #050308 !important;
+}
+
+.product-360-stage.garment-bg-light {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(183, 148, 255, 0.12), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+        #f5f1e8 !important;
+}
+
+body[data-theme="angelic"] .product-360-stage {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(141, 99, 207, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 250, 241, 0.58)),
+        #fffaf1;
+    border-color: rgba(45, 31, 58, 0.10);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.54),
+        0 18px 40px rgba(83, 61, 109, 0.12);
+}
+
+body[data-theme="angelic"] .product-360-stage.garment-bg-dark {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(141, 99, 207, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        #050308 !important;
+}
+
+body[data-theme="angelic"] .product-360-stage.garment-bg-light {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(141, 99, 207, 0.12), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 250, 241, 0.58)),
+        #fffaf1 !important;
+}
+
+
+@keyframes productShirtSpin {
+    0% {
+        transform: rotateY(0deg) scale(1);
+    }
+
+    55% {
+        transform: rotateY(360deg) scale(1.02);
+    }
+
+    100% {
+        transform: rotateY(360deg) scale(1);
+    }
+}
+
+@media (max-width: 860px) {
+    .product-360-stage {
+        min-height: 280px;
+    }
+
+    .product-360-shirt {
+        width: min(100%, 260px);
+        max-height: 260px;
+    }
+}
+
+@media (max-width: 700px) {
+    .product-360-stage {
+        min-height: 240px;
+        border-radius: 22px;
+    }
+
+    .product-360-shirt {
+        width: min(100%, 220px);
+        max-height: 220px;
+    }
+
+    .product-360-note {
+        font-size: 0.76rem;
+    }
+}
+
+
+/* ================================
+   VISTA 360 MANUAL - CAMISA GIRANDO
+================================ */
+.product-video-card {
+    gap: 14px;
+}
+
+.product-360-video,
+.product-360-note {
+    display: none !important;
+}
+
+.product-360-stage {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 26px;
+    perspective: 1400px;
+    background:
+        radial-gradient(circle at 50% 18%, rgba(183, 148, 255, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        #050308;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 22px 48px rgba(0, 0, 0, 0.28);
+}
+
+.product-360-stage::before {
+    content: "";
+    position: absolute;
+    left: 16%;
+    right: 16%;
+    bottom: 10%;
+    height: 44px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(183, 148, 255, 0.22), transparent 72%);
+    filter: blur(18px);
+    pointer-events: none;
+}
+
+.product-360-shirt {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 300px);
+    max-height: 310px;
+    object-fit: contain;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    will-change: transform;
+    animation: productShirtSpin 18s linear infinite;
+    filter:
+        drop-shadow(0 22px 30px rgba(0, 0, 0, 0.38))
+        drop-shadow(0 0 18px rgba(183, 148, 255, 0.10));
+    background: transparent !important;
+}
+
+.product-360-stage.garment-bg-dark {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(183, 148, 255, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        #050308 !important;
+}
+
+.product-360-stage.garment-bg-light {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(183, 148, 255, 0.11), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+        #f5f1e8 !important;
+}
+
+body[data-theme="angelic"] .product-360-stage {
+    border-color: rgba(45, 31, 58, 0.10);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.54),
+        0 18px 40px rgba(83, 61, 109, 0.12);
+}
+
+body[data-theme="angelic"] .product-360-stage.garment-bg-dark {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(141, 99, 207, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        #050308 !important;
+}
+
+body[data-theme="angelic"] .product-360-stage.garment-bg-light {
+    background:
+        radial-gradient(circle at 50% 18%, rgba(141, 99, 207, 0.11), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 250, 241, 0.58)),
+        #fffaf1 !important;
+}
+
+@keyframes productShirtSpin {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+@media (max-width: 860px) {
+    .product-360-stage {
+        min-height: 280px;
+    }
+
+    .product-360-shirt {
+        width: min(100%, 250px);
+        max-height: 260px;
+    }
+}
+
+@media (max-width: 700px) {
+    .product-360-stage {
+        min-height: 230px;
+        border-radius: 22px;
+    }
+
+    .product-360-shirt {
+        width: min(100%, 210px);
+        max-height: 220px;
+    }
+}

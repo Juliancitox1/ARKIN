@@ -23,7 +23,7 @@
             </div>
 
             <a href="#inicio" class="nav-logo" aria-label="Ir al inicio">
-                <img src="Images/Logo.png" alt="Logo ARKIN" />
+                <img src="Images/Logo.png" alt="Logo ARKIN" decoding="async" />
             </a>
 
             <button class="nav-menu-toggle" id="navMenuToggle" type="button" aria-label="Abrir menú" aria-expanded="false">
@@ -56,7 +56,7 @@
         <section class="hero" id="inicio" aria-label="Inicio">
             <div class="hero-slider" id="heroSlider">
                 <div class="hero-slide active" data-hero-slide>
-                    <img src="Images/FondoPrincipal_3.png" alt="Imagen principal de ARKIN" />
+                    <img src="Images/FondoPrincipal_3.png" alt="Imagen principal de ARKIN" decoding="async" fetchpriority="high" />
                 </div>
 
                 <!-- Espacios reservados para futuras imágenes del hero.
@@ -152,11 +152,11 @@
 
             <div class="nosotros-visual">
                 <article class="visual-card visual-card-large">
-                    <img src="Images/LocalNoche.JPG" alt="Prenda destacada ARKIN" />
+                    <img src="Images/LocalNoche.JPG" alt="Prenda destacada ARKIN" loading="lazy" decoding="async" />
                 </article>
 
                 <article class="visual-card visual-card-small">
-                    <img src="Images/LocalDia.JPG" alt="Detalle visual ARKIN" />
+                    <img src="Images/LocalDia.JPG" alt="Detalle visual ARKIN" loading="lazy" decoding="async" />
                 </article>
             </div>
         </section>
@@ -225,7 +225,7 @@
         <div class="footer-inner">
             <div class="footer-brand">
                 <a href="#inicio" class="footer-logo-link" aria-label="Volver al inicio">
-                    <img src="Images/Logo.png" alt="Logo ARKIN" class="footer-logo" />
+                    <img src="Images/Logo.png" alt="Logo ARKIN" class="footer-logo" loading="lazy" decoding="async" />
                 </a>
 
                 <div>
@@ -306,21 +306,13 @@
                     </a>
                 </section>
 
-                <section class="product-editorial-grid" aria-label="Video 360 y material">
+                <section class="product-editorial-grid" aria-label="Vista 360 y material">
                     <article class="product-video-card">
                         <span class="product-section-label">Vista 360</span>
 
-                        <div class="product-video-placeholder">
-                            <span>Video 360</span>
-                            <small>Reemplaza este espacio por el video de la camiseta girando.</small>
+                        <div class="product-360-stage" id="vista360Stage" aria-hidden="true">
+                            <img id="vista360Camisa" class="product-360-shirt" src="" alt="" />
                         </div>
-
-                        <!-- Cuando tengas el video, puedes reemplazar el div anterior por este bloque:
-                        <video class="product-360-video" controls muted loop playsinline>
-                            <source src="Videos/nombre-del-video.mp4" type="video/mp4" />
-                            Tu navegador no soporta video HTML5.
-                        </video>
-                        -->
                     </article>
 
                     <article class="product-material-card">
@@ -356,9 +348,9 @@
 
     <!-- LOADER GLOBAL -->
     <div class="page-loader" id="pageLoader" aria-hidden="true">
-        <img src="Images/LogoLoader.png" alt="Cargando" class="page-loader-logo" />
+        <img src="Images/LogoLoader.png" alt="Cargando" class="page-loader-logo" decoding="async" />
     </div>
 
-    <script src="FunctionalityHome.js"></script>
+    <script src="FunctionalityHome.js" defer></script>
 </body>
 </html>

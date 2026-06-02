@@ -136,6 +136,8 @@ const modalDescription = document.getElementById("descripcionProducto");
 const modalMaterial = document.getElementById("materialProducto");
 const modalPrice = document.getElementById("precioProducto");
 const mainImage = document.getElementById("imagenPrincipal");
+const product360Shirt = document.getElementById("vista360Camisa");
+const product360Stage = document.getElementById("vista360Stage");
 const thumbnailsContainer = document.getElementById("miniaturas");
 const prevImageButton = document.getElementById("modalPrevImage");
 const nextImageButton = document.getElementById("modalNextImage");
@@ -180,7 +182,7 @@ const heroSlides = [...document.querySelectorAll("[data-hero-slide]")];
 const HERO_SLIDE_TIME = 6000;
 const NEW_PRODUCTS_AUTOSCROLL_TIME = 8000;
 const WARDROBE_IMAGE_TIME = 8000;
-const LOADER_OPEN_DELAY = 1100;
+const LOADER_OPEN_DELAY = 620;
 const LOADER_HIDE_DELAY = 180;
 const THEME_STORAGE_KEY = "arkinThemePreference";
 const THEME_COLORS = {
@@ -364,7 +366,7 @@ function createCardMarkup(productId) {
             data-product-is-hovering="false"
         >
             <div class="product-card-media ${backgroundClass}">
-                <img src="${image}" alt="${product.name}" loading="lazy" />
+                <img src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             </div>
             <div class="product-card-info">
                 <h3 class="product-card-name">${product.name}</h3>
@@ -383,7 +385,7 @@ function createNewProductMarkup(productId) {
     return `
         <article class="new-product-card reveal" data-new-product-id="${productId}">
             <div class="new-product-media ${getGarmentBackgroundClass(image)}">
-                <img src="${image}" alt="${product.name}" loading="lazy" />
+                <img src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             </div>
             <div class="new-product-content">
                 <span class="new-product-label">Lo Nuevo</span>
@@ -418,7 +420,7 @@ function createWardrobeCardMarkup(productId) {
             tabindex="0"
             aria-label="Ver ${product.name}"
         >
-            <img class="wardrobe-image" src="${image}" alt="${product.name}" loading="lazy" />
+            <img class="wardrobe-image" src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             <div class="wardrobe-card-overlay">
                 <span class="wardrobe-card-title">${product.name}</span>
             </div>
@@ -433,7 +435,7 @@ function createRelatedCardMarkup(productId) {
     return `
         <article class="related-card" data-related-product-id="${productId}">
             <div class="related-card-media ${getGarmentBackgroundClass(image)}">
-                <img src="${image}" alt="${product.name}" loading="lazy" />
+                <img src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             </div>
             <div class="related-card-info">
                 <span class="related-card-name">${product.name}</span>
@@ -820,6 +822,16 @@ function renderModalGallery(product) {
     mainImage.closest(".product-main-frame")?.classList.remove("garment-bg-dark", "garment-bg-light");
     mainImage.closest(".product-main-frame")?.classList.add(activeBackgroundClass);
 
+    if (product360Shirt) {
+        product360Shirt.src = activeImage.image;
+        product360Shirt.alt = `${product.name} vista 360`;
+    }
+
+    if (product360Stage) {
+        product360Stage.classList.remove("garment-bg-dark", "garment-bg-light");
+        product360Stage.classList.add(activeBackgroundClass);
+    }
+
     thumbnailsContainer.innerHTML = modalImages
         .map((item, index) => `
             <button
@@ -830,7 +842,7 @@ function renderModalGallery(product) {
                 title="${item.colorName}"
                 type="button"
             >
-                <img src="${item.image}" alt="${item.colorName}" loading="lazy" />
+                <img src="${item.image}" alt="${item.colorName}" loading="lazy" decoding="async" />
             </button>
         `)
         .join("");
