@@ -5173,3 +5173,392 @@ body[data-theme="angelic"] .lo-nuevo-section::after {
         radial-gradient(circle at 2% 30%, rgba(218, 197, 255, 0.28), transparent 28%),
         radial-gradient(circle at 98% 64%, rgba(141, 99, 207, 0.12), transparent 30%);
 }
+
+/* ================================
+   AJUSTES V6 - X CENTRADA, IMAGENES Y SCROLL
+================================ */
+.product-modal .product-panel-luxury > .modal-close,
+.armario-modal .armario-close {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    color: transparent !important;
+    text-indent: 0 !important;
+    overflow: hidden !important;
+}
+
+.product-modal .product-panel-luxury > .modal-close::before,
+.product-modal .product-panel-luxury > .modal-close::after,
+.armario-modal .armario-close::before,
+.armario-modal .armario-close::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 17px !important;
+    height: 1.6px !important;
+    display: block !important;
+    border-radius: 999px !important;
+    background: rgba(245, 241, 232, 0.98) !important;
+    transform-origin: center !important;
+}
+
+.product-modal .product-panel-luxury > .modal-close::before,
+.armario-modal .armario-close::before {
+    transform: translate(-50%, -50%) rotate(45deg) !important;
+}
+
+.product-modal .product-panel-luxury > .modal-close::after,
+.armario-modal .armario-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg) !important;
+}
+
+body[data-theme="angelic"] .product-modal .product-panel-luxury > .modal-close::before,
+body[data-theme="angelic"] .product-modal .product-panel-luxury > .modal-close::after,
+body[data-theme="angelic"] .armario-modal .armario-close::before,
+body[data-theme="angelic"] .armario-modal .armario-close::after {
+    background: rgba(32, 23, 37, 0.92) !important;
+}
+
+.lo-nuevo-track .new-product-media,
+.related-products-luxury .related-card-media {
+    overflow: hidden;
+}
+
+.lo-nuevo-track .new-product-media img {
+    object-fit: contain;
+    object-position: center;
+    transform: scale(1.18);
+}
+
+.lo-nuevo-track .new-product-card:hover .new-product-media img {
+    transform: scale(1.22);
+}
+
+.related-products-luxury .related-card-media img {
+    object-fit: contain;
+    object-position: center;
+    transform: scale(1.18);
+}
+
+.related-products-luxury .related-card:hover .related-card-media img {
+    transform: scale(1.22);
+}
+
+html:has(.armario-modal.is-open),
+body:has(.armario-modal.is-open) {
+    overflow: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html:has(.armario-modal.is-open)::-webkit-scrollbar,
+body:has(.armario-modal.is-open)::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+/* ================================
+   AJUSTES RESPONSIVE V7
+   Modal, armario y carruseles en celular
+================================ */
+@media (max-width: 860px) {
+    .product-luxury-shell {
+        width: 100%;
+        padding: 58px 16px 38px;
+    }
+
+    .product-modal-heading {
+        margin-bottom: 18px;
+    }
+
+    .product-modal-heading #modalTitle {
+        max-width: 100%;
+        font-size: clamp(1.85rem, 9.8vw, 3rem);
+        line-height: 1.12;
+        letter-spacing: 0.09em;
+        word-spacing: 0.05em;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+    }
+
+    .product-modal-collection {
+        margin-top: 8px;
+        font-size: 0.64rem;
+        letter-spacing: 0.22em;
+    }
+
+    .product-gallery-luxury {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .product-gallery-luxury .product-main-frame {
+        width: 100%;
+        min-height: 0 !important;
+        height: clamp(390px, 58vh, 560px) !important;
+        border-radius: 22px;
+    }
+
+    .product-gallery-luxury .product-main-image {
+        width: 100%;
+        height: 100%;
+        min-height: 0 !important;
+        max-height: none !important;
+        padding: 10px;
+        object-fit: contain;
+        object-position: center;
+        transform: none !important;
+    }
+
+    .product-gallery-luxury .product-main-frame:hover .product-main-image {
+        transform: none !important;
+    }
+
+    .product-thumb-column {
+        width: 100%;
+        height: auto !important;
+        max-height: none !important;
+        flex-direction: row;
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 0 8px;
+        scrollbar-width: none;
+    }
+
+    .product-thumb-column::-webkit-scrollbar {
+        display: none;
+    }
+
+    .product-thumb-column .thumb-button {
+        flex: 0 0 68px;
+        width: 68px;
+        height: 84px;
+        border-radius: 14px;
+    }
+
+    .gallery-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+    }
+
+    .gallery-arrow-left {
+        left: 10px;
+    }
+
+    .gallery-arrow-right {
+        right: 10px;
+    }
+
+    .product-description-block {
+        width: 100%;
+        margin-top: 24px;
+        text-align: left;
+    }
+
+    .product-section-label,
+    .selector-block-luxury p {
+        color: var(--purple-soft);
+    }
+
+    .product-description-block .modal-description {
+        font-size: 0.94rem;
+        line-height: 1.68;
+    }
+
+    .product-purchase-card {
+        margin-top: 22px;
+        padding: 20px;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        border-radius: 24px;
+    }
+
+    .product-price-block .modal-price {
+        margin-top: 8px;
+        font-size: 1rem;
+    }
+
+    .product-purchase-card .option-row {
+        margin-top: 10px;
+        gap: 8px;
+    }
+
+    .product-purchase-card .color-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .product-purchase-card .size-button {
+        min-width: 46px;
+        padding: 11px 13px;
+    }
+
+    .product-purchase-card .whatsapp-button {
+        min-height: 52px;
+        padding: 15px 16px;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+    }
+
+    .product-editorial-grid {
+        margin-top: 20px;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .product-video-card,
+    .product-material-card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .product-video-placeholder,
+    .product-360-video {
+        min-height: 230px;
+        border-radius: 18px;
+    }
+
+    .product-video-placeholder span {
+        font-size: clamp(1.45rem, 9vw, 2.45rem);
+    }
+
+    .product-video-placeholder small,
+    .product-material-card .modal-material {
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .related-products-luxury {
+        margin-top: 30px;
+        padding-top: 34px;
+    }
+
+    .related-products-luxury .related-products-header h4 {
+        font-size: clamp(1.45rem, 9vw, 2.6rem);
+        line-height: 1.15;
+    }
+
+    .related-products-luxury .related-track {
+        gap: 12px;
+        padding: 4px 38px 12px;
+    }
+
+    .related-products-luxury .related-card {
+        flex: 0 0 58vw;
+        max-width: 230px;
+        border-radius: 18px;
+    }
+
+    .related-products-luxury .related-card-media img {
+        transform: scale(1.08);
+    }
+
+    .related-products-luxury .related-card:hover .related-card-media img {
+        transform: scale(1.10);
+    }
+
+    .armario-panel {
+        padding: 0 12px 34px;
+    }
+
+    .armario-panel-header {
+        margin: 0 -12px 24px;
+        padding: 18px 58px 16px;
+    }
+
+    #ropaCompleta {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+}
+
+@media (max-width: 520px) {
+    .product-luxury-shell {
+        padding: 54px 12px 34px;
+    }
+
+    .product-modal .product-panel-luxury > .modal-close,
+    .armario-modal .armario-close {
+        top: 13px;
+        right: 13px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .product-gallery-luxury .product-main-frame {
+        height: clamp(360px, 55vh, 500px) !important;
+        border-radius: 20px;
+    }
+
+    .product-gallery-luxury .product-main-image {
+        padding: 7px;
+    }
+
+    .product-thumb-column .thumb-button {
+        flex-basis: 62px;
+        width: 62px;
+        height: 78px;
+    }
+
+    .product-purchase-card,
+    .product-video-card,
+    .product-material-card {
+        padding: 18px;
+        border-radius: 22px;
+    }
+
+    .product-video-placeholder,
+    .product-360-video {
+        min-height: 210px;
+    }
+
+    .related-products-luxury .related-track {
+        padding-left: 34px;
+        padding-right: 34px;
+    }
+
+    .related-products-luxury .related-card {
+        flex-basis: 64vw;
+        max-width: 220px;
+    }
+
+    .new-product-card {
+        min-height: 500px;
+    }
+
+    .lo-nuevo-track .new-product-media img {
+        transform: scale(1.08);
+    }
+
+    .lo-nuevo-track .new-product-card:hover .new-product-media img {
+        transform: scale(1.10);
+    }
+}
+
+@media (max-width: 390px) {
+    .product-modal-heading #modalTitle {
+        font-size: clamp(1.65rem, 10vw, 2.45rem);
+        letter-spacing: 0.075em;
+    }
+
+    .product-gallery-luxury .product-main-frame {
+        height: 340px !important;
+    }
+
+    .product-purchase-card .whatsapp-button {
+        font-size: 0.66rem;
+        letter-spacing: 0.09em;
+    }
+
+    .related-products-luxury .related-card {
+        flex-basis: 70vw;
+    }
+}
