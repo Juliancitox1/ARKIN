@@ -253,13 +253,18 @@
     <div class="product-modal" id="productModal" aria-hidden="true">
         <div class="product-backdrop" data-close-modal></div>
 
-        <div class="product-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="product-panel product-panel-luxury" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <button class="modal-close" id="cerrarProducto" type="button" aria-label="Cerrar ventana">
                 &times;
             </button>
 
-            <div class="product-layout">
-                <div class="product-gallery">
+            <div class="product-luxury-shell">
+                <header class="product-modal-heading">
+                    <h3 id="modalTitle">Producto</h3>
+                    <p class="product-modal-collection">Coleccion NOX</p>
+                </header>
+
+                <section class="product-gallery product-gallery-luxury" aria-label="Galería del producto">
                     <div class="product-main-frame">
                         <button class="gallery-arrow gallery-arrow-left" id="modalPrevImage" type="button" aria-label="Imagen anterior">
                             &#10094;
@@ -272,32 +277,26 @@
                         </button>
                     </div>
 
-                    <div class="thumb-strip" id="miniaturas"></div>
-                </div>
+                    <div class="thumb-strip product-thumb-column" id="miniaturas"></div>
+                </section>
 
-                <div class="product-info">
-                    <span class="eyebrow">Detalle</span>
-                    <h3 id="modalTitle">Producto</h3>
+                <section class="product-description-block" aria-label="Descripción del producto">
+                    <span class="product-section-label">Descripcion</span>
+                    <p class="modal-description" id="descripcionProducto"></p>
+                </section>
 
-                    <div class="product-copy">
-                        <div class="product-copy-block">
-                            <p class="modal-description" id="descripcionProducto"></p>
-                        </div>
-
-                        <div class="product-copy-block">
-                            <span class="product-copy-label">Material</span>
-                            <p class="modal-material" id="materialProducto"></p>
-                        </div>
+                <section class="product-purchase-card" aria-label="Opciones de compra">
+                    <div class="product-price-block">
+                        <span class="product-section-label">Precio</span>
+                        <p class="modal-price" id="precioProducto"></p>
                     </div>
 
-                    <p class="modal-price" id="precioProducto"></p>
-
-                    <div class="selector-block">
+                    <div class="selector-block selector-block-luxury">
                         <p>Colores</p>
                         <div class="option-row option-row-colors" id="selectorColores"></div>
                     </div>
 
-                    <div class="selector-block">
+                    <div class="selector-block selector-block-luxury">
                         <p>Tallas</p>
                         <div class="option-row option-row-sizes" id="selectorTallas"></div>
                     </div>
@@ -305,30 +304,52 @@
                     <a id="linkWhatsapp" href="#" target="_blank" rel="noopener noreferrer" class="whatsapp-button">
                         Solicitar por WhatsApp
                     </a>
-                </div>
+                </section>
+
+                <section class="product-editorial-grid" aria-label="Video 360 y material">
+                    <article class="product-video-card">
+                        <span class="product-section-label">Vista 360</span>
+
+                        <div class="product-video-placeholder">
+                            <span>Video 360</span>
+                        </div>
+
+                        <!-- Cuando tengas el video, puedes reemplazar el div anterior por este bloque:
+                        <video class="product-360-video" controls muted loop playsinline>
+                            <source src="Videos/nombre-del-video.mp4" type="video/mp4" />
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                        -->
+                    </article>
+
+                    <article class="product-material-card">
+                        <span class="product-section-label">Material</span>
+                        <p class="modal-material" id="materialProducto"></p>
+                    </article>
+                </section>
+
+                <section class="related-products related-products-luxury" aria-labelledby="relatedProductsTitle">
+                    <button class="modal-scroll-hint" id="scrollToRelated" type="button" aria-label="Ir a más camisas">
+                        <span>&#8964;</span>
+                    </button>
+
+                    <div class="related-products-header">
+                        <h4 id="relatedProductsTitle">Mas Camisas</h4>
+                    </div>
+
+                    <div class="related-carousel-shell">
+                        <button class="related-arrow related-arrow-left" id="relatedPrev" type="button" aria-label="Ver camisas anteriores">
+                            &#10094;
+                        </button>
+
+                        <div class="related-track" id="relatedProductsTrack"></div>
+
+                        <button class="related-arrow related-arrow-right" id="relatedNext" type="button" aria-label="Ver más camisas">
+                            &#10095;
+                        </button>
+                    </div>
+                </section>
             </div>
-
-            <section class="related-products" aria-labelledby="relatedProductsTitle">
-                <button class="modal-scroll-hint" id="scrollToRelated" type="button" aria-label="Ir a productos relacionados">
-                    <span>&#8964;</span>
-                </button>
-
-                <div class="related-products-header">
-                    <h4 id="relatedProductsTitle">También te puede interesar</h4>
-                </div>
-
-                <div class="related-carousel-shell">
-                    <button class="related-arrow related-arrow-left" id="relatedPrev" type="button" aria-label="Ver productos anteriores">
-                        &#10094;
-                    </button>
-
-                    <div class="related-track" id="relatedProductsTrack"></div>
-
-                    <button class="related-arrow related-arrow-right" id="relatedNext" type="button" aria-label="Ver más productos">
-                        &#10095;
-                    </button>
-                </div>
-            </section>
         </div>
     </div>
 
