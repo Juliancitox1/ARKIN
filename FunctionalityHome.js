@@ -180,10 +180,10 @@ let isPageTransitioning = false;
 
 const heroSlides = [...document.querySelectorAll("[data-hero-slide]")];
 const HERO_SLIDE_TIME = 6000;
-const NEW_PRODUCTS_AUTOSCROLL_TIME = 8000;
-const WARDROBE_IMAGE_TIME = 8000;
-const LOADER_OPEN_DELAY = 620;
-const LOADER_HIDE_DELAY = 180;
+const NEW_PRODUCTS_AUTOSCROLL_TIME = 12000;
+const WARDROBE_IMAGE_TIME = 12000;
+const LOADER_OPEN_DELAY = 700;
+const LOADER_HIDE_DELAY = 120;
 const THEME_STORAGE_KEY = "arkinThemePreference";
 const THEME_COLORS = {
     dark: "#050308",
@@ -1042,22 +1042,33 @@ function updateActiveNav() {
     });
 }
 
-function activateReveal() {
-    const revealElements = document.querySelectorAll(".reveal");
-
-    const observer = new IntersectionObserver(
+const revealObserver = "IntersectionObserver" in window
+    ? new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("is-visible");
-                    observer.unobserve(entry.target);
+                    revealObserver.unobserve(entry.target);
                 }
             });
         },
         { threshold: 0.18 }
-    );
+    )
+    : null;
 
-    revealElements.forEach((element) => observer.observe(element));
+function activateReveal() {
+    const revealElements = document.querySelectorAll(".reveal:not(.is-observed)");
+
+    revealElements.forEach((element) => {
+        element.classList.add("is-observed");
+
+        if (!revealObserver) {
+            element.classList.add("is-visible");
+            return;
+        }
+
+        revealObserver.observe(element);
+    });
 }
 
 /* ================================
@@ -1288,6 +1299,64 @@ window.addEventListener("resize", () => {
     updateActiveNav();
     fitAllCardTexts();
 });
+
+
+
+/* ================================
+   OPTIMIZACION: PAUSAR MOVIMIENTO EN SEGUNDO PLANO
+================================ */
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        pauseBackgroundMotion();
+        clearInterval(heroSlideInterval);
+        return;
+    }
+
+    startHeroSlider();
+
+    if (!modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open")) {
+        resumeBackgroundMotion();
+    }
+});
+
+
+
+/* ================================
+   OPTIMIZACION: PAUSAR CARRUSELES FUERA DE PANTALLA
+================================ */
+const loNuevoSection = document.getElementById("loNuevo");
+const armarioSection = document.getElementById("armario");
+
+if ("IntersectionObserver" in window) {
+    const motionObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.target === loNuevoSection) {
+                    if (entry.isIntersecting && !modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open")) {
+                        startNewProductsAutoScroll();
+                    } else {
+                        stopNewProductsAutoScroll();
+                    }
+                }
+
+                if (entry.target === armarioSection) {
+                    if (entry.isIntersecting && !modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open")) {
+                        startWardrobeImageSwap();
+                    } else {
+                        stopWardrobeImageSwap();
+                    }
+                }
+            });
+        },
+        {
+            root: null,
+            threshold: 0.08
+        }
+    );
+
+    if (loNuevoSection) motionObserver.observe(loNuevoSection);
+    if (armarioSection) motionObserver.observe(armarioSection);
+}
 
 /* ================================
    INICIALIZACIÓN

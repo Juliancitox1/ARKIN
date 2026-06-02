@@ -6049,3 +6049,251 @@ body[data-theme="angelic"] .product-360-stage.garment-bg-light {
         max-height: 220px;
     }
 }
+
+
+/* ================================
+   OPTIMIZACION DE RENDIMIENTO
+================================ */
+
+.hero,
+.lo-nuevo-section,
+.armario-section,
+.nosotros-section,
+.contacto-section,
+.site-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+}
+
+.hero {
+    content-visibility: visible;
+}
+
+.product-card,
+.new-product-card,
+.wardrobe-card,
+.related-card,
+.visual-card,
+.contact-card,
+.product-main-frame,
+.product-info,
+.product-video-card,
+.product-material-card,
+.product-purchase-card {
+    contain: layout paint;
+}
+
+.product-card-media img,
+.new-product-media img,
+.wardrobe-image,
+.related-card-media img,
+.product-main-image,
+.product-360-shirt,
+.nav-logo img,
+.page-loader-logo {
+    will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+
+/* ================================
+   AJUSTES FINALES V13
+   Fondo completo, tema visible y loader mas presente
+================================ */
+
+/* Fondo completo de Lo Nuevo sin corte lateral */
+.lo-nuevo-section {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+    content-visibility: visible !important;
+    contain: none !important;
+    background: transparent !important;
+}
+
+.lo-nuevo-section::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    transform: none !important;
+    pointer-events: none !important;
+    border-radius: 0 !important;
+    filter: none !important;
+    background:
+        radial-gradient(circle at 8% 22%, rgba(183, 148, 255, 0.18), transparent 32%),
+        radial-gradient(circle at 92% 72%, rgba(109, 40, 217, 0.15), transparent 36%),
+        radial-gradient(circle at 50% 112%, rgba(183, 148, 255, 0.09), transparent 38%),
+        linear-gradient(180deg, #000 0%, #050308 48%, #000 100%) !important;
+}
+
+.lo-nuevo-section::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    pointer-events: none !important;
+    border-radius: 0 !important;
+    filter: blur(96px) !important;
+    background:
+        radial-gradient(circle at 2% 30%, rgba(183, 148, 255, 0.13), transparent 28%),
+        radial-gradient(circle at 98% 64%, rgba(109, 40, 217, 0.11), transparent 30%) !important;
+}
+
+.lo-nuevo-section > * {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.lo-nuevo-heading,
+.lo-nuevo-carousel-shell {
+    width: min(100%, 1440px);
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+body[data-theme="angelic"] .lo-nuevo-section {
+    background: transparent !important;
+}
+
+body[data-theme="angelic"] .lo-nuevo-section::before {
+    background:
+        radial-gradient(circle at 8% 22%, rgba(218, 197, 255, 0.40), transparent 32%),
+        radial-gradient(circle at 92% 72%, rgba(141, 99, 207, 0.17), transparent 36%),
+        radial-gradient(circle at 50% 112%, rgba(203, 167, 106, 0.13), transparent 38%),
+        linear-gradient(180deg, #fffaf1 0%, #f7efe1 58%, #fffaf5 100%) !important;
+}
+
+body[data-theme="angelic"] .lo-nuevo-section::after {
+    background:
+        radial-gradient(circle at 2% 30%, rgba(218, 197, 255, 0.28), transparent 28%),
+        radial-gradient(circle at 98% 64%, rgba(141, 99, 207, 0.12), transparent 30%) !important;
+}
+
+/* Boton de tema visible, elegante y legible */
+.header-theme-toggle {
+    min-width: 148px !important;
+    width: auto !important;
+    height: 38px !important;
+    padding: 0 46px 0 15px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    opacity: 0.88 !important;
+    border-radius: 999px !important;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.10), rgba(183, 148, 255, 0.045)),
+        rgba(5, 3, 8, 0.68) !important;
+    border: 1px solid rgba(255, 255, 255, 0.13) !important;
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.24),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset !important;
+}
+
+.header-theme-toggle::before {
+    display: none !important;
+}
+
+.header-theme-toggle .theme-toggle-text {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    display: inline-block !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    color: rgba(245, 241, 232, 0.88) !important;
+    font-size: 0.56rem !important;
+    line-height: 1 !important;
+    letter-spacing: 0.12em !important;
+    white-space: nowrap !important;
+}
+
+.header-theme-toggle .theme-toggle-orb {
+    right: 9px !important;
+    width: 23px !important;
+    height: 23px !important;
+    transform: translateY(-50%) !important;
+}
+
+.header-theme-toggle:hover {
+    opacity: 1 !important;
+    transform: translateY(-50%) scale(1.02) !important;
+    border-color: rgba(183, 148, 255, 0.30) !important;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(183, 148, 255, 0.065)),
+        rgba(5, 3, 8, 0.82) !important;
+}
+
+body[data-theme="angelic"] .header-theme-toggle {
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(235, 220, 255, 0.46)),
+        rgba(255, 250, 241, 0.80) !important;
+    border-color: rgba(45, 31, 58, 0.14) !important;
+    box-shadow:
+        0 12px 24px rgba(83, 61, 109, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.70) inset !important;
+}
+
+body[data-theme="angelic"] .header-theme-toggle .theme-toggle-text {
+    color: rgba(32, 23, 37, 0.82) !important;
+}
+
+body[data-theme="angelic"] .header-theme-toggle:hover {
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(235, 220, 255, 0.58)),
+        rgba(255, 250, 241, 0.92) !important;
+    border-color: rgba(141, 99, 207, 0.24) !important;
+}
+
+/* El menu movil conserva el boton con texto completo */
+@media (max-width: 860px) {
+    .header-theme-toggle {
+        display: none !important;
+    }
+
+    .mobile-theme-toggle .theme-toggle-text {
+        color: rgba(245, 241, 232, 0.88) !important;
+    }
+
+    body[data-theme="angelic"] .mobile-theme-toggle .theme-toggle-text {
+        color: rgba(32, 23, 37, 0.82) !important;
+    }
+}
+
+/* Lo Nuevo no usa content-visibility para evitar cortes del reflector */
+.hero,
+.armario-section,
+.nosotros-section,
+.contacto-section,
+.site-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+}
+
+.lo-nuevo-section {
+    content-visibility: visible !important;
+}
