@@ -230,6 +230,21 @@ function getProductPreviewImages(product) {
     )];
 }
 
+function getBlackVariantImage(product) {
+    const blackColor = Object.entries(product.colors).find(([colorName, colorData]) => {
+        return colorData.enabled !== false && colorName.toLowerCase().startsWith("negro");
+    });
+
+    return blackColor?.[1]?.gallery?.[0] || "";
+}
+
+function updateWardrobeBackground(card, image) {
+    if (typeof getGarmentBackgroundClass !== "function") return;
+
+    card.classList.remove("garment-bg-dark", "garment-bg-light");
+    card.classList.add(getGarmentBackgroundClass(image));
+}
+
 function getScrollAmount(track, cardSelector) {
     const firstCard = track?.querySelector(cardSelector);
     if (!track || !firstCard) return track?.clientWidth || 0;
@@ -239,6 +254,37 @@ function getScrollAmount(track, cardSelector) {
     const cardWidth = firstCard.getBoundingClientRect().width;
 
     return cardWidth + gap;
+}
+
+function fitTextToCard(selector, minFontSize = 10) {
+    const elements = document.querySelectorAll(selector);
+
+    elements.forEach((element) => {
+        element.style.fontSize = "";
+        element.style.letterSpacing = "";
+
+        let fontSize = parseFloat(window.getComputedStyle(element).fontSize);
+        let letterSpacing = parseFloat(window.getComputedStyle(element).letterSpacing) || 0;
+
+        let safetyCounter = 0;
+
+        while (element.scrollWidth > element.clientWidth && fontSize > minFontSize && safetyCounter < 40) {
+            fontSize -= 0.5;
+            letterSpacing = Math.max(letterSpacing - 0.2, 0);
+
+            element.style.fontSize = `${fontSize}px`;
+            element.style.letterSpacing = `${letterSpacing}px`;
+
+            safetyCounter++;
+        }
+    });
+}
+
+function fitAllCardTexts() {
+    fitTextToCard(".product-card-name", 9);
+    fitTextToCard(".related-card-name", 8);
+    fitTextToCard(".new-product-name", 18);
+    fitTextToCard(".wardrobe-card-title", 18);
 }
 
 function getSavedTheme() {
@@ -306,10 +352,18 @@ function startHeroSlider() {
 function createCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
+    const blackImage = getBlackVariantImage(product) || image;
+    const backgroundClass = typeof getGarmentBackgroundClass === "function" ? getGarmentBackgroundClass(image) : "";
 
     return `
-        <article class="product-card reveal" data-product-id="${productId}">
-            <div class="product-card-media ${getGarmentBackgroundClass(image)}">
+        <article
+            class="product-card reveal ${backgroundClass}"
+            data-product-id="${productId}"
+            data-product-hover-image="${blackImage}"
+            data-product-before-hover-image=""
+            data-product-is-hovering="false"
+        >
+            <div class="product-card-media ${backgroundClass}">
                 <img src="${image}" alt="${product.name}" loading="lazy" />
             </div>
             <div class="product-card-info">
@@ -349,12 +403,17 @@ function createWardrobeCardMarkup(productId) {
 
     const images = getProductPreviewImages(product);
     const image = images[0] || getPrimaryImage(product);
+    const blackImage = getBlackVariantImage(product) || image;
+    const backgroundClass = typeof getGarmentBackgroundClass === "function" ? getGarmentBackgroundClass(image) : "";
 
     return `
         <article
-            class="wardrobe-card reveal ${getGarmentBackgroundClass(image)}"
+            class="wardrobe-card reveal ${backgroundClass}"
             data-wardrobe-product-id="${productId}"
             data-wardrobe-image-index="0"
+            data-wardrobe-hover-image="${blackImage}"
+            data-wardrobe-before-hover-image=""
+            data-wardrobe-is-hovering="false"
             role="button"
             tabindex="0"
             aria-label="Ver ${product.name}"
@@ -393,6 +452,7 @@ function renderProducts() {
         .join("");
 
     activateReveal();
+    fitAllCardTexts();
 }
 
 function renderNewProducts() {
@@ -405,6 +465,7 @@ function renderNewProducts() {
 
     newProductsTrack.scrollTo({ left: 0, behavior: "auto" });
     activateReveal();
+    fitAllCardTexts();
 }
 
 function renderWardrobeProducts() {
@@ -416,6 +477,7 @@ function renderWardrobeProducts() {
         .join("");
 
     activateReveal();
+    fitAllCardTexts();
 }
 
 function renderRelatedProducts() {
@@ -427,6 +489,7 @@ function renderRelatedProducts() {
         .join("");
 
     relatedProductsTrack.scrollTo({ left: 0, behavior: "auto" });
+    fitAllCardTexts();
 }
 
 /* ================================
@@ -465,12 +528,98 @@ function stopNewProductsAutoScroll() {
     newProductsAutoScrollInterval = null;
 }
 
+function setWardrobeHoverImage(card, isHovering) {
+    const imageElement = card.querySelector(".wardrobe-image");
+    if (!imageElement) return;
+
+    const productId = card.dataset.wardrobeProductId;
+    const product = products[productId];
+    const hoverImage = card.dataset.wardrobeHoverImage;
+
+    if (!product || !hoverImage) return;
+
+    if (isHovering) {
+        card.dataset.wardrobeBeforeHoverImage = imageElement.getAttribute("src") || "";
+        card.dataset.wardrobeIsHovering = "true";
+
+        imageElement.src = hoverImage;
+        imageElement.alt = `${product.name} versión negra`;
+
+        updateWardrobeBackground(card, hoverImage);
+        return;
+    }
+
+    const previousImage = card.dataset.wardrobeBeforeHoverImage;
+
+    card.dataset.wardrobeIsHovering = "false";
+
+    if (previousImage) {
+        imageElement.src = previousImage;
+        imageElement.alt = product.name;
+        updateWardrobeBackground(card, previousImage);
+    }
+}
+
+function setFullWardrobeHoverImage(card, isHovering) {
+    const imageElement = card.querySelector(".product-card-media img");
+    const mediaElement = card.querySelector(".product-card-media");
+
+    if (!imageElement) return;
+
+    const productId = card.dataset.productId;
+    const product = products[productId];
+    const hoverImage = card.dataset.productHoverImage;
+
+    if (!product || !hoverImage) return;
+
+    if (isHovering) {
+        card.dataset.productBeforeHoverImage = imageElement.getAttribute("src") || "";
+        card.dataset.productIsHovering = "true";
+
+        imageElement.src = hoverImage;
+        imageElement.alt = `${product.name} versión negra`;
+
+        if (typeof getGarmentBackgroundClass === "function") {
+            const backgroundClass = getGarmentBackgroundClass(hoverImage);
+
+            card.classList.remove("garment-bg-dark", "garment-bg-light");
+            card.classList.add(backgroundClass);
+
+            mediaElement?.classList.remove("garment-bg-dark", "garment-bg-light");
+            mediaElement?.classList.add(backgroundClass);
+        }
+
+        return;
+    }
+
+    const previousImage = card.dataset.productBeforeHoverImage;
+
+    card.dataset.productIsHovering = "false";
+
+    if (previousImage) {
+        imageElement.src = previousImage;
+        imageElement.alt = product.name;
+
+        if (typeof getGarmentBackgroundClass === "function") {
+            const backgroundClass = getGarmentBackgroundClass(previousImage);
+
+            card.classList.remove("garment-bg-dark", "garment-bg-light");
+            card.classList.add(backgroundClass);
+
+            mediaElement?.classList.remove("garment-bg-dark", "garment-bg-light");
+            mediaElement?.classList.add(backgroundClass);
+        }
+    }
+}
+
 function rotateWardrobeImages() {
     if (!wardrobeGrid) return;
 
     const wardrobeCards = [...wardrobeGrid.querySelectorAll("[data-wardrobe-product-id]")];
 
     wardrobeCards.forEach((card) => {
+        if (card.dataset.wardrobeIsHovering === "true") return;
+
         const productId = card.dataset.wardrobeProductId;
         const product = products[productId];
         if (!product) return;
@@ -969,6 +1118,20 @@ scrollToRelatedButton?.addEventListener("click", () => {
     });
 });
 
+ropaCompleta?.addEventListener("mouseover", (event) => {
+    const card = event.target.closest("[data-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setFullWardrobeHoverImage(card, true);
+});
+
+ropaCompleta?.addEventListener("mouseout", (event) => {
+    const card = event.target.closest("[data-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setFullWardrobeHoverImage(card, false);
+});
+
 ropaCompleta?.addEventListener("click", handleProductClick);
 
 toggleArmarioButton?.addEventListener("click", openArmarioModal);
@@ -976,6 +1139,20 @@ cerrarArmarioButton?.addEventListener("click", closeArmarioModal);
 armarioBackdrop?.addEventListener("click", closeArmarioModal);
 closeModalButton?.addEventListener("click", closeProduct);
 backdrop?.addEventListener("click", closeProduct);
+
+wardrobeGrid?.addEventListener("mouseover", (event) => {
+    const card = event.target.closest("[data-wardrobe-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setWardrobeHoverImage(card, true);
+});
+
+wardrobeGrid?.addEventListener("mouseout", (event) => {
+    const card = event.target.closest("[data-wardrobe-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setWardrobeHoverImage(card, false);
+});
 
 wardrobeGrid?.addEventListener("click", (event) => {
     const card = event.target.closest("[data-wardrobe-product-id]");
@@ -1097,6 +1274,7 @@ window.addEventListener("resize", () => {
     }
 
     updateActiveNav();
+    fitAllCardTexts();
 });
 
 /* ================================
@@ -1111,3 +1289,9 @@ updateActiveNav();
 startHeroSlider();
 startNewProductsAutoScroll();
 startWardrobeImageSwap();
+
+if (document.fonts) {
+    document.fonts.ready.then(fitAllCardTexts);
+} else {
+    window.addEventListener("load", fitAllCardTexts);
+}

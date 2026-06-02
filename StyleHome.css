@@ -4167,3 +4167,40 @@ body[data-theme="angelic"] .garment-bg-light,
 body[data-theme="angelic"] .garment-bg-light img {
     background: #fffaf1 !important;
 }
+
+/* ================================
+   CONTACTO - TEXTO MAPA NORMAL
+================================ */
+
+.contact-map-overlay strong {
+    font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    letter-spacing: normal !important;
+    word-spacing: normal !important;
+    line-height: 1.1;
+}
+
+/* ================================
+   CARDS - NOMBRES EN UNA SOLA LÍNEA
+================================ */
+
+.product-card-name,
+.related-card-name,
+.new-product-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* ================================
+   CARDS - TEXTO AUTOAJUSTABLE
+================================ */
+
+.product-card-name,
+.related-card-name,
+.new-product-name,
+.wardrobe-card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
