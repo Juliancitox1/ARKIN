@@ -6297,3 +6297,674 @@ body[data-theme="angelic"] .header-theme-toggle:hover {
 .lo-nuevo-section {
     content-visibility: visible !important;
 }
+
+
+/* ================================
+   RESPONSIVE FIX FINAL
+   Tablet, movil, modales y carruseles
+================================ */
+
+:root {
+    --app-height: 100dvh;
+}
+
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Evita que un contenedor corte los modales fixed */
+.armario-section,
+.product-modal,
+.armario-modal {
+    contain: none !important;
+    content-visibility: visible !important;
+}
+
+.armario-section {
+    overflow: visible !important;
+}
+
+.product-modal,
+.armario-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: var(--app-height) !important;
+    max-height: var(--app-height) !important;
+    z-index: 5000 !important;
+    overflow: hidden !important;
+}
+
+.product-panel,
+.product-panel-luxury,
+.armario-panel {
+    width: 100% !important;
+    height: var(--app-height) !important;
+    max-height: var(--app-height) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+}
+
+body.modal-open,
+body.no-scroll,
+body.nav-open {
+    width: 100%;
+    min-height: 100%;
+}
+
+/* Botones cerrar siempre visibles y centrados */
+.product-modal .modal-close,
+.product-modal .product-panel-luxury > .modal-close,
+.armario-close {
+    position: fixed !important;
+    top: max(12px, env(safe-area-inset-top)) !important;
+    right: max(12px, env(safe-area-inset-right)) !important;
+    z-index: 9999 !important;
+    display: grid !important;
+    place-items: center !important;
+    text-align: center !important;
+    padding: 0 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+}
+
+.product-modal .modal-close,
+.product-modal .product-panel-luxury > .modal-close {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 27px !important;
+}
+
+.armario-close {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 26px !important;
+}
+
+/* Header movil estable */
+@media (max-width: 860px) {
+    .site-header {
+        z-index: 2500 !important;
+    }
+
+    .nav {
+        grid-template-columns: auto auto !important;
+        align-items: center !important;
+    }
+
+    .mobile-nav-panel {
+        max-height: calc(var(--app-height) - 88px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .mobile-theme-toggle {
+        min-width: 100% !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* Lo Nuevo responsive */
+@media (max-width: 1024px) {
+    .lo-nuevo-section {
+        padding: 88px 20px !important;
+    }
+
+    .lo-nuevo-carousel-shell {
+        max-width: 100% !important;
+        gap: 10px !important;
+    }
+
+    .lo-nuevo-track {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scroll-snap-type: x mandatory !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+
+    .lo-nuevo-track::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .new-product-card {
+        flex: 0 0 calc((100% - 18px) / 2) !important;
+        min-width: calc((100% - 18px) / 2) !important;
+        min-height: 540px !important;
+        scroll-snap-align: start !important;
+    }
+
+    .new-product-content {
+        left: 24px !important;
+        right: 24px !important;
+        bottom: 28px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .lo-nuevo-section {
+        padding: 76px 14px 84px !important;
+    }
+
+    .lo-nuevo-carousel-shell {
+        gap: 0 !important;
+    }
+
+    .new-product-card {
+        flex: 0 0 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        min-height: min(520px, calc(var(--app-height) - 150px)) !important;
+        border-radius: 24px !important;
+    }
+
+    .new-product-media img {
+        padding: 10px !important;
+        transform: scale(1.02) !important;
+    }
+
+    .new-product-content {
+        left: 18px !important;
+        right: 18px !important;
+        bottom: 22px !important;
+    }
+
+    .new-product-name {
+        font-size: clamp(1.9rem, 12vw, 3.1rem) !important;
+        white-space: normal !important;
+        text-align: left !important;
+    }
+
+    .lo-nuevo-arrow {
+        width: 38px !important;
+        height: 38px !important;
+    }
+}
+
+/* Armario principal */
+@media (max-width: 1024px) {
+    .wardrobe-grid {
+        min-height: auto !important;
+    }
+
+    .wardrobe-card {
+        min-height: 58vh !important;
+    }
+
+    .wardrobe-image {
+        object-fit: contain !important;
+        padding: 12px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .armario-section {
+        padding: 72px 0 58px !important;
+        overflow: hidden !important;
+    }
+
+    .wardrobe-card {
+        min-height: min(520px, 64svh) !important;
+    }
+
+    .wardrobe-card-overlay {
+        opacity: 1 !important;
+        background: linear-gradient(180deg, transparent 42%, rgba(0, 0, 0, 0.42) 100%) !important;
+        place-items: end center !important;
+        padding-bottom: 28px !important;
+    }
+
+    .wardrobe-card-title {
+        opacity: 1 !important;
+        transform: none !important;
+        font-size: clamp(1.8rem, 10vw, 3rem) !important;
+    }
+}
+
+/* Armario completo */
+.armario-modal.is-open {
+    display: block !important;
+}
+
+.armario-panel {
+    padding-left: clamp(12px, 3vw, 34px) !important;
+    padding-right: clamp(12px, 3vw, 34px) !important;
+    padding-bottom: 42px !important;
+}
+
+.armario-panel-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    margin-left: calc(clamp(12px, 3vw, 34px) * -1) !important;
+    margin-right: calc(clamp(12px, 3vw, 34px) * -1) !important;
+}
+
+#ropaCompleta {
+    width: min(100%, 1280px) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: clamp(16px, 2.2vw, 28px) !important;
+}
+
+@media (max-width: 1100px) {
+    #ropaCompleta {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .armario-panel-header {
+        padding: 22px 72px 20px !important;
+    }
+
+    .collection-title-modal {
+        font-size: clamp(1.35rem, 4vw, 2.6rem) !important;
+        line-height: 1.1 !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .armario-panel {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        padding-bottom: 32px !important;
+    }
+
+    .armario-panel-header {
+        margin-left: -12px !important;
+        margin-right: -12px !important;
+        margin-bottom: 22px !important;
+        padding: 18px 56px 16px !important;
+    }
+
+    #armarioTitulo {
+        font-size: 0.68rem !important;
+        letter-spacing: 0.18em !important;
+        line-height: 1.25 !important;
+    }
+
+    .collection-title-modal {
+        margin-top: 8px !important;
+        font-size: clamp(1.18rem, 7vw, 2rem) !important;
+        letter-spacing: 0.08em !important;
+        line-height: 1.12 !important;
+    }
+
+    #ropaCompleta {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+        padding-bottom: 20px !important;
+    }
+
+    #ropaCompleta .product-card {
+        border-radius: 22px !important;
+    }
+
+    #ropaCompleta .product-card-media img {
+        aspect-ratio: 4 / 4.95 !important;
+        padding: 10px !important;
+        transform: none !important;
+    }
+
+    #ropaCompleta .product-card-info {
+        padding: 17px 16px 19px !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+    }
+
+    #ropaCompleta .product-card-name {
+        max-width: 100% !important;
+        white-space: normal !important;
+        font-size: 0.9rem !important;
+    }
+
+    #ropaCompleta .product-card-price {
+        margin-left: 0 !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+/* Modal producto */
+.product-modal.is-open {
+    display: block !important;
+}
+
+.product-luxury-shell {
+    max-width: 1240px !important;
+    padding-left: clamp(14px, 3vw, 34px) !important;
+    padding-right: clamp(14px, 3vw, 34px) !important;
+}
+
+.product-gallery-luxury {
+    min-width: 0 !important;
+}
+
+.product-gallery-luxury .product-main-frame {
+    overflow: hidden !important;
+}
+
+.product-gallery-luxury .product-main-image {
+    max-width: 100% !important;
+    object-fit: contain !important;
+}
+
+@media (max-width: 1100px) {
+    .product-luxury-shell {
+        padding-top: 66px !important;
+        padding-bottom: 42px !important;
+    }
+
+    .product-modal-heading {
+        margin-bottom: 24px !important;
+    }
+
+    .product-modal-heading #modalTitle {
+        font-size: clamp(2rem, 6.5vw, 4.6rem) !important;
+    }
+
+    .product-gallery-luxury {
+        grid-template-columns: minmax(0, 1fr) 86px !important;
+        gap: 12px !important;
+    }
+
+    .product-gallery-luxury .product-main-frame {
+        height: min(62vh, 620px) !important;
+        min-height: 430px !important;
+    }
+
+    .product-thumb-column {
+        height: min(62vh, 620px) !important;
+    }
+
+    .product-thumb-column .thumb-button {
+        width: 78px !important;
+        height: 98px !important;
+        flex-basis: 98px !important;
+    }
+
+    .product-purchase-card,
+    .product-editorial-grid {
+        grid-template-columns: 1fr 1fr !important;
+        align-items: stretch !important;
+    }
+
+    .product-purchase-card .whatsapp-button {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .product-luxury-shell {
+        padding-top: 58px !important;
+        padding-bottom: 32px !important;
+    }
+
+    .product-modal-heading #modalTitle {
+        font-size: clamp(1.75rem, 10vw, 3.1rem) !important;
+        letter-spacing: 0.08em !important;
+        line-height: 1.08 !important;
+        word-break: normal !important;
+    }
+
+    .product-modal-collection {
+        font-size: 0.62rem !important;
+        letter-spacing: 0.20em !important;
+    }
+
+    .product-gallery-luxury {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .product-gallery-luxury .product-main-frame {
+        height: min(54vh, 440px) !important;
+        min-height: 330px !important;
+        border-radius: 22px !important;
+    }
+
+    .product-gallery-luxury .product-main-image {
+        padding: 12px !important;
+        transform: none !important;
+    }
+
+    .product-thumb-column {
+        height: auto !important;
+        max-height: none !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        padding: 0 0 8px !important;
+        scrollbar-width: none !important;
+    }
+
+    .product-thumb-column::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .product-thumb-column .thumb-button {
+        flex: 0 0 66px !important;
+        width: 66px !important;
+        height: 84px !important;
+        border-radius: 14px !important;
+    }
+
+    .product-description-block {
+        width: 100% !important;
+        margin-top: 24px !important;
+        text-align: center !important;
+    }
+
+    .product-description-block .modal-description {
+        font-size: 0.92rem !important;
+        line-height: 1.62 !important;
+    }
+
+    .product-purchase-card,
+    .product-editorial-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    .product-purchase-card {
+        margin-top: 20px !important;
+        padding: 18px !important;
+        border-radius: 22px !important;
+    }
+
+    .product-purchase-card .option-row {
+        justify-content: center !important;
+    }
+
+    .product-purchase-card .whatsapp-button {
+        grid-column: auto !important;
+        min-height: 50px !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.10em !important;
+        padding: 14px 14px !important;
+    }
+
+    .product-video-card,
+    .product-material-card {
+        padding: 20px !important;
+        border-radius: 22px !important;
+    }
+
+    .product-360-stage {
+        min-height: 220px !important;
+    }
+
+    .product-360-shirt {
+        width: min(100%, 210px) !important;
+        max-height: 220px !important;
+    }
+
+    .product-material-card .modal-material {
+        max-width: 100% !important;
+        font-size: 0.92rem !important;
+        line-height: 1.6 !important;
+    }
+
+    .related-products-luxury {
+        margin-top: 28px !important;
+        padding-top: 28px !important;
+    }
+
+    .related-track {
+        padding: 4px 42px 12px !important;
+        gap: 14px !important;
+        scroll-snap-type: x mandatory !important;
+    }
+
+    .related-products-luxury .related-card {
+        flex: 0 0 58vw !important;
+        max-width: 220px !important;
+        scroll-snap-align: start !important;
+    }
+
+    .related-products-luxury .related-card-media img {
+        padding: 8px !important;
+        transform: none !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .product-gallery-luxury .product-main-frame {
+        height: 330px !important;
+        min-height: 330px !important;
+    }
+
+    .product-modal-heading #modalTitle {
+        font-size: clamp(1.55rem, 9vw, 2.5rem) !important;
+    }
+
+    .product-purchase-card {
+        padding: 16px !important;
+    }
+
+    .color-button {
+        width: 34px !important;
+        height: 34px !important;
+    }
+
+    .size-button {
+        min-width: 46px !important;
+        padding: 11px 12px !important;
+    }
+
+    .related-products-luxury .related-card {
+        flex-basis: 68vw !important;
+    }
+}
+
+/* Nosotros y contacto */
+@media (max-width: 980px) {
+    .nosotros-section {
+        grid-template-columns: 1fr !important;
+        padding: 96px 22px !important;
+        gap: 42px !important;
+    }
+
+    .nosotros-content {
+        max-width: 820px !important;
+        margin: 0 auto !important;
+    }
+
+    .nosotros-visual {
+        width: min(100%, 760px) !important;
+        height: 560px !important;
+        min-height: 520px !important;
+        margin: 0 auto !important;
+    }
+
+    .contacto-inner {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .nosotros-section {
+        padding: 78px 14px !important;
+        gap: 34px !important;
+    }
+
+    .nosotros-intro {
+        margin-bottom: 32px !important;
+        font-size: 0.95rem !important;
+        line-height: 1.68 !important;
+    }
+
+    .nosotros-values {
+        gap: 18px !important;
+    }
+
+    .nosotros-value-card {
+        padding: 22px 18px 24px !important;
+        border-radius: 22px !important;
+    }
+
+    .nosotros-visual {
+        height: 390px !important;
+        min-height: 390px !important;
+    }
+
+    .contacto-section {
+        padding: 76px 14px 88px !important;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    .contact-card,
+    .contact-card-schedule,
+    .contact-map-card {
+        border-radius: 22px !important;
+    }
+
+    .contact-map-card,
+    .contact-map-card iframe {
+        min-height: 310px !important;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+    }
+
+    .footer-nav {
+        justify-content: center !important;
+    }
+}
+
+/* Ajustes de pantallas bajas */
+@media (max-height: 680px) and (max-width: 900px) {
+    .product-gallery-luxury .product-main-frame {
+        height: 420px !important;
+        min-height: 320px !important;
+    }
+
+    .armario-panel-header {
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
+    }
+
+    .collection-title-modal {
+        font-size: clamp(1.1rem, 4vw, 1.8rem) !important;
+    }
+}

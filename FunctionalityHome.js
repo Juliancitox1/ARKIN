@@ -727,6 +727,7 @@ function releasePageTransition() {
    ARMARIO COMPLETO
 ================================ */
 function openArmarioModal() {
+    closeMobileMenu();
     if (!armarioCompleto || isPageTransitioning) return;
 
     isPageTransitioning = true;
@@ -930,6 +931,7 @@ function renderModal() {
 }
 
 function openProduct(productId, openedFromArmario = false) {
+    closeMobileMenu();
     const product = products[productId];
 
     if (isPageTransitioning) {
@@ -1356,6 +1358,22 @@ if ("IntersectionObserver" in window) {
 
     if (loNuevoSection) motionObserver.observe(loNuevoSection);
     if (armarioSection) motionObserver.observe(armarioSection);
+}
+
+
+/* ================================
+   RESPONSIVE FIX: ALTURA REAL EN MOVIL
+================================ */
+function updateAppViewportHeight() {
+    document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
+}
+
+updateAppViewportHeight();
+window.addEventListener("resize", updateAppViewportHeight);
+window.addEventListener("orientationchange", updateAppViewportHeight);
+
+if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", updateAppViewportHeight);
 }
 
 /* ================================
