@@ -8570,3 +8570,893 @@ body[data-theme="angelic"] .related-card-name-top::after {
         letter-spacing: 0.065em !important;
     }
 }
+
+/* ================================
+   AJUSTE FINAL - TITULOS Y PRECIOS EN CARDS
+================================ */
+
+.product-card,
+.new-product-card,
+.related-card {
+    position: relative !important;
+}
+
+/* Titulos centrados, mas grandes y con mas aire */
+.product-card-name-top,
+.new-product-name-top,
+.related-card-name-top {
+    position: absolute !important;
+    top: clamp(14px, 1.6vw, 24px) !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+
+    width: calc(100% - clamp(34px, 5vw, 72px)) !important;
+    max-width: calc(100% - clamp(34px, 5vw, 72px)) !important;
+
+    margin: 0 !important;
+    padding: 0 0 11px !important;
+
+    display: block !important;
+    text-align: center !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+
+    color: rgba(245, 241, 232, 0.98) !important;
+    font-family: "Darkhusk", "Manrope", system-ui, sans-serif !important;
+    font-size: clamp(1.18rem, 1.35vw, 1.55rem) !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.145em !important;
+    word-spacing: 0.28em !important;
+    line-height: 1.35 !important;
+    text-transform: uppercase !important;
+
+    white-space: normal !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+
+    pointer-events: none !important;
+    z-index: 7 !important;
+}
+
+/* Linea premium debajo del titulo */
+.product-card-name-top::after,
+.new-product-name-top::after,
+.related-card-name-top::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 0 !important;
+    transform: translateX(-50%) !important;
+
+    width: min(112px, 64%) !important;
+    height: 1px !important;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(183, 148, 255, 0.9),
+        rgba(245, 241, 232, 0.36),
+        transparent
+    ) !important;
+}
+
+.product-card:hover .product-card-name-top::after,
+.new-product-card:hover .new-product-name-top::after,
+.related-card:hover .related-card-name-top::after {
+    width: min(156px, 82%) !important;
+}
+
+/* Precio diferente al titulo: mas limpio y editorial */
+.product-card-info,
+.related-card-info {
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.product-card-info::before {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 42px !important;
+    opacity: 0.65 !important;
+}
+
+.product-card-price,
+.related-card-price {
+    margin: 0 auto !important;
+    width: fit-content !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 8px 14px !important;
+    border-radius: 10px !important;
+
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018)),
+        rgba(5, 3, 8, 0.58) !important;
+
+    border: 1px solid rgba(245, 241, 232, 0.12) !important;
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.22),
+        0 0 0 1px rgba(183, 148, 255, 0.045) inset !important;
+
+    color: rgba(220, 202, 255, 0.95) !important;
+    font-family: "Manrope", system-ui, sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 850 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+.product-card:hover .product-card-price,
+.related-card:hover .related-card-price {
+    border-color: rgba(183, 148, 255, 0.28) !important;
+    color: rgba(245, 241, 232, 0.98) !important;
+    background:
+        linear-gradient(180deg, rgba(183, 148, 255, 0.105), rgba(255, 255, 255, 0.025)),
+        rgba(5, 3, 8, 0.66) !important;
+}
+
+/* Tema Angelic */
+body[data-theme="angelic"] .product-card-name-top,
+body[data-theme="angelic"] .new-product-name-top,
+body[data-theme="angelic"] .related-card-name-top {
+    color: rgba(32, 23, 37, 0.96) !important;
+}
+
+body[data-theme="angelic"] .product-card-name-top::after,
+body[data-theme="angelic"] .new-product-name-top::after,
+body[data-theme="angelic"] .related-card-name-top::after {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(141, 99, 207, 0.72),
+        rgba(203, 167, 106, 0.5),
+        transparent
+    ) !important;
+}
+
+body[data-theme="angelic"] .product-card-price,
+body[data-theme="angelic"] .related-card-price {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 250, 241, 0.46)),
+        rgba(255, 250, 241, 0.78) !important;
+    border-color: rgba(45, 31, 58, 0.12) !important;
+    color: rgba(80, 50, 126, 0.96) !important;
+    box-shadow:
+        0 10px 22px rgba(83, 61, 109, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.56) inset !important;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top {
+        top: 14px !important;
+        width: calc(100% - 34px) !important;
+        max-width: calc(100% - 34px) !important;
+        font-size: 1.08rem !important;
+        letter-spacing: 0.13em !important;
+        word-spacing: 0.22em !important;
+        line-height: 1.32 !important;
+    }
+
+    .product-card-price,
+    .related-card-price {
+        font-size: 0.86rem !important;
+        padding: 8px 13px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top {
+        top: 13px !important;
+        width: calc(100% - 28px) !important;
+        max-width: calc(100% - 28px) !important;
+        font-size: 1rem !important;
+        letter-spacing: 0.11em !important;
+        word-spacing: 0.18em !important;
+        line-height: 1.3 !important;
+        padding-bottom: 9px !important;
+    }
+
+    .product-card-price,
+    .related-card-price {
+        font-size: 0.82rem !important;
+        padding: 7px 12px !important;
+        border-radius: 9px !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top {
+        font-size: 0.94rem !important;
+        letter-spacing: 0.095em !important;
+        word-spacing: 0.12em !important;
+    }
+
+    .product-card-price,
+    .related-card-price {
+        font-size: 0.78rem !important;
+    }
+}
+
+/* ================================
+   AJUSTE FINAL - BOTONES CERRAR
+================================ */
+
+.armario-close,
+.product-modal .product-panel-luxury > .modal-close {
+    right: 38px !important;
+}
+
+/* Tablet */
+@media (max-width: 860px) {
+    .armario-close,
+    .product-modal .product-panel-luxury > .modal-close {
+        right: 30px !important;
+    }
+}
+
+/* Movil */
+@media (max-width: 700px) {
+    .armario-close,
+    .product-modal .product-panel-luxury > .modal-close {
+        right: 24px !important;
+    }
+}
+
+/* Movil pequeno */
+@media (max-width: 480px) {
+    .armario-close,
+    .product-modal .product-panel-luxury > .modal-close {
+        right: 20px !important;
+    }
+}
+
+/* ================================
+   AJUSTE FINAL - MODAL PRODUCTO V2
+================================ */
+
+/* Galeria: colores verticales + imagen principal + miniaturas abajo */
+.product-gallery-luxury {
+    display: grid !important;
+    grid-template-columns: 86px minmax(0, 1fr) !important;
+    gap: 18px !important;
+    align-items: stretch !important;
+    padding-right: 0 !important;
+}
+
+.product-color-rail {
+    min-width: 0 !important;
+    padding: 18px 10px !important;
+    border-radius: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    background:
+        radial-gradient(circle at top, rgba(183, 148, 255, 0.11), transparent 42%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.018)),
+        rgba(8, 6, 12, 0.72) !important;
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset !important;
+}
+
+.product-color-rail .product-section-label {
+    writing-mode: vertical-rl !important;
+    transform: rotate(180deg) !important;
+    margin: 0 !important;
+    font-size: 0.58rem !important;
+    letter-spacing: 0.22em !important;
+}
+
+.product-color-rail .option-row-colors {
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+}
+
+.product-color-rail .color-button {
+    width: 38px !important;
+    height: 38px !important;
+    flex: 0 0 auto !important;
+}
+
+.product-main-gallery-area {
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+}
+
+.product-gallery-luxury .product-main-frame {
+    width: 100% !important;
+}
+
+.product-thumbs-under-main {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 2px 2px 10px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: thin !important;
+}
+
+.product-thumbs-under-main .thumb-button {
+    flex: 0 0 86px !important;
+    width: 86px !important;
+    height: 106px !important;
+    border-radius: 16px !important;
+}
+
+.product-thumbs-under-main .thumb-button img {
+    object-fit: contain !important;
+}
+
+/* Caja de compra: primero tallas, despues precio */
+.product-purchase-card {
+    width: min(100%, 920px) !important;
+    margin: 26px auto 0 !important;
+    padding: 24px 26px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.65fr) !important;
+    gap: 22px !important;
+    align-items: center !important;
+}
+
+.product-size-block {
+    order: 1 !important;
+}
+
+.product-price-block {
+    order: 2 !important;
+}
+
+.product-purchase-card .option-row-sizes {
+    justify-content: center !important;
+}
+
+.product-price-block .modal-price {
+    margin: 0 auto !important;
+}
+
+/* Descripcion arriba de material, en la misma seccion */
+.product-copy-card {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    align-content: center !important;
+}
+
+.product-copy-section {
+    position: relative !important;
+    padding: 0 0 22px !important;
+    text-align: center !important;
+}
+
+.product-copy-section:not(:last-child)::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 0 !important;
+    width: min(220px, 70%) !important;
+    height: 1px !important;
+    transform: translateX(-50%) !important;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(183, 148, 255, 0.52),
+        rgba(245, 241, 232, 0.20),
+        transparent
+    ) !important;
+}
+
+.product-copy-card .product-section-label {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.product-copy-card .modal-description,
+.product-copy-card .modal-material {
+    max-width: 54ch !important;
+    margin: 0 auto !important;
+    color: rgba(226, 220, 236, 0.90) !important;
+    font-family: "Manrope", system-ui, sans-serif !important;
+    font-size: 1rem !important;
+    line-height: 1.76 !important;
+    letter-spacing: normal !important;
+    text-align: center !important;
+    white-space: pre-line !important;
+}
+
+/* Boton final WhatsApp antes de Mas por ver */
+.product-final-whatsapp-wrap {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 34px auto 10px !important;
+}
+
+.product-final-whatsapp {
+    width: min(100%, 520px) !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    position: relative !important;
+    overflow: hidden !important;
+
+    background:
+        linear-gradient(135deg, rgba(245, 241, 232, 0.98), rgba(220, 202, 255, 0.92)),
+        rgba(245, 241, 232, 0.94) !important;
+
+    color: #050308 !important;
+    border: 1px solid rgba(245, 241, 232, 0.44) !important;
+    box-shadow:
+        0 20px 42px rgba(0, 0, 0, 0.34),
+        0 0 26px rgba(183, 148, 255, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.20) inset !important;
+
+    font-size: 0.78rem !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+}
+
+.product-final-whatsapp::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.48),
+        transparent
+    ) !important;
+    transform: translateX(-120%) !important;
+    transition: transform 0.65s ease !important;
+}
+
+.product-final-whatsapp:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.04) !important;
+    box-shadow:
+        0 26px 52px rgba(0, 0, 0, 0.42),
+        0 0 34px rgba(183, 148, 255, 0.22),
+        0 0 0 1px rgba(255, 255, 255, 0.24) inset !important;
+}
+
+.product-final-whatsapp:hover::before {
+    transform: translateX(120%) !important;
+}
+
+/* Tema Angelic */
+body[data-theme="angelic"] .product-color-rail,
+body[data-theme="angelic"] .product-copy-card {
+    background:
+        radial-gradient(circle at top, rgba(218, 197, 255, 0.22), transparent 42%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 250, 241, 0.52)),
+        rgba(255, 250, 241, 0.86) !important;
+    border-color: rgba(45, 31, 58, 0.12) !important;
+}
+
+body[data-theme="angelic"] .product-copy-card .modal-description,
+body[data-theme="angelic"] .product-copy-card .modal-material {
+    color: rgba(83, 73, 91, 0.84) !important;
+}
+
+body[data-theme="angelic"] .product-final-whatsapp {
+    background:
+        linear-gradient(135deg, rgba(32, 23, 37, 0.96), rgba(80, 50, 126, 0.94)),
+        rgba(32, 23, 37, 0.94) !important;
+    color: #fffaf1 !important;
+    border-color: rgba(141, 99, 207, 0.26) !important;
+}
+
+/* Responsive tablet */
+@media (max-width: 980px) {
+    .product-gallery-luxury {
+        grid-template-columns: 74px minmax(0, 1fr) !important;
+        gap: 14px !important;
+    }
+
+    .product-color-rail {
+        padding: 16px 8px !important;
+        border-radius: 22px !important;
+    }
+
+    .product-color-rail .color-button {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .product-thumbs-under-main .thumb-button {
+        flex-basis: 76px !important;
+        width: 76px !important;
+        height: 96px !important;
+    }
+
+    .product-purchase-card {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .product-price-block {
+        padding-top: 18px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+}
+
+/* Responsive movil */
+@media (max-width: 700px) {
+    .product-gallery-luxury {
+        grid-template-columns: 58px minmax(0, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .product-color-rail {
+        padding: 12px 6px !important;
+        border-radius: 18px !important;
+        gap: 12px !important;
+    }
+
+    .product-color-rail .product-section-label {
+        font-size: 0.5rem !important;
+        letter-spacing: 0.18em !important;
+    }
+
+    .product-color-rail .option-row-colors {
+        gap: 10px !important;
+    }
+
+    .product-color-rail .color-button {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .product-thumbs-under-main {
+        gap: 8px !important;
+        padding-bottom: 8px !important;
+    }
+
+    .product-thumbs-under-main .thumb-button {
+        flex-basis: 64px !important;
+        width: 64px !important;
+        height: 82px !important;
+        border-radius: 13px !important;
+    }
+
+    .product-purchase-card {
+        margin-top: 20px !important;
+        padding: 20px !important;
+        border-radius: 22px !important;
+    }
+
+    .product-copy-card {
+        gap: 20px !important;
+    }
+
+    .product-copy-card .modal-description,
+    .product-copy-card .modal-material {
+        font-size: 0.92rem !important;
+        line-height: 1.62 !important;
+    }
+
+    .product-final-whatsapp-wrap {
+        margin-top: 28px !important;
+    }
+
+    .product-final-whatsapp {
+        min-height: 54px !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.13em !important;
+        padding: 15px 18px !important;
+    }
+}
+
+/* Responsive movil pequeno */
+@media (max-width: 420px) {
+    .product-gallery-luxury {
+        grid-template-columns: 50px minmax(0, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .product-color-rail .color-button {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .product-thumbs-under-main .thumb-button {
+        flex-basis: 58px !important;
+        width: 58px !important;
+        height: 74px !important;
+    }
+
+    .product-purchase-card {
+        padding: 16px !important;
+    }
+
+    .product-final-whatsapp {
+        font-size: 0.66rem !important;
+        letter-spacing: 0.10em !important;
+    }
+}
+
+/* ================================
+   AJUSTE FINAL - MODAL PRODUCTO COLORES DERECHA + WPP
+================================ */
+
+/* Galeria: imagen principal a la izquierda, colores a la derecha */
+.product-gallery-luxury {
+    grid-template-columns: minmax(0, 1fr) 86px !important;
+    align-items: start !important;
+}
+
+/* Imagen y miniaturas primero */
+.product-main-gallery-area {
+    order: 1 !important;
+}
+
+/* Selector de colores al lado derecho */
+.product-color-rail {
+    order: 2 !important;
+    height: min(66vh, 680px) !important;
+    min-height: 500px !important;
+    max-height: min(66vh, 680px) !important;
+
+    align-self: start !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    padding: 20px 10px !important;
+}
+
+/* Titulo y colores centrados dentro del recuadro */
+.product-color-rail .product-section-label {
+    width: auto !important;
+    margin: 0 !important;
+    text-align: center !important;
+}
+
+.product-color-rail .option-row-colors {
+    width: 100% !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 13px !important;
+}
+
+/* Boton WPP mas luxury sin exagerar */
+.product-final-whatsapp {
+    isolation: isolate !important;
+    position: relative !important;
+    box-shadow:
+        0 20px 42px rgba(0, 0, 0, 0.34),
+        0 0 24px rgba(183, 148, 255, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.20) inset !important;
+}
+
+.product-final-whatsapp::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: -2px !important;
+    z-index: -1 !important;
+    border-radius: inherit !important;
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(183, 148, 255, 0.38),
+            rgba(109, 40, 217, 0.16) 42%,
+            transparent 72%
+        ) !important;
+    opacity: 0.55 !important;
+    filter: blur(14px) !important;
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease !important;
+}
+
+.product-final-whatsapp:hover {
+    transform: translateY(-3px) !important;
+    box-shadow:
+        0 28px 58px rgba(0, 0, 0, 0.44),
+        0 0 34px rgba(183, 148, 255, 0.30),
+        0 0 62px rgba(109, 40, 217, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.26) inset !important;
+}
+
+.product-final-whatsapp:hover::after {
+    opacity: 0.95 !important;
+    transform: scale(1.035) !important;
+}
+
+/* Tema Angelic */
+body[data-theme="angelic"] .product-final-whatsapp::after {
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(203, 167, 106, 0.34),
+            rgba(141, 99, 207, 0.16) 44%,
+            transparent 72%
+        ) !important;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+    .product-gallery-luxury {
+        grid-template-columns: minmax(0, 1fr) 74px !important;
+    }
+
+    .product-color-rail {
+        height: min(66vh, 680px) !important;
+        min-height: 500px !important;
+        max-height: min(66vh, 680px) !important;
+    }
+}
+
+/* Movil */
+@media (max-width: 700px) {
+    .product-gallery-luxury {
+        grid-template-columns: minmax(0, 1fr) 58px !important;
+        gap: 10px !important;
+    }
+
+    .product-color-rail {
+        height: 54vh !important;
+        min-height: 54vh !important;
+        max-height: 54vh !important;
+        padding: 12px 6px !important;
+    }
+
+    .product-color-rail .option-row-colors {
+        gap: 10px !important;
+    }
+}
+
+/* Movil pequeno */
+@media (max-width: 420px) {
+    .product-gallery-luxury {
+        grid-template-columns: minmax(0, 1fr) 50px !important;
+        gap: 8px !important;
+    }
+
+    .product-color-rail {
+        height: 54vh !important;
+        min-height: 54vh !important;
+        max-height: 54vh !important;
+    }
+}
+
+/* ================================
+   AJUSTE FINAL - MODAL PRECIO, COLOR RAIL Y THUMBS SCROLL
+================================ */
+
+/* Precio del modal un poco mas grande */
+.product-purchase-card .product-price-block .modal-price,
+.product-price-block .modal-price {
+    font-size: clamp(1.18rem, 1.35vw, 1.45rem) !important;
+    padding: 10px 16px !important;
+    font-weight: 950 !important;
+}
+
+/* Barra de colores centrada con respecto a la imagen principal */
+.product-gallery-luxury {
+    align-items: start !important;
+}
+
+.product-color-rail {
+    align-self: start !important;
+    height: min(66vh, 680px) !important;
+    min-height: 500px !important;
+    max-height: min(66vh, 680px) !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.product-main-gallery-area {
+    align-self: start !important;
+}
+
+/* Miniaturas debajo de la imagen principal */
+.product-thumbs-under-main {
+    position: relative !important;
+    z-index: 8 !important;
+    transition:
+        transform 0.42s ease,
+        opacity 0.42s ease,
+        filter 0.42s ease !important;
+}
+
+/* Cuando haces scroll hacia abajo, las miniaturas suben y se sobreponen */
+.product-thumbs-under-main.thumbs-over-main {
+    transform: translateY(-76px) !important;
+    opacity: 0.96 !important;
+    filter:
+        drop-shadow(0 18px 28px rgba(0, 0, 0, 0.42))
+        drop-shadow(0 0 18px rgba(183, 148, 255, 0.12)) !important;
+}
+
+.product-thumbs-under-main.thumbs-over-main .thumb-button {
+    background: rgba(5, 3, 8, 0.78) !important;
+    backdrop-filter: blur(10px) !important;
+    border-color: rgba(183, 148, 255, 0.28) !important;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+    .product-purchase-card .product-price-block .modal-price,
+    .product-price-block .modal-price {
+        font-size: 1.22rem !important;
+    }
+
+    .product-color-rail {
+        height: min(66vh, 680px) !important;
+        min-height: 500px !important;
+        max-height: min(66vh, 680px) !important;
+    }
+
+    .product-thumbs-under-main.thumbs-over-main {
+        transform: translateY(-66px) !important;
+    }
+}
+
+/* Movil */
+@media (max-width: 700px) {
+    .product-purchase-card .product-price-block .modal-price,
+    .product-price-block .modal-price {
+        font-size: 1.08rem !important;
+        padding: 9px 14px !important;
+    }
+
+    .product-color-rail {
+        height: 54vh !important;
+        min-height: 54vh !important;
+        max-height: 54vh !important;
+    }
+
+    .product-thumbs-under-main.thumbs-over-main {
+        transform: translateY(-52px) !important;
+    }
+}
+
+/* Movil pequeno */
+@media (max-width: 420px) {
+    .product-purchase-card .product-price-block .modal-price,
+    .product-price-block .modal-price {
+        font-size: 1rem !important;
+    }
+
+    .product-thumbs-under-main.thumbs-over-main {
+        transform: translateY(-44px) !important;
+    }
+}

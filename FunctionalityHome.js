@@ -1061,6 +1061,8 @@ function openProduct(productId, openedFromArmario = false) {
                 top: 0,
                 behavior: "auto"
             });
+
+            resetProductThumbsScrollEffect();
             closeModalButton?.focus();
         } catch (error) {
             console.error("Error al abrir el producto:", error);
@@ -1300,11 +1302,51 @@ function initializeVisualCards() {
 }
 
 /* ================================
+   EFECTO SCROLL MINIATURAS MODAL
+================================ */
+let lastProductModalScrollTop = 0;
+
+function handleProductThumbsScrollEffect() {
+    const productPanel = document.querySelector(".product-panel-luxury");
+    const thumbs = document.getElementById("miniaturas");
+
+    if (!productPanel || !thumbs) return;
+
+    const currentScrollTop = productPanel.scrollTop;
+    const isScrollingDown = currentScrollTop > lastProductModalScrollTop;
+    const hasScrolledEnough = currentScrollTop > 80;
+
+    if (isScrollingDown && hasScrolledEnough) {
+        thumbs.classList.add("thumbs-over-main");
+    } else {
+        thumbs.classList.remove("thumbs-over-main");
+    }
+
+    lastProductModalScrollTop = Math.max(currentScrollTop, 0);
+}
+
+function resetProductThumbsScrollEffect() {
+    const productPanel = document.querySelector(".product-panel-luxury");
+    const thumbs = document.getElementById("miniaturas");
+
+    lastProductModalScrollTop = 0;
+    thumbs?.classList.remove("thumbs-over-main");
+
+    if (productPanel) {
+        productPanel.scrollTop = 0;
+    }
+}
+
+/* ================================
    EVENTOS
 ================================ */
 themeToggles.forEach((button) => {
     button.addEventListener("click", toggleTheme);
 });
+
+document
+    .querySelector(".product-panel-luxury")
+    ?.addEventListener("scroll", handleProductThumbsScrollEffect, { passive: true });
 
 newNextButton?.addEventListener("click", () => {
     moveNewProducts(1);
