@@ -1,4 +1,14 @@
 /* ================================
+   DOCUMENTACION RAPIDA - FunctionalityHome.js
+   - Configuracion: WhatsApp, tallas, materiales y colores por coleccion.
+   - Productos: datos base, colecciones NOX/Cromo y listas de renderizado.
+   - Render: crea cards, carruseles, armarios y productos relacionados.
+   - Modales: abre/cierra Armario completo, categorias y detalle de producto.
+   - Interaccion: hover, seleccion de color/talla, WhatsApp, menu movil y tema.
+   - Rendimiento: renderiza secciones solo cuando se necesitan.
+================================ */
+
+/* ================================
    CONFIGURACION GENERAL
 ================================ */
 const whatsappNumber = "573160551532";
@@ -10,6 +20,7 @@ const baseSizes = [
     { label: "XL", enabled: true }
 ];
 
+// Duplica las tallas base y permite desactivar tallas puntuales.
 function cloneSizes(disabledSizes = []) {
     return baseSizes.map((size) => ({
         ...size,
@@ -17,6 +28,7 @@ function cloneSizes(disabledSizes = []) {
     }));
 }
 
+// Crea las variantes de color y rutas de imagen para Coleccion NOX.
 function createNoxColors(baseName, includeRedBlack = false) {
     const folder = "Images/Coleccion_NOX";
     const colors = {
@@ -53,6 +65,7 @@ function createNoxColors(baseName, includeRedBlack = false) {
     return colors;
 }
 
+// Crea las variantes de color y rutas de imagen para Coleccion Cromo.
 function createCromoColors(baseName, categoryFolder = "Camisas") {
     const folder = `Images/Coleccion_NOX_Cromo/${categoryFolder}`;
 
@@ -151,6 +164,7 @@ const cromoCopy = {
 const shirtMaterial = "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250";
 const cropTopMaterial = "CropTop\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250";
 
+// Une nombre, descripcion, precio, material, categoria, coleccion y colores en un producto.
 function createProduct({ id, designId, collection, category, colors, available = true, material = shirtMaterial, description, price }) {
     const copy = productCopy[designId];
 
@@ -313,6 +327,7 @@ const THEME_COLORS = {
 };
 const prefersReducedMotionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
 
+// Respeta usuarios que prefieren menos animacion.
 function shouldReduceMotion() {
     return Boolean(prefersReducedMotionQuery?.matches);
 }
@@ -320,22 +335,26 @@ function shouldReduceMotion() {
 /* ================================
    UTILIDADES
 ================================ */
+// Valida si un producto puede mostrarse.
 function isProductAvailable(productId) {
     const product = products[productId];
     return product && product.available !== false;
 }
 
+// Obtiene el primer color activo del producto.
 function getFirstEnabledColor(product) {
     const availableColor = Object.entries(product.colors).find(([, color]) => color.enabled !== false);
     return availableColor ? availableColor[0] : Object.keys(product.colors)[0];
 }
 
+// Obtiene la imagen principal usada en cards y previews.
 function getPrimaryImage(product) {
     const colorName = getFirstEnabledColor(product);
     const gallery = product.colors[colorName]?.gallery || [];
     return gallery[0] || "";
 }
 
+// Define fondo oscuro o claro segun el color de la prenda.
 function getGarmentBackgroundClass(value = "") {
     const normalizedValue = value.toLowerCase();
 
@@ -350,6 +369,7 @@ function getGarmentBackgroundClass(value = "") {
     return "garment-bg-dark";
 }
 
+// Reune imagenes activas de un producto para previews.
 function getProductPreviewImages(product) {
     return [...new Set(
         Object.values(product.colors)
@@ -359,6 +379,7 @@ function getProductPreviewImages(product) {
     )];
 }
 
+// Busca una variante negra para efectos hover.
 function getBlackVariantImage(product) {
     const blackColor = Object.entries(product.colors).find(([colorName, colorData]) => {
         return colorData.enabled !== false && colorName.toLowerCase().startsWith("negro");
@@ -367,6 +388,7 @@ function getBlackVariantImage(product) {
     return blackColor?.[1]?.gallery?.[0] || "";
 }
 
+// Actualiza el fondo de una card cuando cambia su imagen.
 function updateWardrobeBackground(card, image) {
     if (typeof getGarmentBackgroundClass !== "function") return;
 
@@ -374,6 +396,7 @@ function updateWardrobeBackground(card, image) {
     card.classList.add(getGarmentBackgroundClass(image));
 }
 
+// Calcula cuanto debe desplazarse un carrusel.
 function getScrollAmount(track, cardSelector) {
     const firstCard = track?.querySelector(cardSelector);
     if (!track || !firstCard) return track?.clientWidth || 0;
@@ -385,6 +408,7 @@ function getScrollAmount(track, cardSelector) {
     return cardWidth + gap;
 }
 
+// Reduce texto si no cabe dentro de una card.
 function fitTextToCard(selector, minFontSize = 10) {
     const elements = document.querySelectorAll(selector);
 
@@ -409,6 +433,7 @@ function fitTextToCard(selector, minFontSize = 10) {
     });
 }
 
+// Aplica ajuste de texto a todas las cards visibles.
 function fitAllCardTexts() {
     fitTextToCard(".product-card-name", 9);
     fitTextToCard(".related-card-name", 8);
@@ -416,6 +441,7 @@ function fitAllCardTexts() {
     fitTextToCard(".wardrobe-card-title", 18);
 }
 
+// Lee el tema guardado en el navegador.
 function getSavedTheme() {
     try {
         const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
@@ -425,6 +451,7 @@ function getSavedTheme() {
     }
 }
 
+// Aplica tema Dark o Angelic y guarda preferencia.
 function setTheme(theme, savePreference = true) {
     const activeTheme = theme === "angelic" ? "angelic" : "dark";
     const isAngelic = activeTheme === "angelic";
@@ -450,6 +477,7 @@ function setTheme(theme, savePreference = true) {
     }
 }
 
+// Cambia entre tema Dark y Angelic.
 function toggleTheme() {
     const nextTheme = document.body.dataset.theme === "angelic" ? "dark" : "angelic";
     setTheme(nextTheme);
@@ -458,6 +486,7 @@ function toggleTheme() {
 /* ================================
    HERO
 ================================ */
+// Muestra una imagen del hero.
 function showHeroSlide(index) {
     if (!heroSlides.length) return;
 
@@ -466,6 +495,7 @@ function showHeroSlide(index) {
     heroSlides[currentHeroSlide].classList.add("active");
 }
 
+// Inicia rotacion automatica del hero cuando aplica.
 function startHeroSlider() {
     if (heroSlides.length <= 1 || shouldReduceMotion()) return;
 
@@ -478,6 +508,7 @@ function startHeroSlider() {
 /* ================================
    RENDER DE CARDS
 ================================ */
+// Genera el HTML de una card de producto para grids.
 function createCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
@@ -506,6 +537,7 @@ function createCardMarkup(productId) {
     `;
 }
 
+// Genera el HTML de una card para carruseles de Lo Nuevo.
 function createNewProductMarkup(productId) {
     const product = products[productId];
     if (!product) return "";
@@ -540,6 +572,7 @@ function createNewProductMarkup(productId) {
     `;
 }
 
+// Genera el HTML de una card para Mas por ver.
 function createRelatedCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
@@ -568,6 +601,7 @@ function createRelatedCardMarkup(productId) {
     `;
 }
 
+// Genera los recuadros principales de Armario: Camisas, CropTops y Proximamente.
 function createWardrobeCategoryMarkup(card) {
     const backgroundClass = getGarmentBackgroundClass(card.image || "");
     const disabledClass = card.disabled ? "is-upcoming" : "";
@@ -592,6 +626,7 @@ function createWardrobeCategoryMarkup(card) {
     `;
 }
 
+// Renderiza productos dentro de un grid especifico.
 function renderProductGrid(grid, productIds) {
     if (!grid) return;
 
@@ -601,6 +636,7 @@ function renderProductGrid(grid, productIds) {
         .join("");
 }
 
+// Llena Armario completo con NOX y Cromo cuando se abre.
 function renderProducts() {
     renderProductGrid(ropaCompleta, noxProductIds);
     renderProductGrid(ropaCromoCompleta, cromoProductIds);
@@ -609,6 +645,7 @@ function renderProducts() {
     fitAllCardTexts();
 }
 
+// Llena el carrusel principal de Coleccion NOX.
 function renderNewProducts() {
     if (!newProductsTrack) return;
 
@@ -622,6 +659,7 @@ function renderNewProducts() {
     fitAllCardTexts();
 }
 
+// Llena el carrusel de Coleccion Cromo.
 function renderCromoNewProducts() {
     if (!cromoProductsTrack) return;
 
@@ -635,6 +673,7 @@ function renderCromoNewProducts() {
     fitAllCardTexts();
 }
 
+// Llena los 4 recuadros grandes del Armario.
 function renderWardrobeProducts() {
     if (!wardrobeGrid) return;
 
@@ -646,6 +685,7 @@ function renderWardrobeProducts() {
     fitAllCardTexts();
 }
 
+// Devuelve productos de la coleccion opuesta para Mas por ver.
 function getOppositeCollectionRelatedIds(productId) {
     const product = products[productId];
     if (!product) return [];
@@ -661,6 +701,7 @@ function getOppositeCollectionRelatedIds(productId) {
     return Object.keys(products);
 }
 
+// Renderiza Mas por ver dentro del modal de producto.
 function renderRelatedProducts() {
     if (!relatedProductsTrack || !currentProductId) return;
 
@@ -676,6 +717,7 @@ function renderRelatedProducts() {
 /* ================================
    CARRUSELES Y ROTACION
 ================================ */
+// Mueve el carrusel NOX.
 function moveNewProducts(direction) {
     if (!newProductsTrack) return;
 
@@ -695,6 +737,7 @@ function moveNewProducts(direction) {
     newProductsTrack.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
+// Inicia desplazamiento automatico del carrusel NOX.
 function startNewProductsAutoScroll() {
     if (!newProductsTrack || newProductsTrack.children.length <= 2 || shouldReduceMotion()) return;
 
@@ -704,11 +747,13 @@ function startNewProductsAutoScroll() {
     }, NEW_PRODUCTS_AUTOSCROLL_TIME);
 }
 
+// Detiene desplazamiento automatico del carrusel NOX.
 function stopNewProductsAutoScroll() {
     clearInterval(newProductsAutoScrollInterval);
     newProductsAutoScrollInterval = null;
 }
 
+// Mueve el carrusel Cromo.
 function moveCromoProducts(direction) {
     if (!cromoProductsTrack) return;
 
@@ -728,6 +773,7 @@ function moveCromoProducts(direction) {
     cromoProductsTrack.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
+// Inicia desplazamiento automatico del carrusel Cromo.
 function startCromoProductsAutoScroll() {
     if (!cromoProductsTrack || cromoProductsTrack.children.length <= 2 || shouldReduceMotion()) return;
 
@@ -737,11 +783,13 @@ function startCromoProductsAutoScroll() {
     }, NEW_PRODUCTS_AUTOSCROLL_TIME + 1800);
 }
 
+// Detiene desplazamiento automatico del carrusel Cromo.
 function stopCromoProductsAutoScroll() {
     clearInterval(cromoProductsAutoScrollInterval);
     cromoProductsAutoScrollInterval = null;
 }
 
+// Cambia imagen de una card de armario al pasar el cursor.
 function setWardrobeHoverImage(card, isHovering) {
     const imageElement = card.querySelector(".wardrobe-image");
     if (!imageElement) return;
@@ -775,6 +823,7 @@ function setWardrobeHoverImage(card, isHovering) {
 }
 
 
+// Cambia imagen de los recuadros Camisas/CropTops al pasar el cursor.
 function setCategoryHoverImage(card, isHovering) {
     const imageElement = card.querySelector(".wardrobe-image");
     if (!imageElement) return;
@@ -799,6 +848,7 @@ function setCategoryHoverImage(card, isHovering) {
     }
 }
 
+// Cambia imagen de producto en Armario completo al pasar el cursor.
 function setFullWardrobeHoverImage(card, isHovering) {
     const imageElement = card.querySelector(".product-card-media img");
     const mediaElement = card.querySelector(".product-card-media");
@@ -852,6 +902,7 @@ function setFullWardrobeHoverImage(card, isHovering) {
 }
 
 
+// Cambia imagen de carrusel al pasar el cursor.
 function setCarouselHoverImage(card, isHovering) {
     const imageElement = card.querySelector(".new-product-media img, .related-card-media img");
     const mediaElement = card.querySelector(".new-product-media, .related-card-media");
@@ -903,6 +954,7 @@ function setCarouselHoverImage(card, isHovering) {
     }
 }
 
+// Rota imagenes del armario cuando hay varias previews.
 function rotateWardrobeImages() {
     if (!wardrobeGrid) return;
 
@@ -939,6 +991,7 @@ function rotateWardrobeImages() {
     });
 }
 
+// Inicia rotacion de imagenes del armario.
 function startWardrobeImageSwap() {
     if (!wardrobeGrid || shouldReduceMotion()) return;
 
@@ -946,11 +999,13 @@ function startWardrobeImageSwap() {
     wardrobeImageInterval = setInterval(rotateWardrobeImages, WARDROBE_IMAGE_TIME);
 }
 
+// Detiene rotacion de imagenes del armario.
 function stopWardrobeImageSwap() {
     clearInterval(wardrobeImageInterval);
     wardrobeImageInterval = null;
 }
 
+// Mueve el carrusel Mas por ver.
 function moveRelatedProducts(direction) {
     if (!relatedProductsTrack) return;
 
@@ -958,6 +1013,7 @@ function moveRelatedProducts(direction) {
     relatedProductsTrack.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
+// Desplaza Mas por ver mientras se sostiene hover en flechas.
 function startRelatedHoverScroll(direction) {
     if (shouldReduceMotion()) return;
 
@@ -968,17 +1024,20 @@ function startRelatedHoverScroll(direction) {
     }, 16);
 }
 
+// Detiene desplazamiento continuo de Mas por ver.
 function stopRelatedHoverScroll() {
     clearInterval(relatedHoverScrollInterval);
     relatedHoverScrollInterval = null;
 }
 
+// Pausa animaciones de fondo cuando se abre un modal.
 function pauseBackgroundMotion() {
     stopNewProductsAutoScroll();
     stopCromoProductsAutoScroll();
     stopWardrobeImageSwap();
 }
 
+// Reactiva animaciones cuando no hay modales abiertos.
 function resumeBackgroundMotion() {
     startNewProductsAutoScroll();
     startCromoProductsAutoScroll();
@@ -988,6 +1047,7 @@ function resumeBackgroundMotion() {
 /* ================================
    LOADER GLOBAL
 ================================ */
+// Muestra loader global.
 function showPageLoader() {
     clearTimeout(loaderTimeout);
 
@@ -998,6 +1058,7 @@ function showPageLoader() {
     document.body.classList.add("no-scroll");
 }
 
+// Oculta loader global.
 function hidePageLoader(delay = 0) {
     clearTimeout(loaderTimeout);
 
@@ -1010,6 +1071,7 @@ function hidePageLoader(delay = 0) {
     }, delay);
 }
 
+// Desbloquea nuevas transiciones despues del loader.
 function releasePageTransition() {
     setTimeout(() => {
         isPageTransitioning = false;
@@ -1019,6 +1081,7 @@ function releasePageTransition() {
 /* ================================
    ARMARIO COMPLETO
 ================================ */
+// Abre Armario completo y carga sus productos.
 function openArmarioModal() {
     closeMobileMenu();
     if (!armarioCompleto || isPageTransitioning) return;
@@ -1047,6 +1110,7 @@ function openArmarioModal() {
     }, LOADER_OPEN_DELAY);
 }
 
+// Cierra Armario completo.
 function closeArmarioModal() {
     if (!armarioCompleto || isPageTransitioning) return;
 
@@ -1077,6 +1141,7 @@ function closeArmarioModal() {
 }
 
 
+// Verifica si Armario completo o categorias estan abiertas.
 function isAnyCollectionModalOpen() {
     return Boolean(
         armarioCompleto?.classList.contains("is-open") ||
@@ -1084,6 +1149,7 @@ function isAnyCollectionModalOpen() {
     );
 }
 
+// Abre Camisas o CropTops y renderiza solo esa categoria.
 function openCategoryModal(category) {
     closeMobileMenu();
     if (!categoriaModal || isPageTransitioning) return;
@@ -1136,6 +1202,7 @@ function openCategoryModal(category) {
     }, LOADER_OPEN_DELAY);
 }
 
+// Cierra la ventana de categoria.
 function closeCategoryModal() {
     if (!categoriaModal || isPageTransitioning) return;
 
@@ -1168,6 +1235,7 @@ function closeCategoryModal() {
 /* ================================
    MODAL DE PRODUCTO
 ================================ */
+// Obtiene las imagenes disponibles para el modal del producto.
 function getModalImages(product) {
     return Object.entries(product.colors)
         .filter(([, colorData]) => colorData.enabled !== false)
@@ -1178,6 +1246,8 @@ function getModalImages(product) {
         .filter((item) => item.image);
 }
 
+// Actualiza imagen principal, miniaturas y vista 360.
+// Rellena todo el modal del producto actual.
 function renderModalGallery(product) {
     if (!mainImage || !thumbnailsContainer) return;
 
@@ -1231,6 +1301,7 @@ function renderModalGallery(product) {
         .join("");
 }
 
+// Renderiza botones de color.
 function renderColorOptions(product) {
     if (!colorsContainer) return;
 
@@ -1258,6 +1329,7 @@ function renderColorOptions(product) {
         .join("");
 }
 
+// Renderiza botones de talla.
 function renderSizeOptions(product) {
     if (!sizesContainer) return;
 
@@ -1285,6 +1357,7 @@ function renderSizeOptions(product) {
         .join("");
 }
 
+// Actualiza enlace de WhatsApp con producto, color y talla.
 function updateWhatsAppLink() {
     const product = products[currentProductId];
     if (!product || !whatsappLink) return;
@@ -1327,6 +1400,7 @@ function renderModal() {
     renderRelatedProducts();
 }
 
+// Abre el modal de producto.
 function openProduct(productId, openedFromArmario = false) {
     closeMobileMenu();
     const product = products[productId];
@@ -1374,6 +1448,7 @@ function openProduct(productId, openedFromArmario = false) {
     }, LOADER_OPEN_DELAY);
 }
 
+// Cierra el modal de producto.
 function closeProduct() {
     if (!modal || isPageTransitioning) return;
 
@@ -1406,6 +1481,7 @@ function closeProduct() {
     }, LOADER_OPEN_DELAY);
 }
 
+// Detecta clicks sobre cards de producto.
 function handleProductClick(event) {
     const card = event.target.closest(".product-card");
     if (!card) return;
@@ -1415,6 +1491,7 @@ function handleProductClick(event) {
     openProduct(productId, openedFromArmario);
 }
 
+// Permite activar cards con Enter o Espacio.
 function isKeyboardActivation(event) {
     return event.key === "Enter" || event.key === " ";
 }
@@ -1422,10 +1499,12 @@ function isKeyboardActivation(event) {
 /* ================================
    HEADER Y REVEAL
 ================================ */
+// Cambia el header cuando la pagina hace scroll.
 function updateHeaderState() {
     siteHeader?.classList.toggle("is-scrolled", window.scrollY > 10);
 }
 
+// Marca el link activo segun la seccion visible.
 function updateActiveNav() {
     if (!siteHeader) return;
 
@@ -1468,6 +1547,7 @@ const revealObserver = "IntersectionObserver" in window
     )
     : null;
 
+// Activa animaciones reveal cuando los elementos entran en pantalla.
 function activateReveal() {
     const revealElements = document.querySelectorAll(".reveal:not(.is-observed)");
 
@@ -1489,6 +1569,7 @@ function activateReveal() {
 const navMenuToggle = document.getElementById("navMenuToggle");
 const mobileNavPanel = document.getElementById("mobileNavPanel");
 
+// Cierra el menu movil.
 function closeMobileMenu() {
     if (!navMenuToggle || !mobileNavPanel || !siteHeader) return;
 
@@ -1499,6 +1580,7 @@ function closeMobileMenu() {
     document.body.classList.remove("nav-open");
 }
 
+// Abre o cierra el menu movil.
 function toggleMobileMenu() {
     if (!navMenuToggle || !mobileNavPanel || !siteHeader) return;
 
@@ -1511,6 +1593,7 @@ function toggleMobileMenu() {
 }
 
 
+// Lanza animacion puntual del logo.
 function playHeaderLogoClickSpin() {
     if (!headerLogoLink) return;
 
@@ -1526,6 +1609,7 @@ function playHeaderLogoClickSpin() {
 let visualLightbox = null;
 let lastFocusedBeforeVisualModal = null;
 
+// Crea una ventana para ampliar imagenes de Nosotros.
 function getVisualLightbox() {
     if (visualLightbox) return visualLightbox;
 
@@ -1548,6 +1632,7 @@ function getVisualLightbox() {
     return visualLightbox;
 }
 
+// Abre la imagen ampliada.
 function openVisualLightbox(imageElement) {
     if (!imageElement) return;
 
@@ -1566,6 +1651,7 @@ function openVisualLightbox(imageElement) {
     closeButton?.focus();
 }
 
+// Cierra la imagen ampliada.
 function closeVisualLightbox() {
     if (!visualLightbox?.classList.contains("is-open")) return;
 
@@ -1583,6 +1669,7 @@ function closeVisualLightbox() {
     lastFocusedBeforeVisualModal = null;
 }
 
+// Conecta las imagenes de Nosotros con el lightbox.
 function initializeVisualCards() {
     document.querySelectorAll(".nosotros-visual .visual-card").forEach((card) => {
         const imageElement = card.querySelector("img");
@@ -1607,6 +1694,7 @@ function initializeVisualCards() {
 ================================ */
 let lastProductModalScrollTop = 0;
 
+// Hace que las miniaturas suban al bajar scroll en el modal.
 function handleProductThumbsScrollEffect() {
     const productPanel = document.querySelector(".product-panel-luxury");
     const thumbs = document.getElementById("miniaturas");
@@ -1626,6 +1714,7 @@ function handleProductThumbsScrollEffect() {
     lastProductModalScrollTop = Math.max(currentScrollTop, 0);
 }
 
+// Reinicia posicion de miniaturas al abrir producto.
 function resetProductThumbsScrollEffect() {
     const productPanel = document.querySelector(".product-panel-luxury");
     const thumbs = document.getElementById("miniaturas");
@@ -1753,6 +1842,7 @@ scrollToRelatedButton?.addEventListener("click", () => {
     });
 });
 
+// Conecta eventos de click, teclado y hover en grids renderizados.
 function bindProductGridEvents(grid) {
     if (!grid) return;
 
@@ -2081,6 +2171,7 @@ if ("IntersectionObserver" in window) {
 /* ================================
    RESPONSIVE FIX: ALTURA REAL EN MOVIL
 ================================ */
+// Guarda la altura real de pantalla para responsive movil.
 function updateAppViewportHeight() {
     document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
 }
