@@ -1496,3 +1496,147 @@ body[data-theme="angelic"] #categoriaTitulo{color:rgba(32,23,37,0.96) !important
         min-height:76px !important;
     }
 }
+
+/* ================================
+   RESPONSIVE MOBILE - CARDS PRODUCTO
+   Ajusta titulos, precios y espacios en cards para celular.
+================================ */
+@media (max-width: 700px) {
+    .product-card,
+    .new-product-card,
+    .related-card {
+        overflow: hidden !important;
+    }
+
+    .armario-panel .armario-grid .product-card-name-top,
+    #ropaCompleta .product-card-name-top,
+    #ropaCromoCompleta .product-card-name-top,
+    #categoriaNoxGrid .product-card-name-top,
+    #categoriaCromoGrid .product-card-name-top,
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top {
+        top: 15px !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        width: calc(100% - 34px) !important;
+        max-width: calc(100% - 34px) !important;
+        padding: 0 0 9px !important;
+        margin: 0 !important;
+        text-align: center !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        font-size: clamp(0.98rem, 4.2vw, 1.18rem) !important;
+        letter-spacing: 0.085em !important;
+        word-spacing: 0.08em !important;
+        line-height: 1.24 !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        z-index: 8 !important;
+    }
+
+    .armario-panel .armario-grid .product-card-name-top::after,
+    #ropaCompleta .product-card-name-top::after,
+    #ropaCromoCompleta .product-card-name-top::after,
+    #categoriaNoxGrid .product-card-name-top::after,
+    #categoriaCromoGrid .product-card-name-top::after,
+    .product-card-name-top::after,
+    .new-product-name-top::after,
+    .related-card-name-top::after {
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        width: min(96px, 62%) !important;
+        bottom: 0 !important;
+    }
+
+    .armario-panel .armario-grid .product-card-info,
+    #ropaCompleta .product-card-info,
+    #ropaCromoCompleta .product-card-info,
+    #categoriaNoxGrid .product-card-info,
+    #categoriaCromoGrid .product-card-info {
+        min-height: 86px !important;
+        padding: 20px 18px 22px !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    .armario-panel .armario-grid .product-card-price,
+    #ropaCompleta .product-card-price,
+    #ropaCromoCompleta .product-card-price,
+    #categoriaNoxGrid .product-card-price,
+    #categoriaCromoGrid .product-card-price {
+        margin: 0 auto !important;
+        font-size: 0.86rem !important;
+        padding: 8px 13px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .armario-panel .armario-grid .product-card-name-top,
+    #ropaCompleta .product-card-name-top,
+    #ropaCromoCompleta .product-card-name-top,
+    #categoriaNoxGrid .product-card-name-top,
+    #categoriaCromoGrid .product-card-name-top,
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top {
+        top: 13px !important;
+        width: calc(100% - 28px) !important;
+        max-width: calc(100% - 28px) !important;
+        font-size: clamp(0.88rem, 4.6vw, 1.04rem) !important;
+        letter-spacing: 0.07em !important;
+        word-spacing: 0.04em !important;
+        line-height: 1.22 !important;
+        padding-bottom: 8px !important;
+    }
+
+    .armario-panel .armario-grid .product-card-name-top::after,
+    #ropaCompleta .product-card-name-top::after,
+    #ropaCromoCompleta .product-card-name-top::after,
+    #categoriaNoxGrid .product-card-name-top::after,
+    #categoriaCromoGrid .product-card-name-top::after,
+    .product-card-name-top::after,
+    .new-product-name-top::after,
+    .related-card-name-top::after {
+        width: min(82px, 58%) !important;
+    }
+
+    .armario-panel .armario-grid .product-card-info,
+    #ropaCompleta .product-card-info,
+    #ropaCromoCompleta .product-card-info,
+    #categoriaNoxGrid .product-card-info,
+    #categoriaCromoGrid .product-card-info {
+        min-height: 78px !important;
+        padding: 18px 16px 20px !important;
+    }
+
+    .armario-panel .armario-grid .product-card-price,
+    #ropaCompleta .product-card-price,
+    #ropaCromoCompleta .product-card-price,
+    #categoriaNoxGrid .product-card-price,
+    #categoriaCromoGrid .product-card-price {
+        font-size: 0.8rem !important;
+        padding: 7px 12px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .armario-panel .armario-grid .product-card-name-top,
+    #ropaCompleta .product-card-name-top,
+    #ropaCromoCompleta .product-card-name-top,
+    #categoriaNoxGrid .product-card-name-top,
+    #categoriaCromoGrid .product-card-name-top,
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top {
+        font-size: 0.82rem !important;
+        letter-spacing: 0.055em !important;
+        word-spacing: 0.02em !important;
+    }
+}
