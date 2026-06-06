@@ -1,5 +1,5 @@
 /* ================================
-   CONFIGURACIÓN GENERAL
+   CONFIGURACION GENERAL
 ================================ */
 const whatsappNumber = "573160551532";
 
@@ -58,32 +58,32 @@ function createColors(baseName, includeRedBlack = false) {
 const products = {
     1: {
         name: "Heart Cross",
-        description: "Un símbolo afilado que nace del vacío. Una pieza limpia, oscura y elegante para quienes imponen presencia sin decir demasiado.",
-        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
+        description: "Un simbolo afilado que nace del vacio. Una pieza limpia, oscura y elegante para quienes imponen presencia sin decir demasiado.",
+        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D1", true)
     },
     2: {
         name: "Tribal Cross",
-        description: "Trazos curvos y espinas visuales recorren la prenda como una marca nocturna. Diseñada para destacar con carácter y misterio.",
-        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
+        description: "Trazos curvos y espinas visuales recorren la prenda como una marca nocturna. Disenada para destacar con caracter y misterio.",
+        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
         price: "$95.000",
         sizes: cloneSizes(),
         colors: createColors("D2")
     },
     3: {
         name: "Framing",
-        description: "Una composición oscura de energía silenciosa. Su diseño mezcla fuerza, elegancia y una identidad que no busca aprobación.",
-        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
+        description: "Una composicion oscura de energia silenciosa. Su diseno mezcla fuerza, elegancia y una identidad que no busca aprobacion.",
+        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
         price: "$85.000",
         sizes: cloneSizes(),
         colors: createColors("D3")
     },
     4: {
         name: "Demonic Flash",
-        description: "Un diseño de presencia intensa, creado para quienes caminan entre lo minimalista y lo agresivo sin perder sofisticación.",
-        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
+        description: "Un diseno de presencia intensa, creado para quienes caminan entre lo minimalista y lo agresivo sin perder sofisticacion.",
+        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D4")
@@ -91,7 +91,7 @@ const products = {
     5: {
         name: "Chain",
         description: "Una pieza marcada por el contraste y la sombra. Sutil a primera vista, pero con una esencia rebelde imposible de ignorar.",
-        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
+        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D5")
@@ -99,16 +99,16 @@ const products = {
     6: {
         name: "Abyss Beast",
         available: false,
-        description: "Espinas violetas atraviesan la prenda como una herida elegante. Un diseño agresivo, oscuro y dominante nacido desde el abismo.",
-        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
+        description: "Espinas violetas atraviesan la prenda como una herida elegante. Un diseno agresivo, oscuro y dominante nacido desde el abismo.",
+        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D6")
     },
     7: {
         name: "Winged Arcane",
-        description: "Un sello vertical de apariencia mística y ornamental. Una pieza creada para vestir elegancia oscura con aire ceremonial.",
-        material: "Oversize\n80% Algodón\n16% Poliéster\n4% Spandex\nGramaje 250",
+        description: "Un sello vertical de apariencia mistica y ornamental. Una pieza creada para vestir elegancia oscura con aire ceremonial.",
+        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
         price: "$75.000",
         sizes: cloneSizes(),
         colors: createColors("D7")
@@ -190,6 +190,11 @@ const THEME_COLORS = {
     dark: "#050308",
     angelic: "#fffaf1"
 };
+const prefersReducedMotionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+
+function shouldReduceMotion() {
+    return Boolean(prefersReducedMotionQuery?.matches);
+}
 
 /* ================================
    UTILIDADES
@@ -341,7 +346,7 @@ function showHeroSlide(index) {
 }
 
 function startHeroSlider() {
-    if (heroSlides.length <= 1) return;
+    if (heroSlides.length <= 1 || shouldReduceMotion()) return;
 
     clearInterval(heroSlideInterval);
     heroSlideInterval = setInterval(() => {
@@ -365,6 +370,9 @@ function createCardMarkup(productId) {
             data-product-hover-image="${blackImage}"
             data-product-before-hover-image=""
             data-product-is-hovering="false"
+            role="button"
+            tabindex="0"
+            aria-label="Ver detalle de ${product.name}"
         >
             <h3 class="product-card-name product-card-name-top">${product.name}</h3>
             <div class="product-card-media ${backgroundClass}">
@@ -392,6 +400,9 @@ function createNewProductMarkup(productId) {
             data-carousel-hover-image="${blackImage}"
             data-carousel-before-hover-image=""
             data-carousel-is-hovering="false"
+            role="button"
+            tabindex="0"
+            aria-label="Ver detalle de ${product.name}"
         >
             <h3 class="new-product-name new-product-name-top">${product.name}</h3>
             <div class="new-product-media ${backgroundClass}">
@@ -450,6 +461,9 @@ function createRelatedCardMarkup(productId) {
             data-carousel-hover-image="${blackImage}"
             data-carousel-before-hover-image=""
             data-carousel-is-hovering="false"
+            role="button"
+            tabindex="0"
+            aria-label="Ver detalle de ${product.name}"
         >
             <span class="related-card-name related-card-name-top">${product.name}</span>
             <div class="related-card-media ${backgroundClass}">
@@ -512,7 +526,7 @@ function renderRelatedProducts() {
 }
 
 /* ================================
-   CARRUSELES Y ROTACIÓN
+   CARRUSELES Y ROTACION
 ================================ */
 function moveNewProducts(direction) {
     if (!newProductsTrack) return;
@@ -534,7 +548,7 @@ function moveNewProducts(direction) {
 }
 
 function startNewProductsAutoScroll() {
-    if (!newProductsTrack || newProductsTrack.children.length <= 2) return;
+    if (!newProductsTrack || newProductsTrack.children.length <= 2 || shouldReduceMotion()) return;
 
     stopNewProductsAutoScroll();
     newProductsAutoScrollInterval = setInterval(() => {
@@ -562,7 +576,7 @@ function setWardrobeHoverImage(card, isHovering) {
         card.dataset.wardrobeIsHovering = "true";
 
         imageElement.src = hoverImage;
-        imageElement.alt = `${product.name} versión negra`;
+        imageElement.alt = `${product.name} version negra`;
 
         updateWardrobeBackground(card, hoverImage);
         return;
@@ -596,7 +610,7 @@ function setFullWardrobeHoverImage(card, isHovering) {
         card.dataset.productIsHovering = "true";
 
         imageElement.src = hoverImage;
-        imageElement.alt = `${product.name} versión negra`;
+        imageElement.alt = `${product.name} version negra`;
 
         if (typeof getGarmentBackgroundClass === "function") {
             const backgroundClass = getGarmentBackgroundClass(hoverImage);
@@ -649,7 +663,7 @@ function setCarouselHoverImage(card, isHovering) {
         card.dataset.carouselIsHovering = "true";
 
         imageElement.src = hoverImage;
-        imageElement.alt = `${product.name} versión negra`;
+        imageElement.alt = `${product.name} version negra`;
 
         if (typeof getGarmentBackgroundClass === "function") {
             const backgroundClass = getGarmentBackgroundClass(hoverImage);
@@ -720,7 +734,7 @@ function rotateWardrobeImages() {
 }
 
 function startWardrobeImageSwap() {
-    if (!wardrobeGrid) return;
+    if (!wardrobeGrid || shouldReduceMotion()) return;
 
     stopWardrobeImageSwap();
     wardrobeImageInterval = setInterval(rotateWardrobeImages, WARDROBE_IMAGE_TIME);
@@ -739,6 +753,8 @@ function moveRelatedProducts(direction) {
 }
 
 function startRelatedHoverScroll(direction) {
+    if (shouldReduceMotion()) return;
+
     stopRelatedHoverScroll();
 
     relatedHoverScrollInterval = setInterval(() => {
@@ -923,15 +939,20 @@ function renderColorOptions(product) {
 
     colorsContainer.innerHTML = Object.entries(product.colors)
         .map(([colorName, colorData]) => {
-            const disabledClass = colorData.enabled === false ? "is-disabled" : "";
-            const activeClass = colorName === currentColorName ? "active" : "";
+            const isDisabled = colorData.enabled === false;
+            const isActive = colorName === currentColorName;
+            const disabledClass = isDisabled ? "is-disabled" : "";
+            const activeClass = isActive ? "active" : "";
 
             return `
                 <button
                     class="color-button ${activeClass} ${disabledClass}"
                     data-color="${colorName}"
                     title="${colorName}"
-                    aria-label="${colorName}"
+                    aria-label="Color ${colorName}"
+                    aria-pressed="${isActive}"
+                    aria-disabled="${isDisabled}"
+                    ${isDisabled ? "disabled" : ""}
                     style="background: ${colorData.swatch};"
                     type="button"
                 ></button>
@@ -945,13 +966,19 @@ function renderSizeOptions(product) {
 
     sizesContainer.innerHTML = product.sizes
         .map((size) => {
-            const disabledClass = size.enabled === false ? "is-disabled" : "";
-            const activeClass = size.label === currentSize ? "active" : "";
+            const isDisabled = size.enabled === false;
+            const isActive = size.label === currentSize;
+            const disabledClass = isDisabled ? "is-disabled" : "";
+            const activeClass = isActive ? "active" : "";
 
             return `
                 <button
                     class="size-button ${activeClass} ${disabledClass}"
                     data-size="${size.label}"
+                    aria-label="Talla ${size.label}"
+                    aria-pressed="${isActive}"
+                    aria-disabled="${isDisabled}"
+                    ${isDisabled ? "disabled" : ""}
                     type="button"
                 >
                     ${size.label}
@@ -1085,6 +1112,10 @@ function handleProductClick(event) {
     openProduct(productId, openedFromArmario);
 }
 
+function isKeyboardActivation(event) {
+    return event.key === "Enter" || event.key === " ";
+}
+
 /* ================================
    HEADER Y REVEAL
 ================================ */
@@ -1109,7 +1140,14 @@ function updateActiveNav() {
     });
 
     navLinks.forEach((link) => {
-        link.classList.toggle("active", link.getAttribute("href") === `#${currentSectionId}`);
+        const isActive = link.getAttribute("href") === `#${currentSectionId}`;
+        link.classList.toggle("active", isActive);
+
+        if (isActive) {
+            link.setAttribute("aria-current", "page");
+        } else {
+            link.removeAttribute("aria-current");
+        }
     });
 }
 
@@ -1143,7 +1181,7 @@ function activateReveal() {
 }
 
 /* ================================
-   MENÚ MÓVIL
+   MENU MOVIL
 ================================ */
 const navMenuToggle = document.getElementById("navMenuToggle");
 const mobileNavPanel = document.getElementById("mobileNavPanel");
@@ -1153,7 +1191,7 @@ function closeMobileMenu() {
 
     siteHeader.classList.remove("mobile-menu-open");
     navMenuToggle.setAttribute("aria-expanded", "false");
-    navMenuToggle.setAttribute("aria-label", "Abrir menú");
+    navMenuToggle.setAttribute("aria-label", "Abrir menu");
     mobileNavPanel.setAttribute("aria-hidden", "true");
     document.body.classList.remove("nav-open");
 }
@@ -1164,7 +1202,7 @@ function toggleMobileMenu() {
     const isOpen = siteHeader.classList.toggle("mobile-menu-open");
 
     navMenuToggle.setAttribute("aria-expanded", String(isOpen));
-    navMenuToggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+    navMenuToggle.setAttribute("aria-label", isOpen ? "Cerrar menu" : "Abrir menu");
     mobileNavPanel.setAttribute("aria-hidden", String(!isOpen));
     document.body.classList.toggle("nav-open", isOpen);
 }
@@ -1302,6 +1340,16 @@ newProductsTrack?.addEventListener("click", (event) => {
     openProduct(card.dataset.newProductId);
 });
 
+newProductsTrack?.addEventListener("keydown", (event) => {
+    if (!isKeyboardActivation(event)) return;
+
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card) return;
+
+    event.preventDefault();
+    openProduct(card.dataset.newProductId);
+});
+
 relatedNextButton?.addEventListener("click", () => moveRelatedProducts(1));
 relatedPrevButton?.addEventListener("click", () => moveRelatedProducts(-1));
 relatedNextButton?.addEventListener("mouseenter", () => startRelatedHoverScroll(1));
@@ -1334,6 +1382,17 @@ ropaCompleta?.addEventListener("mouseout", (event) => {
 
 ropaCompleta?.addEventListener("click", handleProductClick);
 
+ropaCompleta?.addEventListener("keydown", (event) => {
+    if (!isKeyboardActivation(event)) return;
+
+    const card = event.target.closest("[data-product-id]");
+    if (!card) return;
+
+    event.preventDefault();
+    const openedFromArmario = Boolean(card.closest("#ropaCompleta"));
+    openProduct(card.dataset.productId, openedFromArmario);
+});
+
 toggleArmarioButton?.addEventListener("click", openArmarioModal);
 cerrarArmarioButton?.addEventListener("click", closeArmarioModal);
 armarioBackdrop?.addEventListener("click", closeArmarioModal);
@@ -1362,7 +1421,7 @@ wardrobeGrid?.addEventListener("click", (event) => {
 });
 
 wardrobeGrid?.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
+    if (!isKeyboardActivation(event)) return;
 
     const card = event.target.closest("[data-wardrobe-product-id]");
     if (!card) return;
@@ -1389,6 +1448,16 @@ relatedProductsTrack?.addEventListener("click", (event) => {
     const card = event.target.closest("[data-related-product-id]");
     if (!card) return;
 
+    openProduct(card.dataset.relatedProductId, productOpenedFromArmario);
+});
+
+relatedProductsTrack?.addEventListener("keydown", (event) => {
+    if (!isKeyboardActivation(event)) return;
+
+    const card = event.target.closest("[data-related-product-id]");
+    if (!card) return;
+
+    event.preventDefault();
     openProduct(card.dataset.relatedProductId, productOpenedFromArmario);
 });
 
@@ -1501,6 +1570,21 @@ window.addEventListener("resize", () => {
     fitAllCardTexts();
 });
 
+prefersReducedMotionQuery?.addEventListener?.("change", () => {
+    if (shouldReduceMotion()) {
+        pauseBackgroundMotion();
+        clearInterval(heroSlideInterval);
+        stopRelatedHoverScroll();
+        return;
+    }
+
+    startHeroSlider();
+
+    if (!modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open")) {
+        resumeBackgroundMotion();
+    }
+});
+
 
 
 /* ================================
@@ -1576,7 +1660,7 @@ if (window.visualViewport) {
 }
 
 /* ================================
-   INICIALIZACIÓN
+   INICIALIZACION
 ================================ */
 setTheme(getSavedTheme(), false);
 renderProducts();

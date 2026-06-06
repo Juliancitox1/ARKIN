@@ -7,7 +7,7 @@
 }
 
 /* ================================
-   CONFIGURACIÓN GENERAL
+   CONFIGURACION GENERAL
 ================================ */
 :root {
     --bg: #050308;
@@ -83,7 +83,7 @@ section[id] {
 }
 
 /* ================================
-   TIPOGRAFÍA ARKIN
+   TIPOGRAFIA ARKIN
    Darkhusk global con excepciones legibles
 ================================ */
 
@@ -108,7 +108,7 @@ a {
     line-height: 1.25;
 }
 
-/* Excepciones: textos largos, materiales, precios y números */
+/* Excepciones: textos largos, materiales, precios y numeros */
 .new-product-description,
 .product-info .modal-description,
 .product-info .modal-material,
@@ -129,7 +129,7 @@ a {
     line-height: 1.65;
 }
 
-/* Números/contactos específicos */
+/* Numeros/contactos especificos */
 .contact-card .contact-value,
 .contact-card-schedule .contact-value,
 .footer-bottom,
@@ -140,7 +140,7 @@ a {
     letter-spacing: normal;
 }
 
-/* Títulos y elementos de marca con Darkhusk más controlado */
+/* Titulos y elementos de marca con Darkhusk mas controlado */
 .nav-link,
 .mobile-nav-link,
 .theme-toggle,
@@ -173,7 +173,7 @@ a {
     line-height: 1.2;
 }
 
-/* Excepción extra: textos de descripción dentro de cards y modal */
+/* Excepcion extra: textos de descripcion dentro de cards y modal */
 .product-copy,
 .product-copy p,
 .nosotros-content p,
@@ -196,7 +196,7 @@ a {
 }
 
 /* ================================
-   HEADER / MENÚ PRINCIPAL
+   HEADER / MENU PRINCIPAL
 ================================ */
 .site-header {
     position: fixed;
@@ -387,7 +387,7 @@ a {
 }
 
 /* ================================
-   SECCIÓN LO NUEVO
+   SECCION LO NUEVO
 ================================ */
 .lo-nuevo-section {
     width: 100%;
@@ -2036,7 +2036,7 @@ a {
 }
 
 /* ================================
-   CONTÁCTANOS
+   CONTACTANOS
 ================================ */
 .contacto-section {
     width: 100%;
@@ -3961,10 +3961,10 @@ body[data-theme="angelic"] .site-header.mobile-menu-open .nav-menu-toggle {
 
 /* ================================
    DARKHUSK - AJUSTES FINALES
-   Fuerza títulos faltantes
+   Fuerza titulos faltantes
 ================================ */
 
-/* Sección Nuevo */
+/* Seccion Nuevo */
 .lo-nuevo-heading h2,
 .new-product-name {
     font-family: "Darkhusk", "Manrope", system-ui, sans-serif;
@@ -3972,28 +3972,28 @@ body[data-theme="angelic"] .site-header.mobile-menu-open .nav-menu-toggle {
     line-height: 1.15;
 }
 
-/* Armario: título al pasar el mouse */
+/* Armario: titulo al pasar el mouse */
 .wardrobe-card-title {
     font-family: "Darkhusk", "Manrope", system-ui, sans-serif;
     letter-spacing: 0.06em;
     line-height: 1.15;
 }
 
-/* Modal producto: nombre del diseño */
+/* Modal producto: nombre del diseno */
 .product-info #modalTitle {
     font-family: "Darkhusk", "Manrope", system-ui, sans-serif;
     letter-spacing: 0.06em;
     line-height: 1.15;
 }
 
-/* Modal producto: título Material */
+/* Modal producto: titulo Material */
 .product-copy-label {
     font-family: "Darkhusk", "Manrope", system-ui, sans-serif;
     letter-spacing: 0.08em;
     line-height: 1.2;
 }
 
-/* Ventana Armario completo: título */
+/* Ventana Armario completo: titulo */
 #armarioTitulo {
     font-family: "Darkhusk", "Manrope", system-ui, sans-serif;
     letter-spacing: 0.08em;
@@ -4100,7 +4100,7 @@ body[data-theme="angelic"] .site-header.mobile-menu-open .nav-menu-toggle {
 }
 
 /* ================================
-   COLECCIÓN NOX
+   COLECCION NOX
 ================================ */
 
 .collection-title {
@@ -4132,7 +4132,7 @@ body[data-theme="angelic"] .collection-title {
 }
 
 /* ================================
-   FONDOS SEGÚN COLOR DE CAMISETA
+   FONDOS SEGUN COLOR DE CAMISETA
    Blancas: fondo negro / Negras: fondo blanco
 ================================ */
 
@@ -4146,7 +4146,7 @@ body[data-theme="angelic"] .collection-title {
     background: #f5f1e8 !important;
 }
 
-/* Ajuste específico para el modal */
+/* Ajuste especifico para el modal */
 .product-main-frame.garment-bg-dark,
 .product-main-image.garment-bg-dark {
     background: #050308 !important;
@@ -4180,7 +4180,7 @@ body[data-theme="angelic"] .garment-bg-light img {
 }
 
 /* ================================
-   CARDS - NOMBRES EN UNA SOLA LÍNEA
+   CARDS - NOMBRES EN UNA SOLA LINEA
 ================================ */
 
 .product-card-name,
@@ -4617,7 +4617,7 @@ body[data-theme="angelic"] .selector-block-luxury p {
 
 /* ================================
    AJUSTES MODAL PRODUCTO - LUJO V2
-   Visibilidad, proporción y distribución
+   Visibilidad, proporcion y distribucion
 ================================ */
 .product-modal .product-panel-luxury > .modal-close {
     position: fixed !important;
@@ -4853,7 +4853,7 @@ body[data-theme="angelic"] .product-modal .product-panel-luxury > .modal-close {
 
 /* ================================
    AJUSTES MODAL PRODUCTO - LUJO V3
-   Imagen más alta, labels morados y Material compacto
+   Imagen mas alta, labels morados y Material compacto
 ================================ */
 @media (min-width: 981px) {
     .product-luxury-shell {
@@ -5105,7 +5105,7 @@ body[data-theme="angelic"] .armario-modal .armario-close::before {
 
 /* ================================
    AJUSTE LO NUEVO - REFLECTOR FULL WIDTH V5
-   Evita que el fondo se corte por el max-width de la sección
+   Evita que el fondo se corte por el max-width de la seccion
 ================================ */
 .lo-nuevo-section {
     position: relative;
@@ -7292,10 +7292,10 @@ body[data-theme="angelic"] .visual-lightbox-close::after {
 }
 
 /* ================================
-   CORRECCIÓN FINAL - LOGO 3D Y NOMBRES EN CARRUSELES
+   CORRECCION FINAL - LOGO 3D Y NOMBRES EN CARRUSELES
 ================================ */
 
-/* Logo: mantiene giro 3D, pero ahora el click dura más y da varias vueltas visibles */
+/* Logo: mantiene giro 3D, pero ahora el click dura mas y da varias vueltas visibles */
 .nav-logo {
     perspective: 900px !important;
 }
@@ -7324,7 +7324,7 @@ body[data-theme="angelic"] .visual-lightbox-close::after {
     }
 }
 
-/* Nombre superior aplicado también a los carruseles */
+/* Nombre superior aplicado tambien a los carruseles */
 .product-card-name-top,
 .new-product-name-top,
 .related-card-name-top {
@@ -8168,5 +8168,405 @@ main .contacto-heading .eyebrow {
 
     .contact-map-overlay strong {
         font-size: 1.12rem !important;
+    }
+}
+
+/* ================================
+   AJUSTES PROFESIONALES - ENTREGA BASE
+   Accesibilidad, movimiento y estabilidad visual
+================================ */
+:root {
+    --focus-ring: 0 0 0 3px rgba(183, 148, 255, 0.42);
+}
+
+:focus-visible {
+    outline: 2px solid rgba(183, 148, 255, 0.9);
+    outline-offset: 4px;
+}
+
+.nav-link[aria-current="page"] {
+    color: var(--text);
+}
+
+.color-button:disabled,
+.size-button:disabled {
+    cursor: not-allowed;
+}
+
+.new-product-card[role="button"],
+.related-card[role="button"],
+.wardrobe-card[role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.new-product-card:focus-visible,
+.related-card:focus-visible,
+.wardrobe-card:focus-visible,
+.contact-card:focus-visible,
+.contact-map-link:focus-visible,
+.whatsapp-button:focus-visible,
+.theme-toggle:focus-visible,
+.nav-menu-toggle:focus-visible,
+.view-all-button:focus-visible,
+.modal-close:focus-visible,
+.armario-close:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring), 0 18px 40px rgba(0, 0, 0, 0.32);
+}
+
+.product-modal[aria-hidden="true"],
+.armario-modal[aria-hidden="true"],
+.visual-lightbox[aria-hidden="true"] {
+    pointer-events: none;
+}
+
+.product-modal.is-open,
+.armario-modal.is-open,
+.visual-lightbox.is-open {
+    pointer-events: auto;
+}
+
+/* Mas estabilidad en celulares con barras dinamicas del navegador */
+.hero {
+    min-height: var(--app-height, 100svh);
+}
+
+.product-panel,
+.armario-panel {
+    height: var(--app-height, 100dvh);
+    max-height: var(--app-height, 100dvh);
+}
+
+/* Mejor lectura de textos largos sin cambiar la estetica de marca */
+.nosotros-intro,
+.nosotros-value-card p,
+.product-description-block .modal-description,
+.product-material-card .modal-material {
+    text-wrap: pretty;
+}
+
+/* Evita saltos visuales al renderizar productos/carruseles */
+.lo-nuevo-track,
+.related-track,
+#ropaCompleta,
+.wardrobe-grid {
+    contain: layout paint;
+}
+
+/* Preferencia del usuario: reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    .hero-slide,
+    .nav-logo img,
+    .page-loader-logo,
+    .modal-scroll-hint span,
+    .view-all-button::before {
+        animation: none !important;
+        transform: none !important;
+    }
+}
+
+/* Pulido movil: mantiene botones y cards comodos sin alterar composicion */
+@media (max-width: 700px) {
+    .product-purchase-card .whatsapp-button {
+        min-height: 56px;
+    }
+
+    .color-button,
+    .size-button,
+    .thumb-button,
+    .gallery-arrow,
+    .related-arrow,
+    .lo-nuevo-arrow {
+        touch-action: manipulation;
+    }
+}
+
+
+/* ================================
+   AJUSTE EDITORIAL - COLECCION NOX LATERAL
+   Aplica en Lo Nuevo y Armario completo
+================================ */
+.lo-nuevo-heading {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+.lo-nuevo-heading .collection-title,
+.armario-collection-banner .collection-title-modal {
+    width: 100% !important;
+    max-width: 1180px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: clamp(14px, 2.4vw, 34px) !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+}
+
+.lo-nuevo-heading .collection-title::after,
+.armario-collection-banner .collection-title-modal::after {
+    content: "";
+    flex: 1 1 auto;
+    min-width: 72px;
+    height: 1px;
+    display: block;
+    transform: translateY(0.04em);
+    background: linear-gradient(
+        90deg,
+        rgba(183, 148, 255, 0.76),
+        rgba(245, 241, 232, 0.22),
+        transparent
+    );
+}
+
+.armario-collection-banner {
+    text-align: left !important;
+}
+
+.armario-collection-banner::after {
+    display: none !important;
+}
+
+body[data-theme="angelic"] .lo-nuevo-heading .collection-title::after,
+body[data-theme="angelic"] .armario-collection-banner .collection-title-modal::after {
+    background: linear-gradient(
+        90deg,
+        rgba(141, 99, 207, 0.54),
+        rgba(32, 23, 37, 0.16),
+        transparent
+    );
+}
+
+@media (max-width: 700px) {
+    .lo-nuevo-heading .collection-title,
+    .armario-collection-banner .collection-title-modal {
+        gap: 12px !important;
+    }
+
+    .lo-nuevo-heading .collection-title::after,
+    .armario-collection-banner .collection-title-modal::after {
+        min-width: 46px;
+    }
+}
+
+@media (max-width: 420px) {
+    .lo-nuevo-heading .collection-title,
+    .armario-collection-banner .collection-title-modal {
+        gap: 10px !important;
+    }
+
+    .lo-nuevo-heading .collection-title::after,
+    .armario-collection-banner .collection-title-modal::after {
+        min-width: 34px;
+    }
+}
+
+/* ================================
+   AJUSTE SOLICITADO - COLECCION LATERAL Y TITULOS PREMIUM
+   Archivo original: StyleHome.css
+================================ */
+
+/* Armario completo: Coleccion NOX mas pequena y mas hacia la izquierda */
+.armario-collection-banner {
+    width: min(100%, 1460px) !important;
+    max-width: 1460px !important;
+    margin: clamp(26px, 3.4vw, 46px) auto clamp(24px, 3vw, 42px) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: left !important;
+}
+
+.armario-collection-banner .collection-title-modal {
+    max-width: 100% !important;
+    font-size: clamp(1.9rem, 4.15vw, 4.65rem) !important;
+    letter-spacing: 0.105em !important;
+    word-spacing: 0.08em !important;
+    line-height: 1 !important;
+    gap: clamp(12px, 2vw, 28px) !important;
+}
+
+.armario-collection-banner .collection-title-modal::after {
+    min-width: 90px !important;
+}
+
+/* Titulos de productos: reemplaza la capsula redonda por un tratamiento editorial premium */
+.product-card-name-top,
+.new-product-name-top,
+.related-card-name-top {
+    top: clamp(14px, 1.45vw, 22px) !important;
+    left: clamp(16px, 2vw, 28px) !important;
+    right: auto !important;
+    width: max-content !important;
+    max-width: calc(100% - clamp(32px, 4vw, 56px)) !important;
+    padding: 0 0 9px !important;
+    display: inline-block !important;
+    text-align: left !important;
+    color: rgba(245, 241, 232, 0.96) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    text-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.62),
+        0 0 18px rgba(183, 148, 255, 0.16) !important;
+    font-size: clamp(1rem, 1.02vw, 1.22rem) !important;
+    letter-spacing: 0.095em !important;
+    line-height: 1.12 !important;
+    white-space: normal !important;
+}
+
+.product-card-name-top::after,
+.new-product-name-top::after,
+.related-card-name-top::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: min(82px, 72%);
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(183, 148, 255, 0.88),
+        rgba(245, 241, 232, 0.28),
+        transparent
+    );
+    transition: width 0.28s ease, opacity 0.28s ease;
+}
+
+.product-card:hover .product-card-name-top::after,
+.new-product-card:hover .new-product-name-top::after,
+.related-card:hover .related-card-name-top::after {
+    width: 100%;
+}
+
+.new-product-content {
+    padding-top: 42px !important;
+}
+
+body[data-theme="angelic"] .product-card-name-top,
+body[data-theme="angelic"] .new-product-name-top,
+body[data-theme="angelic"] .related-card-name-top {
+    color: rgba(32, 23, 37, 0.96) !important;
+    background: transparent !important;
+    text-shadow:
+        0 2px 10px rgba(255, 250, 241, 0.72),
+        0 0 16px rgba(141, 99, 207, 0.10) !important;
+}
+
+body[data-theme="angelic"] .product-card-name-top::after,
+body[data-theme="angelic"] .new-product-name-top::after,
+body[data-theme="angelic"] .related-card-name-top::after {
+    background: linear-gradient(
+        90deg,
+        rgba(141, 99, 207, 0.78),
+        rgba(32, 23, 37, 0.16),
+        transparent
+    );
+}
+
+@media (max-width: 1100px) {
+    .armario-collection-banner {
+        width: 100% !important;
+        max-width: none !important;
+        margin-top: 26px !important;
+        margin-bottom: 34px !important;
+    }
+
+    .armario-collection-banner .collection-title-modal {
+        font-size: clamp(1.75rem, 5vw, 3.8rem) !important;
+        gap: clamp(10px, 1.8vw, 22px) !important;
+    }
+}
+
+@media (max-width: 860px) {
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top {
+        top: 14px !important;
+        left: 16px !important;
+        max-width: calc(100% - 32px) !important;
+        padding-bottom: 8px !important;
+        font-size: 0.96rem !important;
+        letter-spacing: 0.085em !important;
+    }
+
+    .new-product-content {
+        padding-top: 36px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .armario-collection-banner {
+        margin: 22px 0 24px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .armario-collection-banner .collection-title-modal {
+        font-size: clamp(1.35rem, 7.6vw, 2.35rem) !important;
+        letter-spacing: 0.075em !important;
+        word-spacing: 0.04em !important;
+        gap: 10px !important;
+    }
+
+    .armario-collection-banner .collection-title-modal::after {
+        min-width: 44px !important;
+    }
+
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top,
+    #ropaCompleta .product-card-name-top {
+        top: 12px !important;
+        left: 14px !important;
+        max-width: calc(100% - 28px) !important;
+        padding-bottom: 7px !important;
+        font-size: 0.88rem !important;
+        letter-spacing: 0.075em !important;
+    }
+
+    .new-product-content {
+        padding-top: 30px !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .armario-collection-banner {
+        margin-top: 18px !important;
+        margin-bottom: 22px !important;
+    }
+
+    .armario-collection-banner .collection-title-modal {
+        font-size: clamp(1.15rem, 7.2vw, 1.85rem) !important;
+        letter-spacing: 0.062em !important;
+        gap: 8px !important;
+    }
+
+    .armario-collection-banner .collection-title-modal::after {
+        min-width: 32px !important;
+    }
+
+    .product-card-name-top,
+    .new-product-name-top,
+    .related-card-name-top,
+    #ropaCompleta .product-card-name-top {
+        top: 11px !important;
+        left: 12px !important;
+        max-width: calc(100% - 24px) !important;
+        font-size: 0.8rem !important;
+        letter-spacing: 0.065em !important;
     }
 }
