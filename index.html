@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARKIN | Coleccion NOX</title>
-    <meta name="description" content="ARKIN: marca de ropa oscura, elegante y atemporal. Explora la coleccion NOX, el armario completo y solicita tus prendas por WhatsApp." />
+    <title>ARKIN | Coleccion NOX Cromo</title>
+    <meta name="description" content="ARKIN: marca de ropa oscura, elegante y atemporal. Explora la coleccion NOX, la coleccion Cromo, el armario completo y solicita tus prendas por WhatsApp." />
     <meta name="theme-color" content="#050308" id="themeColorMeta" />
     <link rel="preload" href="Darkhusk.otf" as="font" type="font/otf" crossorigin />
     <link rel="stylesheet" href="StyleHome.css" />
@@ -58,18 +58,10 @@
         <section class="hero" id="inicio" aria-label="Inicio">
             <div class="hero-slider" id="heroSlider">
                 <div class="hero-slide active" data-hero-slide>
-                    <img src="Images/FondoPrincipal_3.png" alt="Imagen principal de ARKIN" decoding="async" fetchpriority="high" />
+                    <img src="Images/FondoPrincipal_1.png" alt="Imagen principal de ARKIN" decoding="async" fetchpriority="high" />
                 </div>
 
-                <!-- Espacios reservados para futuras imagenes del hero.
-                <div class="hero-slide" data-hero-slide>
-                    <img decoding="async" src="Images/FondoPrincipal_2.jpg" alt="Imagen principal de ARKIN 2" />
-                </div>
-
-                <div class="hero-slide" data-hero-slide>
-                    <img decoding="async" src="Images/FondoPrincipal_3.jpg" alt="Imagen principal de ARKIN 3" />
-                </div>
-                -->
+                <!-- Espacios reservados para futuras imagenes del hero. -->
             </div>
         </section>
 
@@ -88,6 +80,22 @@
                 <div class="lo-nuevo-track" id="loNuevoTrack"></div>
 
                 <button class="lo-nuevo-arrow lo-nuevo-arrow-right" id="loNuevoNext" aria-label="Ver mas productos nuevos" type="button">
+                    &#10095;
+                </button>
+            </div>
+
+            <div class="section-heading lo-nuevo-heading lo-nuevo-cromo-heading">
+                <p class="collection-title collection-title-cromo">Coleccion Cromo</p>
+            </div>
+
+            <div class="lo-nuevo-carousel-shell lo-nuevo-cromo-shell">
+                <button class="lo-nuevo-arrow lo-nuevo-arrow-left" id="cromoNuevoPrev" aria-label="Ver producto Cromo anterior" type="button">
+                    &#10094;
+                </button>
+
+                <div class="lo-nuevo-track" id="cromoNuevoTrack"></div>
+
+                <button class="lo-nuevo-arrow lo-nuevo-arrow-right" id="cromoNuevoNext" aria-label="Ver mas productos Cromo" type="button">
                     &#10095;
                 </button>
             </div>
@@ -121,11 +129,52 @@
                         <h3 id="armarioTitulo">Armario completo</h3>
                     </div>
 
-                    <div class="armario-collection-banner" aria-label="Coleccion del armario">
-                        <p class="collection-title collection-title-modal">Coleccion NOX</p>
+                    <section class="armario-collection-section" aria-label="Coleccion NOX">
+                        <div class="armario-collection-banner" aria-label="Coleccion del armario">
+                            <p class="collection-title collection-title-modal">Coleccion NOX</p>
+                        </div>
+
+                        <div class="all-products-grid armario-grid" id="ropaCompleta"></div>
+                    </section>
+
+                    <section class="armario-collection-section" aria-label="Coleccion Cromo">
+                        <div class="armario-collection-banner" aria-label="Coleccion Cromo del armario">
+                            <p class="collection-title collection-title-modal">Coleccion Cromo</p>
+                        </div>
+
+                        <div class="all-products-grid armario-grid" id="ropaCromoCompleta"></div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="armario-modal category-modal" id="categoriaModal" aria-hidden="true">
+                <div class="armario-backdrop" data-close-categoria></div>
+
+                <div class="armario-panel" role="dialog" aria-modal="true" aria-labelledby="categoriaTitulo">
+                    <button class="armario-close" id="cerrarCategoria" type="button" aria-label="Cerrar categoria">
+                        &times;
+                    </button>
+
+                    <div class="armario-panel-header">
+                        <span class="eyebrow">ARKIN</span>
+                        <h3 id="categoriaTitulo">Camisas</h3>
                     </div>
 
-                    <div class="all-products-grid armario-grid" id="ropaCompleta"></div>
+                    <section class="armario-collection-section category-collection-block" id="categoriaNoxBlock" aria-label="Coleccion NOX">
+                        <div class="armario-collection-banner">
+                            <p class="collection-title collection-title-modal">Coleccion NOX</p>
+                        </div>
+
+                        <div class="all-products-grid armario-grid" id="categoriaNoxGrid"></div>
+                    </section>
+
+                    <section class="armario-collection-section category-collection-block" id="categoriaCromoBlock" aria-label="Coleccion Cromo">
+                        <div class="armario-collection-banner">
+                            <p class="collection-title collection-title-modal">Coleccion Cromo</p>
+                        </div>
+
+                        <div class="all-products-grid armario-grid" id="categoriaCromoGrid"></div>
+                    </section>
                 </div>
             </div>
         </section>
@@ -267,7 +316,7 @@
             <div class="product-luxury-shell">
                 <header class="product-modal-heading">
                     <h3 id="modalTitle">Producto</h3>
-                    <p class="product-modal-collection">Coleccion NOX</p>
+                    <p class="product-modal-collection" id="modalCollection">Coleccion NOX</p>
                 </header>
 
                 <section class="product-gallery product-gallery-luxury" aria-label="Galeria del producto">

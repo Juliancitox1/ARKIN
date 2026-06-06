@@ -17,27 +17,28 @@ function cloneSizes(disabledSizes = []) {
     }));
 }
 
-function createColors(baseName, includeRedBlack = false) {
+function createNoxColors(baseName, includeRedBlack = false) {
+    const folder = "Images/Coleccion_NOX";
     const colors = {
         "Blanco Morado": {
             enabled: true,
             swatch: "linear-gradient(135deg, #f5f1e8 50%, #6d28d9 50%)",
-            gallery: [`Images/${baseName}_BlancoMorado.png`]
+            gallery: [`${folder}/${baseName}_BlancoMorado.png`]
         },
         "Blanco Negro": {
             enabled: true,
             swatch: "linear-gradient(135deg, #f5f1e8 50%, #111111 50%)",
-            gallery: [`Images/${baseName}_BlancoNegro.png`]
+            gallery: [`${folder}/${baseName}_BlancoNegro.png`]
         },
         "Negro Blanco": {
             enabled: true,
             swatch: "linear-gradient(135deg, #111111 50%, #f5f1e8 50%)",
-            gallery: [`Images/${baseName}_NegroBlanco.png`]
+            gallery: [`${folder}/${baseName}_NegroBlanco.png`]
         },
         "Negro Morado": {
             enabled: true,
             swatch: "linear-gradient(135deg, #111111 50%, #6d28d9 50%)",
-            gallery: [`Images/${baseName}_NegroMorado.png`]
+            gallery: [`${folder}/${baseName}_NegroMorado.png`]
         }
     };
 
@@ -45,78 +46,184 @@ function createColors(baseName, includeRedBlack = false) {
         colors["Rojo Negro"] = {
             enabled: true,
             swatch: "linear-gradient(135deg, #dc2626 50%, #111111 50%)",
-            gallery: [`Images/${baseName}_RojoNegro.png`]
+            gallery: [`${folder}/${baseName}_RojoNegro.png`]
         };
     }
 
     return colors;
 }
 
-/* ================================
-   PRODUCTOS
-================================ */
-const products = {
+function createCromoColors(baseName, categoryFolder = "Camisas") {
+    const folder = `Images/Coleccion_NOX_Cromo/${categoryFolder}`;
+
+    return {
+        "Blanco Cromo": {
+            enabled: true,
+            swatch: "linear-gradient(135deg, #f5f1e8 50%, #c9c9c9 50%)",
+            gallery: [`${folder}/${baseName}_BlancoCromo.png`]
+        },
+        "Negro Cromo": {
+            enabled: true,
+            swatch: "linear-gradient(135deg, #111111 50%, #c9c9c9 50%)",
+            gallery: [`${folder}/${baseName}_NegroCromo.png`]
+        },
+        "Rojo Cromo": {
+            enabled: true,
+            swatch: "linear-gradient(135deg, #dc2626 50%, #c9c9c9 50%)",
+            gallery: [`${folder}/${baseName}_RojoCromo.png`]
+        }
+    };
+}
+
+const productCopy = {
     1: {
         name: "Heart Cross",
         description: "Un simbolo afilado que nace del vacio. Una pieza limpia, oscura y elegante para quienes imponen presencia sin decir demasiado.",
-        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
-        price: "$95.000",
-        sizes: cloneSizes(),
-        colors: createColors("D1", true)
+        price: "$95.000"
     },
     2: {
         name: "Tribal Cross",
         description: "Trazos curvos y espinas visuales recorren la prenda como una marca nocturna. Disenada para destacar con caracter y misterio.",
-        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
-        price: "$95.000",
-        sizes: cloneSizes(),
-        colors: createColors("D2")
+        price: "$95.000"
     },
     3: {
         name: "Framing",
         description: "Una composicion oscura de energia silenciosa. Su diseno mezcla fuerza, elegancia y una identidad que no busca aprobacion.",
-        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
-        price: "$85.000",
-        sizes: cloneSizes(),
-        colors: createColors("D3")
+        price: "$85.000"
     },
     4: {
         name: "Demonic Flash",
         description: "Un diseno de presencia intensa, creado para quienes caminan entre lo minimalista y lo agresivo sin perder sofisticacion.",
-        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
-        price: "$75.000",
-        sizes: cloneSizes(),
-        colors: createColors("D4")
+        price: "$75.000"
     },
     5: {
         name: "Chain",
         description: "Una pieza marcada por el contraste y la sombra. Sutil a primera vista, pero con una esencia rebelde imposible de ignorar.",
-        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
-        price: "$75.000",
-        sizes: cloneSizes(),
-        colors: createColors("D5")
+        price: "$75.000"
     },
     6: {
         name: "Abyss Beast",
-        available: false,
         description: "Espinas violetas atraviesan la prenda como una herida elegante. Un diseno agresivo, oscuro y dominante nacido desde el abismo.",
-        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
-        price: "$75.000",
-        sizes: cloneSizes(),
-        colors: createColors("D6")
+        price: "$75.000"
     },
     7: {
         name: "Winged Arcane",
         description: "Un sello vertical de apariencia mistica y ornamental. Una pieza creada para vestir elegancia oscura con aire ceremonial.",
-        material: "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250",
-        price: "$75.000",
-        sizes: cloneSizes(),
-        colors: createColors("D7")
+        price: "$75.000"
     }
 };
 
-const newProductIds = [1, 2, 3, 4, 5, 6, 7];
-const wardrobeProductIds = [1, 2, 3, 4];
+/* ================================
+   TEXTOS EDITABLES - COLECCION CROMO
+   Cambia solo descripcion y precio en esta seccion
+================================ */
+const cromoCopy = {
+    1: {
+        description: "Un simbolo afilado que nace del vacio. Una pieza limpia, oscura y elegante para quienes imponen presencia sin decir demasiado.",
+        price: "$95.000"
+    },
+    2: {
+        description: "Trazos curvos y espinas visuales recorren la prenda como una marca nocturna. Disenada para destacar con caracter y misterio.",
+        price: "$95.000"
+    },
+    3: {
+        description: "Una composicion oscura de energia silenciosa. Su diseno mezcla fuerza, elegancia y una identidad que no busca aprobacion.",
+        price: "$85.000"
+    },
+    4: {
+        description: "Un diseno de presencia intensa, creado para quienes caminan entre lo minimalista y lo agresivo sin perder sofisticacion.",
+        price: "$75.000"
+    },
+    5: {
+        description: "Una pieza marcada por el contraste y la sombra. Sutil a primera vista, pero con una esencia rebelde imposible de ignorar.",
+        price: "$75.000"
+    },
+    6: {
+        description: "Espinas cromadas atraviesan la prenda como una marca brillante y oscura. Una pieza Cromo con presencia agresiva y limpia.",
+        price: "$75.000"
+    },
+    7: {
+        description: "Un sello vertical de apariencia mistica y ornamental. Una pieza Cromo creada para vestir elegancia oscura con aire ceremonial.",
+        price: "$75.000"
+    }
+};
+
+const shirtMaterial = "Oversize\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250";
+const cropTopMaterial = "CropTop\n80% Algodon\n16% Poliester\n4% Spandex\nGramaje 250";
+
+function createProduct({ id, designId, collection, category, colors, available = true, material = shirtMaterial, description, price }) {
+    const copy = productCopy[designId];
+
+    return {
+        id,
+        designId,
+        name: copy.name,
+        description: description || copy.description,
+        material,
+        price: price || copy.price,
+        collection,
+        category,
+        available,
+        sizes: cloneSizes(),
+        colors
+    };
+}
+
+/* ================================
+   PRODUCTOS
+================================ */
+const products = {
+    "nox-1": createProduct({ id: "nox-1", designId: 1, collection: "Coleccion NOX", category: "camisas", colors: createNoxColors("D1", true) }),
+    "nox-2": createProduct({ id: "nox-2", designId: 2, collection: "Coleccion NOX", category: "camisas", colors: createNoxColors("D2") }),
+    "nox-3": createProduct({ id: "nox-3", designId: 3, collection: "Coleccion NOX", category: "camisas", colors: createNoxColors("D3") }),
+    "nox-4": createProduct({ id: "nox-4", designId: 4, collection: "Coleccion NOX", category: "camisas", colors: createNoxColors("D4") }),
+    "nox-5": createProduct({ id: "nox-5", designId: 5, collection: "Coleccion NOX", category: "camisas", colors: createNoxColors("D5") }),
+    "nox-6": createProduct({ id: "nox-6", designId: 6, collection: "Coleccion NOX", category: "camisas", colors: createNoxColors("D6"), available: false }),
+    "nox-7": createProduct({ id: "nox-7", designId: 7, collection: "Coleccion NOX", category: "camisas", colors: createNoxColors("D7") }),
+
+    "cromo-shirt-1": createProduct({ id: "cromo-shirt-1", designId: 1, collection: "Coleccion Cromo", category: "camisas", colors: createCromoColors("D1", "Camisas"), description: cromoCopy[1].description, price: cromoCopy[1].price }),
+    "cromo-shirt-2": createProduct({ id: "cromo-shirt-2", designId: 2, collection: "Coleccion Cromo", category: "camisas", colors: createCromoColors("D2", "Camisas"), description: cromoCopy[2].description, price: cromoCopy[2].price }),
+    "cromo-shirt-3": createProduct({ id: "cromo-shirt-3", designId: 3, collection: "Coleccion Cromo", category: "camisas", colors: createCromoColors("D3", "Camisas"), description: cromoCopy[3].description, price: cromoCopy[3].price }),
+    "cromo-shirt-4": createProduct({ id: "cromo-shirt-4", designId: 4, collection: "Coleccion Cromo", category: "camisas", colors: createCromoColors("D4", "Camisas"), description: cromoCopy[4].description, price: cromoCopy[4].price }),
+    "cromo-shirt-5": createProduct({ id: "cromo-shirt-5", designId: 5, collection: "Coleccion Cromo", category: "camisas", colors: createCromoColors("D5", "Camisas"), description: cromoCopy[5].description, price: cromoCopy[5].price }),
+    "cromo-shirt-7": createProduct({ id: "cromo-shirt-7", designId: 7, collection: "Coleccion Cromo", category: "camisas", colors: createCromoColors("D7", "Camisas"), description: cromoCopy[7].description, price: cromoCopy[7].price }),
+    "cromo-crop-6": createProduct({ id: "cromo-crop-6", designId: 6, collection: "Coleccion Cromo", category: "croptops", colors: createCromoColors("D6", "CropTops"), material: cropTopMaterial, description: cromoCopy[6].description, price: cromoCopy[6].price })
+};
+
+const noxProductIds = ["nox-1", "nox-2", "nox-3", "nox-4", "nox-5", "nox-6", "nox-7"];
+const cromoShirtProductIds = ["cromo-shirt-1", "cromo-shirt-2", "cromo-shirt-3", "cromo-shirt-4", "cromo-shirt-5", "cromo-shirt-7"];
+const cromoCropTopProductIds = ["cromo-crop-6"];
+const cromoProductIds = [...cromoShirtProductIds, ...cromoCropTopProductIds];
+const shirtProductIds = [...noxProductIds, ...cromoShirtProductIds];
+const cropTopProductIds = [...cromoCropTopProductIds];
+const newProductIds = [...noxProductIds];
+const cromoNewProductIds = [...cromoProductIds];
+const wardrobeCategoryCards = [
+    {
+        title: "Camisas",
+        target: "camisas",
+        image: getPrimaryImage(products["nox-1"]),
+        hoverImage: getPrimaryImage(products["cromo-shirt-1"])
+    },
+    {
+        title: "CropTops",
+        target: "croptops",
+        image: getPrimaryImage(products["cromo-crop-6"]),
+        hoverImage: getBlackVariantImage(products["cromo-crop-6"])
+    },
+    {
+        title: "Proximamente",
+        target: "soon-1",
+        image: "Images/Logo.png",
+        disabled: true
+    },
+    {
+        title: "Proximamente",
+        target: "soon-2",
+        image: "Images/Logo.png",
+        disabled: true
+    }
+];
 
 /* ================================
    ELEMENTOS DEL HTML
@@ -126,12 +233,14 @@ const navLinks = [...document.querySelectorAll(".nav-link")];
 const toggleArmarioButton = document.getElementById("toggleArmario");
 const armarioCompleto = document.getElementById("armarioCompleto");
 const ropaCompleta = document.getElementById("ropaCompleta");
+const ropaCromoCompleta = document.getElementById("ropaCromoCompleta");
 const cerrarArmarioButton = document.getElementById("cerrarArmario");
 const armarioBackdrop = armarioCompleto?.querySelector("[data-close-armario]");
 const modal = document.getElementById("productModal");
 const closeModalButton = document.getElementById("cerrarProducto");
 const backdrop = modal?.querySelector("[data-close-modal]");
 const modalTitle = document.getElementById("modalTitle");
+const modalCollection = document.getElementById("modalCollection");
 const modalDescription = document.getElementById("descripcionProducto");
 const modalMaterial = document.getElementById("materialProducto");
 const modalPrice = document.getElementById("precioProducto");
@@ -151,7 +260,18 @@ const scrollToRelatedButton = document.getElementById("scrollToRelated");
 const newProductsTrack = document.getElementById("loNuevoTrack");
 const newPrevButton = document.getElementById("loNuevoPrev");
 const newNextButton = document.getElementById("loNuevoNext");
+const cromoProductsTrack = document.getElementById("cromoNuevoTrack");
+const cromoPrevButton = document.getElementById("cromoNuevoPrev");
+const cromoNextButton = document.getElementById("cromoNuevoNext");
 const wardrobeGrid = document.getElementById("wardrobeGrid");
+const categoriaModal = document.getElementById("categoriaModal");
+const categoriaTitulo = document.getElementById("categoriaTitulo");
+const cerrarCategoriaButton = document.getElementById("cerrarCategoria");
+const categoriaBackdrop = categoriaModal?.querySelector("[data-close-categoria]");
+const categoriaNoxBlock = document.getElementById("categoriaNoxBlock");
+const categoriaCromoBlock = document.getElementById("categoriaCromoBlock");
+const categoriaNoxGrid = document.getElementById("categoriaNoxGrid");
+const categoriaCromoGrid = document.getElementById("categoriaCromoGrid");
 const pageLoader = document.getElementById("pageLoader");
 const currentYear = document.getElementById("currentYear");
 const themeToggles = [...document.querySelectorAll("[data-theme-toggle]")];
@@ -167,6 +287,7 @@ if (currentYear) {
    ESTADO INTERNO
 ================================ */
 let newProductsAutoScrollInterval = null;
+let cromoProductsAutoScrollInterval = null;
 let wardrobeImageInterval = null;
 let relatedHoverScrollInterval = null;
 let loaderTimeout = null;
@@ -419,35 +540,6 @@ function createNewProductMarkup(productId) {
     `;
 }
 
-function createWardrobeCardMarkup(productId) {
-    const product = products[productId];
-    if (!product) return "";
-
-    const images = getProductPreviewImages(product);
-    const image = images[0] || getPrimaryImage(product);
-    const blackImage = getBlackVariantImage(product) || image;
-    const backgroundClass = typeof getGarmentBackgroundClass === "function" ? getGarmentBackgroundClass(image) : "";
-
-    return `
-        <article
-            class="wardrobe-card reveal ${backgroundClass}"
-            data-wardrobe-product-id="${productId}"
-            data-wardrobe-image-index="0"
-            data-wardrobe-hover-image="${blackImage}"
-            data-wardrobe-before-hover-image=""
-            data-wardrobe-is-hovering="false"
-            role="button"
-            tabindex="0"
-            aria-label="Ver ${product.name}"
-        >
-            <img class="wardrobe-image" src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
-            <div class="wardrobe-card-overlay">
-                <span class="wardrobe-card-title">${product.name}</span>
-            </div>
-        </article>
-    `;
-}
-
 function createRelatedCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
@@ -476,13 +568,42 @@ function createRelatedCardMarkup(productId) {
     `;
 }
 
-function renderProducts() {
-    if (!ropaCompleta) return;
+function createWardrobeCategoryMarkup(card) {
+    const backgroundClass = getGarmentBackgroundClass(card.image || "");
+    const disabledClass = card.disabled ? "is-upcoming" : "";
+    const roleAttributes = card.disabled
+        ? `aria-disabled="true"`
+        : `role="button" tabindex="0" aria-label="Abrir ${card.title}"`;
 
-    ropaCompleta.innerHTML = Object.keys(products)
+    return `
+        <article
+            class="wardrobe-card reveal ${backgroundClass} ${disabledClass}"
+            data-category-target="${card.target}"
+            data-category-hover-image="${card.hoverImage || card.image}"
+            data-category-before-hover-image=""
+            data-category-is-hovering="false"
+            ${roleAttributes}
+        >
+            <img class="wardrobe-image" src="${card.image}" alt="${card.title}" loading="lazy" decoding="async" />
+            <div class="wardrobe-card-overlay">
+                <span class="wardrobe-card-title">${card.title}</span>
+            </div>
+        </article>
+    `;
+}
+
+function renderProductGrid(grid, productIds) {
+    if (!grid) return;
+
+    grid.innerHTML = productIds
         .filter(isProductAvailable)
         .map(createCardMarkup)
         .join("");
+}
+
+function renderProducts() {
+    renderProductGrid(ropaCompleta, noxProductIds);
+    renderProductGrid(ropaCromoCompleta, cromoProductIds);
 
     activateReveal();
     fitAllCardTexts();
@@ -501,22 +622,49 @@ function renderNewProducts() {
     fitAllCardTexts();
 }
 
+function renderCromoNewProducts() {
+    if (!cromoProductsTrack) return;
+
+    cromoProductsTrack.innerHTML = cromoNewProductIds
+        .filter(isProductAvailable)
+        .map(createNewProductMarkup)
+        .join("");
+
+    cromoProductsTrack.scrollTo({ left: 0, behavior: "auto" });
+    activateReveal();
+    fitAllCardTexts();
+}
+
 function renderWardrobeProducts() {
     if (!wardrobeGrid) return;
 
-    wardrobeGrid.innerHTML = wardrobeProductIds
-        .filter(isProductAvailable)
-        .map(createWardrobeCardMarkup)
+    wardrobeGrid.innerHTML = wardrobeCategoryCards
+        .map(createWardrobeCategoryMarkup)
         .join("");
 
     activateReveal();
     fitAllCardTexts();
 }
 
+function getOppositeCollectionRelatedIds(productId) {
+    const product = products[productId];
+    if (!product) return [];
+
+    if (product.collection === "Coleccion NOX") {
+        return cromoProductIds;
+    }
+
+    if (product.collection === "Coleccion Cromo") {
+        return noxProductIds;
+    }
+
+    return Object.keys(products);
+}
+
 function renderRelatedProducts() {
     if (!relatedProductsTrack || !currentProductId) return;
 
-    relatedProductsTrack.innerHTML = Object.keys(products)
+    relatedProductsTrack.innerHTML = getOppositeCollectionRelatedIds(currentProductId)
         .filter((productId) => productId !== String(currentProductId) && isProductAvailable(productId))
         .map(createRelatedCardMarkup)
         .join("");
@@ -561,6 +709,39 @@ function stopNewProductsAutoScroll() {
     newProductsAutoScrollInterval = null;
 }
 
+function moveCromoProducts(direction) {
+    if (!cromoProductsTrack) return;
+
+    const maxScroll = cromoProductsTrack.scrollWidth - cromoProductsTrack.clientWidth;
+    const scrollAmount = getScrollAmount(cromoProductsTrack, ".new-product-card");
+
+    if (direction > 0 && cromoProductsTrack.scrollLeft >= maxScroll - 8) {
+        cromoProductsTrack.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+    }
+
+    if (direction < 0 && cromoProductsTrack.scrollLeft <= 8) {
+        cromoProductsTrack.scrollTo({ left: maxScroll, behavior: "smooth" });
+        return;
+    }
+
+    cromoProductsTrack.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+}
+
+function startCromoProductsAutoScroll() {
+    if (!cromoProductsTrack || cromoProductsTrack.children.length <= 2 || shouldReduceMotion()) return;
+
+    stopCromoProductsAutoScroll();
+    cromoProductsAutoScrollInterval = setInterval(() => {
+        moveCromoProducts(1);
+    }, NEW_PRODUCTS_AUTOSCROLL_TIME + 1800);
+}
+
+function stopCromoProductsAutoScroll() {
+    clearInterval(cromoProductsAutoScrollInterval);
+    cromoProductsAutoScrollInterval = null;
+}
+
 function setWardrobeHoverImage(card, isHovering) {
     const imageElement = card.querySelector(".wardrobe-image");
     if (!imageElement) return;
@@ -589,6 +770,31 @@ function setWardrobeHoverImage(card, isHovering) {
     if (previousImage) {
         imageElement.src = previousImage;
         imageElement.alt = product.name;
+        updateWardrobeBackground(card, previousImage);
+    }
+}
+
+
+function setCategoryHoverImage(card, isHovering) {
+    const imageElement = card.querySelector(".wardrobe-image");
+    if (!imageElement) return;
+
+    const hoverImage = card.dataset.categoryHoverImage;
+    if (!hoverImage || card.classList.contains("is-upcoming")) return;
+
+    if (isHovering) {
+        card.dataset.categoryBeforeHoverImage = imageElement.getAttribute("src") || "";
+        card.dataset.categoryIsHovering = "true";
+        imageElement.src = hoverImage;
+        updateWardrobeBackground(card, hoverImage);
+        return;
+    }
+
+    const previousImage = card.dataset.categoryBeforeHoverImage;
+    card.dataset.categoryIsHovering = "false";
+
+    if (previousImage) {
+        imageElement.src = previousImage;
         updateWardrobeBackground(card, previousImage);
     }
 }
@@ -769,11 +975,13 @@ function stopRelatedHoverScroll() {
 
 function pauseBackgroundMotion() {
     stopNewProductsAutoScroll();
+    stopCromoProductsAutoScroll();
     stopWardrobeImageSwap();
 }
 
 function resumeBackgroundMotion() {
     startNewProductsAutoScroll();
+    startCromoProductsAutoScroll();
     startWardrobeImageSwap();
 }
 
@@ -862,6 +1070,95 @@ function closeArmarioModal() {
             releasePageTransition();
 
             if (!modal?.classList.contains("is-open")) {
+                resumeBackgroundMotion();
+            }
+        }
+    }, LOADER_OPEN_DELAY);
+}
+
+
+function isAnyCollectionModalOpen() {
+    return Boolean(
+        armarioCompleto?.classList.contains("is-open") ||
+        categoriaModal?.classList.contains("is-open")
+    );
+}
+
+function openCategoryModal(category) {
+    closeMobileMenu();
+    if (!categoriaModal || isPageTransitioning) return;
+
+    const isShirts = category === "camisas";
+    const isCropTops = category === "croptops";
+
+    if (!isShirts && !isCropTops) return;
+
+    isPageTransitioning = true;
+    showPageLoader();
+    pauseBackgroundMotion();
+
+    setTimeout(() => {
+        try {
+            categoriaTitulo.textContent = isShirts ? "Camisas" : "CropTops";
+
+            if (isShirts) {
+                categoriaNoxBlock.hidden = false;
+                categoriaCromoBlock.hidden = false;
+                renderProductGrid(categoriaNoxGrid, noxProductIds);
+                renderProductGrid(categoriaCromoGrid, cromoShirtProductIds);
+            }
+
+            if (isCropTops) {
+                categoriaNoxBlock.hidden = true;
+                categoriaCromoBlock.hidden = false;
+                renderProductGrid(categoriaNoxGrid, []);
+                renderProductGrid(categoriaCromoGrid, cropTopProductIds);
+            }
+
+            categoriaModal.classList.add("is-open");
+            categoriaModal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-open");
+
+            categoriaModal.querySelector(".armario-panel")?.scrollTo({
+                top: 0,
+                behavior: "auto"
+            });
+
+            activateReveal();
+            fitAllCardTexts();
+            cerrarCategoriaButton?.focus();
+        } catch (error) {
+            console.error("Error al abrir la categoria:", error);
+        } finally {
+            hidePageLoader(LOADER_HIDE_DELAY);
+            releasePageTransition();
+        }
+    }, LOADER_OPEN_DELAY);
+}
+
+function closeCategoryModal() {
+    if (!categoriaModal || isPageTransitioning) return;
+
+    isPageTransitioning = true;
+    showPageLoader();
+
+    setTimeout(() => {
+        try {
+            categoriaModal.classList.remove("is-open");
+            categoriaModal.setAttribute("aria-hidden", "true");
+
+            if (modal?.classList.contains("is-open") || armarioCompleto?.classList.contains("is-open")) {
+                document.body.classList.add("modal-open");
+            } else {
+                document.body.classList.remove("modal-open");
+            }
+        } catch (error) {
+            console.error("Error al cerrar la categoria:", error);
+        } finally {
+            hidePageLoader(LOADER_HIDE_DELAY);
+            releasePageTransition();
+
+            if (!modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open")) {
                 resumeBackgroundMotion();
             }
         }
@@ -1007,6 +1304,10 @@ function renderModal() {
         modalTitle.textContent = product.name;
     }
 
+    if (modalCollection) {
+        modalCollection.textContent = product.collection || "Coleccion NOX";
+    }
+
     if (modalDescription) {
         modalDescription.textContent = product.fullDescription || product.description || "";
     }
@@ -1085,7 +1386,7 @@ function closeProduct() {
             modal.classList.remove("is-open");
             modal.setAttribute("aria-hidden", "true");
 
-            if (productOpenedFromArmario && armarioCompleto?.classList.contains("is-open")) {
+            if (productOpenedFromArmario && isAnyCollectionModalOpen()) {
                 document.body.classList.add("modal-open");
             } else {
                 document.body.classList.remove("modal-open");
@@ -1098,7 +1399,7 @@ function closeProduct() {
             hidePageLoader(LOADER_HIDE_DELAY);
             releasePageTransition();
 
-            if (!armarioCompleto?.classList.contains("is-open")) {
+            if (!isAnyCollectionModalOpen()) {
                 resumeBackgroundMotion();
             }
         }
@@ -1110,7 +1411,7 @@ function handleProductClick(event) {
     if (!card) return;
 
     const productId = card.dataset.productId;
-    const openedFromArmario = Boolean(card.closest("#ropaCompleta"));
+    const openedFromArmario = Boolean(card.closest("#ropaCompleta, #ropaCromoCompleta, #categoriaNoxGrid, #categoriaCromoGrid"));
     openProduct(productId, openedFromArmario);
 }
 
@@ -1392,6 +1693,50 @@ newProductsTrack?.addEventListener("keydown", (event) => {
     openProduct(card.dataset.newProductId);
 });
 
+cromoNextButton?.addEventListener("click", () => {
+    moveCromoProducts(1);
+    startCromoProductsAutoScroll();
+});
+
+cromoPrevButton?.addEventListener("click", () => {
+    moveCromoProducts(-1);
+    startCromoProductsAutoScroll();
+});
+
+cromoProductsTrack?.addEventListener("mouseenter", stopCromoProductsAutoScroll);
+cromoProductsTrack?.addEventListener("mouseleave", startCromoProductsAutoScroll);
+
+cromoProductsTrack?.addEventListener("mouseover", (event) => {
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setCarouselHoverImage(card, true);
+});
+
+cromoProductsTrack?.addEventListener("mouseout", (event) => {
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setCarouselHoverImage(card, false);
+});
+
+cromoProductsTrack?.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card) return;
+
+    openProduct(card.dataset.newProductId);
+});
+
+cromoProductsTrack?.addEventListener("keydown", (event) => {
+    if (!isKeyboardActivation(event)) return;
+
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card) return;
+
+    event.preventDefault();
+    openProduct(card.dataset.newProductId);
+});
+
 relatedNextButton?.addEventListener("click", () => moveRelatedProducts(1));
 relatedPrevButton?.addEventListener("click", () => moveRelatedProducts(-1));
 relatedNextButton?.addEventListener("mouseenter", () => startRelatedHoverScroll(1));
@@ -1408,40 +1753,59 @@ scrollToRelatedButton?.addEventListener("click", () => {
     });
 });
 
-ropaCompleta?.addEventListener("mouseover", (event) => {
-    const card = event.target.closest("[data-product-id]");
-    if (!card || card.contains(event.relatedTarget)) return;
+function bindProductGridEvents(grid) {
+    if (!grid) return;
 
-    setFullWardrobeHoverImage(card, true);
-});
+    grid.addEventListener("mouseover", (event) => {
+        const card = event.target.closest("[data-product-id]");
+        if (!card || card.contains(event.relatedTarget)) return;
 
-ropaCompleta?.addEventListener("mouseout", (event) => {
-    const card = event.target.closest("[data-product-id]");
-    if (!card || card.contains(event.relatedTarget)) return;
+        setFullWardrobeHoverImage(card, true);
+    });
 
-    setFullWardrobeHoverImage(card, false);
-});
+    grid.addEventListener("mouseout", (event) => {
+        const card = event.target.closest("[data-product-id]");
+        if (!card || card.contains(event.relatedTarget)) return;
 
-ropaCompleta?.addEventListener("click", handleProductClick);
+        setFullWardrobeHoverImage(card, false);
+    });
 
-ropaCompleta?.addEventListener("keydown", (event) => {
-    if (!isKeyboardActivation(event)) return;
+    grid.addEventListener("click", handleProductClick);
 
-    const card = event.target.closest("[data-product-id]");
-    if (!card) return;
+    grid.addEventListener("keydown", (event) => {
+        if (!isKeyboardActivation(event)) return;
 
-    event.preventDefault();
-    const openedFromArmario = Boolean(card.closest("#ropaCompleta"));
-    openProduct(card.dataset.productId, openedFromArmario);
-});
+        const card = event.target.closest("[data-product-id]");
+        if (!card) return;
+
+        event.preventDefault();
+        const openedFromArmario = Boolean(card.closest("#ropaCompleta, #ropaCromoCompleta, #categoriaNoxGrid, #categoriaCromoGrid"));
+        openProduct(card.dataset.productId, openedFromArmario);
+    });
+}
+
+[
+    ropaCompleta,
+    ropaCromoCompleta,
+    categoriaNoxGrid,
+    categoriaCromoGrid
+].forEach(bindProductGridEvents);
 
 toggleArmarioButton?.addEventListener("click", openArmarioModal);
 cerrarArmarioButton?.addEventListener("click", closeArmarioModal);
 armarioBackdrop?.addEventListener("click", closeArmarioModal);
+cerrarCategoriaButton?.addEventListener("click", closeCategoryModal);
+categoriaBackdrop?.addEventListener("click", closeCategoryModal);
 closeModalButton?.addEventListener("click", closeProduct);
 backdrop?.addEventListener("click", closeProduct);
 
 wardrobeGrid?.addEventListener("mouseover", (event) => {
+    const categoryCard = event.target.closest("[data-category-target]");
+    if (categoryCard && !categoryCard.contains(event.relatedTarget)) {
+        setCategoryHoverImage(categoryCard, true);
+        return;
+    }
+
     const card = event.target.closest("[data-wardrobe-product-id]");
     if (!card || card.contains(event.relatedTarget)) return;
 
@@ -1449,6 +1813,12 @@ wardrobeGrid?.addEventListener("mouseover", (event) => {
 });
 
 wardrobeGrid?.addEventListener("mouseout", (event) => {
+    const categoryCard = event.target.closest("[data-category-target]");
+    if (categoryCard && !categoryCard.contains(event.relatedTarget)) {
+        setCategoryHoverImage(categoryCard, false);
+        return;
+    }
+
     const card = event.target.closest("[data-wardrobe-product-id]");
     if (!card || card.contains(event.relatedTarget)) return;
 
@@ -1456,6 +1826,13 @@ wardrobeGrid?.addEventListener("mouseout", (event) => {
 });
 
 wardrobeGrid?.addEventListener("click", (event) => {
+    const categoryCard = event.target.closest("[data-category-target]");
+
+    if (categoryCard && !categoryCard.classList.contains("is-upcoming")) {
+        openCategoryModal(categoryCard.dataset.categoryTarget);
+        return;
+    }
+
     const card = event.target.closest("[data-wardrobe-product-id]");
     if (!card) return;
 
@@ -1464,6 +1841,14 @@ wardrobeGrid?.addEventListener("click", (event) => {
 
 wardrobeGrid?.addEventListener("keydown", (event) => {
     if (!isKeyboardActivation(event)) return;
+
+    const categoryCard = event.target.closest("[data-category-target]");
+
+    if (categoryCard && !categoryCard.classList.contains("is-upcoming")) {
+        event.preventDefault();
+        openCategoryModal(categoryCard.dataset.categoryTarget);
+        return;
+    }
 
     const card = event.target.closest("[data-wardrobe-product-id]");
     if (!card) return;
@@ -1583,6 +1968,11 @@ document.addEventListener("keydown", (event) => {
         return;
     }
 
+    if (categoriaModal?.classList.contains("is-open")) {
+        closeCategoryModal();
+        return;
+    }
+
     if (armarioCompleto?.classList.contains("is-open")) {
         closeArmarioModal();
     }
@@ -1661,8 +2051,10 @@ if ("IntersectionObserver" in window) {
                 if (entry.target === loNuevoSection) {
                     if (entry.isIntersecting && !modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open")) {
                         startNewProductsAutoScroll();
+                        startCromoProductsAutoScroll();
                     } else {
                         stopNewProductsAutoScroll();
+                        stopCromoProductsAutoScroll();
                     }
                 }
 
@@ -1707,12 +2099,14 @@ if (window.visualViewport) {
 setTheme(getSavedTheme(), false);
 renderProducts();
 renderNewProducts();
+renderCromoNewProducts();
 renderWardrobeProducts();
 initializeVisualCards();
 updateHeaderState();
 updateActiveNav();
 startHeroSlider();
 startNewProductsAutoScroll();
+startCromoProductsAutoScroll();
 startWardrobeImageSwap();
 
 if (document.fonts) {

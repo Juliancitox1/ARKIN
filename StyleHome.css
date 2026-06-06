@@ -9460,3 +9460,182 @@ body[data-theme="angelic"] .product-final-whatsapp::after {
         transform: translateY(-44px) !important;
     }
 }
+
+
+/* ================================
+   AJUSTE FINAL - COLECCION CROMO Y CATEGORIAS
+================================ */
+.lo-nuevo-cromo-heading {
+    margin: clamp(52px, 7vw, 92px) auto 34px !important;
+}
+
+.lo-nuevo-cromo-heading .collection-title-cromo {
+    margin-top: 0 !important;
+}
+
+.lo-nuevo-cromo-shell {
+    margin-top: 0 !important;
+}
+
+.armario-collection-section {
+    width: 100% !important;
+}
+
+.armario-collection-section + .armario-collection-section {
+    margin-top: clamp(52px, 7vw, 92px) !important;
+}
+
+.armario-panel .armario-grid {
+    position: relative !important;
+    width: min(100%, 1460px) !important;
+    margin: 0 auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 32px !important;
+    align-items: start !important;
+    padding-bottom: 30px !important;
+}
+
+.armario-panel .armario-grid::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: -28px !important;
+    width: min(760px, 72vw) !important;
+    height: 1px !important;
+    transform: translateX(-50%) !important;
+    pointer-events: none !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), rgba(183, 148, 255, 0.46), rgba(255, 255, 255, 0.18), transparent) !important;
+}
+
+body[data-theme="angelic"] .armario-panel .armario-grid::before {
+    background: linear-gradient(90deg, transparent, rgba(203, 167, 106, 0.58), rgba(141, 99, 207, 0.32), rgba(203, 167, 106, 0.58), transparent) !important;
+}
+
+.category-modal .category-collection-block[hidden] {
+    display: none !important;
+}
+
+.wardrobe-card[data-category-target] .wardrobe-image {
+    object-fit: contain !important;
+}
+
+.wardrobe-card.is-upcoming {
+    cursor: default !important;
+}
+
+.wardrobe-card.is-upcoming .wardrobe-image {
+    width: min(42%, 220px) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: auto !important;
+    opacity: 0.36 !important;
+    filter: grayscale(1) brightness(0.8) drop-shadow(0 0 22px rgba(183, 148, 255, 0.12)) !important;
+}
+
+.wardrobe-card.is-upcoming:hover .wardrobe-image {
+    transform: scale(1.02) !important;
+    filter: grayscale(1) brightness(0.92) drop-shadow(0 0 26px rgba(183, 148, 255, 0.18)) !important;
+}
+
+.wardrobe-card.is-upcoming .wardrobe-card-overlay {
+    opacity: 1 !important;
+    background: rgba(0, 0, 0, 0.42) !important;
+    backdrop-filter: blur(6px) !important;
+}
+
+.wardrobe-card.is-upcoming .wardrobe-card-title {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    color: rgba(245, 241, 232, 0.72) !important;
+}
+
+.product-modal-collection {
+    min-height: 1em !important;
+}
+
+@media (max-width: 1100px) {
+    .armario-panel .armario-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 24px !important;
+    }
+}
+
+@media (max-width: 860px) {
+    .lo-nuevo-cromo-heading {
+        margin-top: 58px !important;
+        margin-bottom: 28px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .armario-collection-section + .armario-collection-section {
+        margin-top: 54px !important;
+    }
+
+    .armario-panel .armario-grid {
+        grid-template-columns: 1fr !important;
+        gap: 22px !important;
+    }
+
+    .wardrobe-card.is-upcoming {
+        min-height: 48svh !important;
+    }
+
+    .wardrobe-card.is-upcoming .wardrobe-image {
+        width: min(46%, 170px) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .lo-nuevo-cromo-heading {
+        margin-top: 48px !important;
+        margin-bottom: 24px !important;
+    }
+
+    .armario-panel .armario-grid {
+        gap: 18px !important;
+    }
+}
+
+
+/* ================================
+   AJUSTE FINAL - TITULOS CATEGORIAS Y CROMO
+================================ */
+#categoriaTitulo {
+    font-size: clamp(1.35rem, 2.1vw, 2.35rem) !important;
+    letter-spacing: 0.16em !important;
+    word-spacing: 0.08em !important;
+    line-height: 1.08 !important;
+    font-family: "Darkhusk", "Manrope", system-ui, sans-serif !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    color: rgba(245, 241, 232, 0.88) !important;
+    margin: 0 !important;
+}
+
+body[data-theme="angelic"] #categoriaTitulo {
+    color: rgba(32, 23, 37, 0.96) !important;
+}
+
+@media (max-width: 1100px) {
+    #categoriaTitulo {
+        font-size: clamp(1.12rem, 2.6vw, 1.85rem) !important;
+        letter-spacing: 0.14em !important;
+    }
+}
+
+@media (max-width: 700px) {
+    #categoriaTitulo {
+        font-size: clamp(0.88rem, 4.7vw, 1.28rem) !important;
+        letter-spacing: 0.11em !important;
+        line-height: 1.12 !important;
+    }
+}
+
+@media (max-width: 420px) {
+    #categoriaTitulo {
+        font-size: clamp(0.8rem, 5vw, 1.08rem) !important;
+        letter-spacing: 0.09em !important;
+    }
+}
