@@ -290,6 +290,8 @@ const pageLoader = document.getElementById("pageLoader");
 const currentYear = document.getElementById("currentYear");
 const themeToggles = [...document.querySelectorAll("[data-theme-toggle]")];
 const themeToggleTexts = [...document.querySelectorAll("[data-theme-toggle-text]")];
+const languageToggles = [...document.querySelectorAll("[data-language-toggle]")];
+const languageToggleTexts = [...document.querySelectorAll("[data-language-toggle-text]")];
 const themeColorMeta = document.getElementById("themeColorMeta");
 const headerLogoLink = document.querySelector(".nav-logo");
 
@@ -321,6 +323,8 @@ const WARDROBE_IMAGE_TIME = 12000;
 const LOADER_OPEN_DELAY = 700;
 const LOADER_HIDE_DELAY = 120;
 const THEME_STORAGE_KEY = "arkinThemePreference";
+const LANGUAGE_STORAGE_KEY = "arkinLanguagePreference";
+let currentLanguage = "es";
 const THEME_COLORS = {
     dark: "#050308",
     angelic: "#fffaf1"
@@ -461,11 +465,11 @@ function setTheme(theme, savePreference = true) {
 
     themeToggles.forEach((button) => {
         button.setAttribute("aria-pressed", String(isAngelic));
-        button.setAttribute("title", isAngelic ? "Cambiar a Dark" : "Cambiar a Angelic");
+        button.setAttribute("title", isAngelic ? t("themeToDark") : t("themeToAngelic"));
     });
 
     themeToggleTexts.forEach((textElement) => {
-        textElement.textContent = isAngelic ? "Angelic / Dark" : "Dark / Angelic";
+        textElement.textContent = isAngelic ? t("themeTextAngelic") : t("themeTextDark");
     });
 
     if (!savePreference) return;
@@ -481,6 +485,416 @@ function setTheme(theme, savePreference = true) {
 function toggleTheme() {
     const nextTheme = document.body.dataset.theme === "angelic" ? "dark" : "angelic";
     setTheme(nextTheme);
+}
+
+
+/* ================================
+   IDIOMA ES / EN
+================================ */
+const productCopyEnglish = {
+    1: {
+        description: "A sharp symbol born from the void. A clean, dark and elegant piece for those who command presence without saying too much."
+    },
+    2: {
+        description: "Curved traces and visual thorns move across the garment like a nocturnal mark. Designed to stand out with character and mystery."
+    },
+    3: {
+        description: "A dark composition with silent energy. Its design blends strength, elegance and an identity that does not seek approval."
+    },
+    4: {
+        description: "A design with intense presence, created for those who move between minimal and aggressive without losing sophistication."
+    },
+    5: {
+        description: "A piece marked by contrast and shadow. Subtle at first sight, but with a rebellious essence impossible to ignore."
+    },
+    6: {
+        description: "Violet thorns cross the garment like an elegant wound. An aggressive, dark and dominant design born from the abyss."
+    },
+    7: {
+        description: "A vertical seal with a mystic and ornamental look. A piece created to wear dark elegance with a ceremonial aura."
+    }
+};
+
+const cromoCopyEnglish = {
+    1: {
+        description: "A sharp symbol born from the void. A clean, dark and elegant Cromo piece for those who command presence without saying too much."
+    },
+    2: {
+        description: "Curved traces and chrome energy move across the garment like a nocturnal mark. Designed to stand out with character and mystery."
+    },
+    3: {
+        description: "A dark composition with silent energy. Its Cromo finish blends strength, elegance and an identity that does not seek approval."
+    },
+    4: {
+        description: "A design with intense presence, created for those who move between minimal and aggressive without losing sophistication."
+    },
+    5: {
+        description: "A piece marked by contrast, shadow and chrome shine. Subtle at first sight, but impossible to ignore."
+    },
+    6: {
+        description: "Chrome thorns cross the garment like a bright and dark mark. A Cromo piece with aggressive and clean presence."
+    },
+    7: {
+        description: "A vertical seal with a mystic and ornamental look. A Cromo piece created to wear dark elegance with a ceremonial aura."
+    }
+};
+
+const languageText = {
+    es: {
+        home: "Inicio",
+        new: "Lo Nuevo",
+        wardrobe: "Armario",
+        about: "Nosotros",
+        contact: "Contactanos",
+        navLabel: "Navegacion principal",
+        footerNavLabel: "Navegacion del footer",
+        openMenu: "Abrir menu",
+        closeMenu: "Cerrar menu",
+        languageAria: "Cambiar idioma a ingles",
+        languageText: "ES / EN",
+        newTitle: "Nuevo",
+        noxCollection: "Coleccion NOX",
+        cromoCollection: "Coleccion Cromo",
+        fullWardrobe: "Armario completo",
+        shirts: "Camisas",
+        cropTops: "CropTops",
+        comingSoon: "Proximamente",
+        openCategory: "Abrir {title}",
+        viewDetail: "Ver detalle de {product}",
+        viewDetailAction: "Ver detalle",
+        newLabel: "Lo Nuevo",
+        colors: "Colores",
+        previousImage: "Imagen anterior",
+        nextImage: "Imagen siguiente",
+        sizes: "Tallas",
+        sizeAria: "Talla {size}",
+        price: "Precio",
+        view360: "Vista 360",
+        description: "Descripcion",
+        material: "Material",
+        requestWhatsapp: "Solicitar por WhatsApp",
+        related: "Mas por ver",
+        relatedHint: "Ir a mas camisas",
+        previousProducts: "Ver camisas anteriores",
+        moreProducts: "Ver mas camisas",
+        closeWardrobe: "Cerrar armario",
+        closeCategory: "Cerrar categoria",
+        closeProduct: "Cerrar ventana",
+        productFallback: "Producto",
+        materialFallback: "Material por confirmar.",
+        aboutIntro: "ARKIN nace como una contrapropuesta a la cotidianidad de la industria textil en Colombia y a la necesidad de una marca oscura y elegante, donde las personas se sientan unicas, identificadas y comodas por medio de disenos y prendas de alta calidad, capaces de conectar con un publico amplio.",
+        mission: "Mision",
+        missionText: "Impactar y conectar a personas de diferentes estilos y generaciones mediante prendas con identidad. Buscamos crear una marca con estilo oscuro y caracter, conservando la elegancia y la limpieza mediante disenos versatiles y propios, evolucionando constantemente en calidad y vision creativa sin perder nuestra esencia.",
+        vision: "Vision",
+        visionText: "Convertirnos en una marca reconocida mundialmente, llevando nuestra identidad desde las calles hasta la alta costura internacional. Aspiramos a construir un universo visual y cultural que inspire autenticidad, exclusividad y arte, manteniendo siempre una esencia oscura, rebelde y atemporal.",
+        whatsapp: "WhatsApp",
+        instagram: "Instagram",
+        tiktok: "TikTok",
+        schedule: "Horario",
+        allDay: "24 horas",
+        location: "Ubicacion",
+        seeYou: "Te esperamos",
+        footerPhrase: "Exclusividad convertida en forma.",
+        rights: "Todos los derechos reservados.",
+        tagline: "Oscuro · Elegante · Atemporal",
+        themeToDark: "Cambiar a Dark",
+        themeToAngelic: "Cambiar a Angelic",
+        themeTextAngelic: "Angelic / Dark",
+        themeTextDark: "Dark / Angelic",
+        visualLightbox: "Imagen ampliada de ARKIN",
+        closeImage: "Cerrar imagen",
+        expandImage: "Ampliar {alt}",
+        imageExpandedAlt: "Imagen ARKIN ampliada",
+        colorAria: "Color {color}",
+        whatsappMessage: "Hola ARKIN, estoy interesad@ en {product} | {price} | Color: {color}{size}"
+    },
+    en: {
+        home: "Home",
+        new: "New",
+        wardrobe: "Wardrobe",
+        about: "About",
+        contact: "Contact",
+        navLabel: "Main navigation",
+        footerNavLabel: "Footer navigation",
+        openMenu: "Open menu",
+        closeMenu: "Close menu",
+        languageAria: "Change language to Spanish",
+        languageText: "EN / ES",
+        newTitle: "New",
+        noxCollection: "NOX Collection",
+        cromoCollection: "Cromo Collection",
+        fullWardrobe: "Full wardrobe",
+        shirts: "Shirts",
+        cropTops: "Crop Tops",
+        comingSoon: "Coming soon",
+        openCategory: "Open {title}",
+        viewDetail: "View details for {product}",
+        viewDetailAction: "View details",
+        newLabel: "New Drop",
+        colors: "Colors",
+        previousImage: "Previous image",
+        nextImage: "Next image",
+        sizes: "Sizes",
+        sizeAria: "Size {size}",
+        price: "Price",
+        view360: "360 View",
+        description: "Description",
+        material: "Material",
+        requestWhatsapp: "Request via WhatsApp",
+        related: "More to see",
+        relatedHint: "Go to more products",
+        previousProducts: "View previous products",
+        moreProducts: "View more products",
+        closeWardrobe: "Close wardrobe",
+        closeCategory: "Close category",
+        closeProduct: "Close window",
+        productFallback: "Product",
+        materialFallback: "Material to be confirmed.",
+        aboutIntro: "ARKIN was born as a counterproposal to the everyday rhythm of the textile industry in Colombia and to the need for a dark and elegant brand, where people feel unique, identified and comfortable through high quality designs and garments made to connect with a broad audience.",
+        mission: "Mission",
+        missionText: "To impact and connect people from different styles and generations through garments with identity. We seek to build a dark and characterful brand, preserving elegance and clean design through versatile and original pieces, constantly evolving in quality and creative vision without losing our essence.",
+        vision: "Vision",
+        visionText: "To become a globally recognized brand, taking our identity from the streets to international high fashion. We aim to build a visual and cultural universe that inspires authenticity, exclusivity and art, while always preserving a dark, rebellious and timeless essence.",
+        whatsapp: "WhatsApp",
+        instagram: "Instagram",
+        tiktok: "TikTok",
+        schedule: "Hours",
+        allDay: "24 hours",
+        location: "Location",
+        seeYou: "Visit us",
+        footerPhrase: "Exclusivity turned into form.",
+        rights: "All rights reserved.",
+        tagline: "Dark · Elegant · Timeless",
+        themeToDark: "Switch to Dark",
+        themeToAngelic: "Switch to Angelic",
+        themeTextAngelic: "Angelic / Dark",
+        themeTextDark: "Dark / Angelic",
+        visualLightbox: "Expanded ARKIN image",
+        closeImage: "Close image",
+        expandImage: "Expand {alt}",
+        imageExpandedAlt: "Expanded ARKIN image",
+        colorAria: "Color {color}",
+        whatsappMessage: "Hi ARKIN, I am interested in {product} | {price} | Color: {color}{size}"
+    }
+};
+
+const materialTranslations = {
+    es: {
+        camisas: shirtMaterial,
+        croptops: cropTopMaterial
+    },
+    en: {
+        camisas: "Oversize\n80% Cotton\n16% Polyester\n4% Spandex\n250 GSM",
+        croptops: "Crop Top\n80% Cotton\n16% Polyester\n4% Spandex\n250 GSM"
+    }
+};
+
+function t(key, replacements = {}) {
+    const text = languageText[currentLanguage]?.[key] || languageText.es[key] || key;
+
+    return Object.entries(replacements).reduce((value, [placeholder, replacement]) => {
+        return value.replaceAll(`{${placeholder}}`, replacement);
+    }, text);
+}
+
+function getSavedLanguage() {
+    try {
+        const savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+        return savedLanguage === "en" ? "en" : "es";
+    } catch (error) {
+        return "es";
+    }
+}
+
+function getCollectionLabel(collection = "") {
+    return collection.toLowerCase().includes("cromo") ? t("cromoCollection") : t("noxCollection");
+}
+
+function getProductDescription(product) {
+    if (!product) return "";
+
+    if (currentLanguage === "en") {
+        const englishSource = product.collection === "Coleccion Cromo" ? cromoCopyEnglish : productCopyEnglish;
+        return englishSource[product.designId]?.description || product.description || "";
+    }
+
+    return product.fullDescription || product.description || "";
+}
+
+function getProductMaterial(product) {
+    if (!product) return t("materialFallback");
+
+    if (currentLanguage === "en") {
+        return materialTranslations.en[product.category] || t("materialFallback");
+    }
+
+    return product.material || t("materialFallback");
+}
+
+function getWardrobeCardTitle(card) {
+    if (card.disabled) return t("comingSoon");
+    if (card.target === "camisas") return t("shirts");
+    if (card.target === "croptops") return t("cropTops");
+    return card.title;
+}
+
+function setElementText(selector, value) {
+    document.querySelectorAll(selector).forEach((element) => {
+        element.textContent = value;
+    });
+}
+
+function setElementAttribute(selector, attribute, value) {
+    document.querySelectorAll(selector).forEach((element) => {
+        element.setAttribute(attribute, value);
+    });
+}
+
+function updateCollectionTitles() {
+    document.querySelectorAll(".collection-title").forEach((element) => {
+        const currentText = element.textContent.toLowerCase();
+        element.textContent = currentText.includes("cromo") ? t("cromoCollection") : t("noxCollection");
+    });
+}
+
+function updateLanguageToggles() {
+    const isEnglish = currentLanguage === "en";
+
+    languageToggles.forEach((button) => {
+        button.setAttribute("aria-pressed", String(isEnglish));
+        button.setAttribute("aria-label", t("languageAria"));
+    });
+
+    languageToggleTexts.forEach((textElement) => {
+        textElement.textContent = t("languageText");
+    });
+}
+
+function updateThemeText() {
+    const isAngelic = document.body.dataset.theme === "angelic";
+
+    themeToggles.forEach((button) => {
+        button.setAttribute("title", isAngelic ? t("themeToDark") : t("themeToAngelic"));
+    });
+
+    themeToggleTexts.forEach((textElement) => {
+        textElement.textContent = isAngelic ? t("themeTextAngelic") : t("themeTextDark");
+    });
+}
+
+function updateStaticTexts() {
+    setElementAttribute(".nav", "aria-label", t("navLabel"));
+    setElementAttribute(".footer-nav", "aria-label", t("footerNavLabel"));
+
+    setElementText('.nav-link[href="#inicio"], .mobile-nav-link[href="#inicio"], .footer-nav a[href="#inicio"]', t("home"));
+    setElementText('.nav-link[href="#loNuevo"], .mobile-nav-link[href="#loNuevo"], .footer-nav a[href="#loNuevo"]', t("new"));
+    setElementText('.nav-link[href="#armario"], .mobile-nav-link[href="#armario"], .footer-nav a[href="#armario"]', t("wardrobe"));
+    setElementText('.nav-link[href="#nosotros"], .mobile-nav-link[href="#nosotros"], .footer-nav a[href="#nosotros"]', t("about"));
+    setElementText('.nav-link[href="#contacto"], .mobile-nav-link[href="#contacto"], .footer-nav a[href="#contacto"]', t("contact"));
+
+    setElementText("#loNuevoTitle", t("newTitle"));
+    setElementText("#toggleArmario", t("fullWardrobe"));
+    setElementText("#armarioTitulo", t("fullWardrobe"));
+    setElementText("#relatedProductsTitle", t("related"));
+    setElementText("#modalTitle", modal?.classList.contains("is-open") ? (products[currentProductId]?.name || t("productFallback")) : t("productFallback"));
+
+    updateCollectionTitles();
+
+    if (categoriaTitulo) {
+        const categoryText = categoriaTitulo.textContent.toLowerCase();
+        categoriaTitulo.textContent = categoryText.includes("crop") ? t("cropTops") : t("shirts");
+    }
+
+    setElementText(".selector-block-luxury.product-size-block p", t("sizes"));
+    setElementText(".product-price-block .product-section-label", t("price"));
+    setElementText(".product-video-card .product-section-label", t("view360"));
+    setElementText(".product-copy-section:nth-child(1) .product-section-label", t("description"));
+    setElementText(".product-copy-section:nth-child(2) .product-section-label", t("material"));
+    setElementText(".product-color-rail .product-section-label", t("colors"));
+    setElementText("#linkWhatsapp", t("requestWhatsapp"));
+
+    setElementText("#nosotrosTitle", t("about"));
+    setElementText(".nosotros-intro", t("aboutIntro"));
+    setElementText(".nosotros-value-card:nth-child(1) h3", t("mission"));
+    setElementText(".nosotros-value-card:nth-child(1) p", t("missionText"));
+    setElementText(".nosotros-value-card:nth-child(2) h3", t("vision"));
+    setElementText(".nosotros-value-card:nth-child(2) p", t("visionText"));
+
+    setElementText("#contactoTitle", t("contact"));
+    const contactLabels = document.querySelectorAll(".contact-card .contact-label");
+    if (contactLabels[0]) contactLabels[0].textContent = t("whatsapp");
+    if (contactLabels[1]) contactLabels[1].textContent = t("whatsapp");
+    if (contactLabels[2]) contactLabels[2].textContent = t("instagram");
+    if (contactLabels[3]) contactLabels[3].textContent = t("tiktok");
+    if (contactLabels[4]) contactLabels[4].textContent = t("schedule");
+    setElementText(".contact-card-schedule .contact-value", t("allDay"));
+    setElementText(".contact-map-overlay span", t("location"));
+    setElementText(".contact-map-overlay strong", t("seeYou"));
+
+    setElementText(".footer-brand p", t("footerPhrase"));
+    setElementText(".footer-copy", `© ${currentYear?.textContent || new Date().getFullYear()} ARKIN. ${t("rights")}`);
+    setElementText(".footer-tagline", t("tagline"));
+
+    setElementAttribute("#modalPrevImage", "aria-label", t("previousImage"));
+    setElementAttribute("#modalNextImage", "aria-label", t("nextImage"));
+    setElementAttribute("#scrollToRelated", "aria-label", t("relatedHint"));
+    setElementAttribute("#relatedPrev", "aria-label", t("previousProducts"));
+    setElementAttribute("#relatedNext", "aria-label", t("moreProducts"));
+    setElementAttribute("#cerrarArmario", "aria-label", t("closeWardrobe"));
+    setElementAttribute("#cerrarCategoria", "aria-label", t("closeCategory"));
+    setElementAttribute("#cerrarProducto", "aria-label", t("closeProduct"));
+
+    if (navMenuToggle) {
+        const isOpen = siteHeader?.classList.contains("mobile-menu-open");
+        navMenuToggle.setAttribute("aria-label", isOpen ? t("closeMenu") : t("openMenu"));
+    }
+
+    updateLanguageToggles();
+    updateThemeText();
+}
+
+function rerenderLanguageContent() {
+    if (newProductsTrack?.children.length) renderNewProducts();
+    if (cromoProductsTrack?.children.length) renderCromoNewProducts();
+    if (wardrobeGrid?.children.length) renderWardrobeProducts();
+    if (ropaCompleta?.children.length || ropaCromoCompleta?.children.length) renderProducts();
+
+    if (categoriaModal?.classList.contains("is-open")) {
+        const category = categoriaTitulo?.textContent.toLowerCase().includes("crop") ? "croptops" : "camisas";
+        if (category === "camisas") {
+            renderProductGrid(categoriaNoxGrid, noxProductIds);
+            renderProductGrid(categoriaCromoGrid, cromoShirtProductIds);
+        } else {
+            renderProductGrid(categoriaNoxGrid, []);
+            renderProductGrid(categoriaCromoGrid, cropTopProductIds);
+        }
+    }
+
+    if (modal?.classList.contains("is-open")) {
+        renderModal();
+    }
+}
+
+function setLanguage(language, savePreference = true) {
+    currentLanguage = language === "en" ? "en" : "es";
+    document.documentElement.lang = currentLanguage;
+    document.body.dataset.language = currentLanguage;
+
+    updateStaticTexts();
+    rerenderLanguageContent();
+    updateStaticTexts();
+
+    if (!savePreference) return;
+
+    try {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+    } catch (error) {
+        console.warn("No se pudo guardar la preferencia de idioma:", error);
+    }
+}
+
+function toggleLanguage() {
+    setLanguage(currentLanguage === "en" ? "es" : "en");
 }
 
 /* ================================
@@ -524,7 +938,7 @@ function createCardMarkup(productId) {
             data-product-is-hovering="false"
             role="button"
             tabindex="0"
-            aria-label="Ver detalle de ${product.name}"
+            aria-label="${t("viewDetail", { product: product.name })}"
         >
             <h3 class="product-card-name product-card-name-top">${product.name}</h3>
             <div class="product-card-media ${backgroundClass}">
@@ -555,17 +969,17 @@ function createNewProductMarkup(productId) {
             data-carousel-is-hovering="false"
             role="button"
             tabindex="0"
-            aria-label="Ver detalle de ${product.name}"
+            aria-label="${t("viewDetail", { product: product.name })}"
         >
             <h3 class="new-product-name new-product-name-top">${product.name}</h3>
             <div class="new-product-media ${backgroundClass}">
                 <img src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             </div>
             <div class="new-product-content">
-                <span class="new-product-label">Lo Nuevo</span>
-                <p class="new-product-description">${product.description}</p>
+                <span class="new-product-label">${t("newLabel")}</span>
+                <p class="new-product-description">${getProductDescription(product)}</p>
                 <div class="new-product-footer">
-                    <span class="new-product-action">Ver detalle</span>
+                    <span class="new-product-action">${t("viewDetailAction")}</span>
                 </div>
             </div>
         </article>
@@ -588,7 +1002,7 @@ function createRelatedCardMarkup(productId) {
             data-carousel-is-hovering="false"
             role="button"
             tabindex="0"
-            aria-label="Ver detalle de ${product.name}"
+            aria-label="${t("viewDetail", { product: product.name })}"
         >
             <span class="related-card-name related-card-name-top">${product.name}</span>
             <div class="related-card-media ${backgroundClass}">
@@ -603,11 +1017,12 @@ function createRelatedCardMarkup(productId) {
 
 // Genera los recuadros principales de Armario: Camisas, CropTops y Proximamente.
 function createWardrobeCategoryMarkup(card) {
+    const title = getWardrobeCardTitle(card);
     const backgroundClass = getGarmentBackgroundClass(card.image || "");
     const disabledClass = card.disabled ? "is-upcoming" : "";
     const roleAttributes = card.disabled
         ? `aria-disabled="true"`
-        : `role="button" tabindex="0" aria-label="Abrir ${card.title}"`;
+        : `role="button" tabindex="0" aria-label="${t("openCategory", { title })}"`;
 
     return `
         <article
@@ -618,9 +1033,9 @@ function createWardrobeCategoryMarkup(card) {
             data-category-is-hovering="false"
             ${roleAttributes}
         >
-            <img class="wardrobe-image" src="${card.image}" alt="${card.title}" loading="lazy" decoding="async" />
+            <img class="wardrobe-image" src="${card.image}" alt="${title}" loading="lazy" decoding="async" />
             <div class="wardrobe-card-overlay">
-                <span class="wardrobe-card-title">${card.title}</span>
+                <span class="wardrobe-card-title">${title}</span>
             </div>
         </article>
     `;
@@ -1165,7 +1580,7 @@ function openCategoryModal(category) {
 
     setTimeout(() => {
         try {
-            categoriaTitulo.textContent = isShirts ? "Camisas" : "CropTops";
+            categoriaTitulo.textContent = isShirts ? t("shirts") : t("cropTops");
 
             if (isShirts) {
                 categoriaNoxBlock.hidden = false;
@@ -1317,7 +1732,7 @@ function renderColorOptions(product) {
                     class="color-button ${activeClass} ${disabledClass}"
                     data-color="${colorName}"
                     title="${colorName}"
-                    aria-label="Color ${colorName}"
+                    aria-label="${t("colorAria", { color: colorName })}"
                     aria-pressed="${isActive}"
                     aria-disabled="${isDisabled}"
                     ${isDisabled ? "disabled" : ""}
@@ -1344,7 +1759,7 @@ function renderSizeOptions(product) {
                 <button
                     class="size-button ${activeClass} ${disabledClass}"
                     data-size="${size.label}"
-                    aria-label="Talla ${size.label}"
+                    aria-label="${t("sizeAria", { size: size.label })}"
                     aria-pressed="${isActive}"
                     aria-disabled="${isDisabled}"
                     ${isDisabled ? "disabled" : ""}
@@ -1362,8 +1777,14 @@ function updateWhatsAppLink() {
     const product = products[currentProductId];
     if (!product || !whatsappLink) return;
 
+    const sizeText = currentSize ? ` | ${currentLanguage === "en" ? "Size" : "Talla"}: ${currentSize}` : "";
     const message = encodeURIComponent(
-        `Hola ARKIN, estoy interesad@ en ${product.name} | ${product.price} | Color: ${currentColorName}${currentSize ? ` | Talla: ${currentSize}` : ""}`
+        t("whatsappMessage", {
+            product: product.name,
+            price: product.price,
+            color: currentColorName,
+            size: sizeText
+        })
     );
 
     whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${message}`;
@@ -1378,15 +1799,15 @@ function renderModal() {
     }
 
     if (modalCollection) {
-        modalCollection.textContent = product.collection || "Coleccion NOX";
+        modalCollection.textContent = getCollectionLabel(product.collection || "Coleccion NOX");
     }
 
     if (modalDescription) {
-        modalDescription.textContent = product.fullDescription || product.description || "";
+        modalDescription.textContent = getProductDescription(product);
     }
 
     if (modalMaterial) {
-        modalMaterial.textContent = product.material || "Material por confirmar.";
+        modalMaterial.textContent = getProductMaterial(product);
     }
 
     if (modalPrice) {
@@ -1575,7 +1996,7 @@ function closeMobileMenu() {
 
     siteHeader.classList.remove("mobile-menu-open");
     navMenuToggle.setAttribute("aria-expanded", "false");
-    navMenuToggle.setAttribute("aria-label", "Abrir menu");
+    navMenuToggle.setAttribute("aria-label", t("openMenu"));
     mobileNavPanel.setAttribute("aria-hidden", "true");
     document.body.classList.remove("nav-open");
 }
@@ -1587,7 +2008,7 @@ function toggleMobileMenu() {
     const isOpen = siteHeader.classList.toggle("mobile-menu-open");
 
     navMenuToggle.setAttribute("aria-expanded", String(isOpen));
-    navMenuToggle.setAttribute("aria-label", isOpen ? "Cerrar menu" : "Abrir menu");
+    navMenuToggle.setAttribute("aria-label", isOpen ? t("closeMenu") : t("openMenu"));
     mobileNavPanel.setAttribute("aria-hidden", String(!isOpen));
     document.body.classList.toggle("nav-open", isOpen);
 }
@@ -1618,8 +2039,8 @@ function getVisualLightbox() {
     visualLightbox.setAttribute("aria-hidden", "true");
     visualLightbox.innerHTML = `
         <div class="visual-lightbox-backdrop" data-visual-lightbox-close></div>
-        <div class="visual-lightbox-panel" role="dialog" aria-modal="true" aria-label="Imagen ampliada de ARKIN">
-            <button class="visual-lightbox-close" type="button" aria-label="Cerrar imagen" data-visual-lightbox-close></button>
+        <div class="visual-lightbox-panel" role="dialog" aria-modal="true" aria-label="${t("visualLightbox")}">
+            <button class="visual-lightbox-close" type="button" aria-label="${t("closeImage")}" data-visual-lightbox-close></button>
             <img class="visual-lightbox-image" src="" alt="" />
         </div>
     `;
@@ -1643,7 +2064,7 @@ function openVisualLightbox(imageElement) {
     lastFocusedBeforeVisualModal = document.activeElement;
 
     lightboxImage.src = imageElement.currentSrc || imageElement.src;
-    lightboxImage.alt = imageElement.alt || "Imagen ARKIN ampliada";
+    lightboxImage.alt = imageElement.alt || t("imageExpandedAlt");
 
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
@@ -1677,7 +2098,7 @@ function initializeVisualCards() {
 
         card.setAttribute("role", "button");
         card.setAttribute("tabindex", "0");
-        card.setAttribute("aria-label", `Ampliar ${imageElement.alt || "imagen ARKIN"}`);
+        card.setAttribute("aria-label", t("expandImage", { alt: imageElement.alt || "imagen ARKIN" }));
 
         card.addEventListener("click", () => openVisualLightbox(imageElement));
         card.addEventListener("keydown", (event) => {
@@ -1732,6 +2153,10 @@ function resetProductThumbsScrollEffect() {
 ================================ */
 themeToggles.forEach((button) => {
     button.addEventListener("click", toggleTheme);
+});
+
+languageToggles.forEach((button) => {
+    button.addEventListener("click", toggleLanguage);
 });
 
 document
@@ -2188,6 +2613,7 @@ if (window.visualViewport) {
    INICIALIZACION
 ================================ */
 setTheme(getSavedTheme(), false);
+setLanguage(getSavedLanguage(), false);
 renderProducts();
 renderNewProducts();
 renderCromoNewProducts();
