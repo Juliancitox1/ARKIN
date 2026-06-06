@@ -157,6 +157,7 @@ const currentYear = document.getElementById("currentYear");
 const themeToggles = [...document.querySelectorAll("[data-theme-toggle]")];
 const themeToggleTexts = [...document.querySelectorAll("[data-theme-toggle-text]")];
 const themeColorMeta = document.getElementById("themeColorMeta");
+const headerLogoLink = document.querySelector(".nav-logo");
 
 if (currentYear) {
     currentYear.textContent = new Date().getFullYear();
@@ -365,11 +366,11 @@ function createCardMarkup(productId) {
             data-product-before-hover-image=""
             data-product-is-hovering="false"
         >
+            <h3 class="product-card-name product-card-name-top">${product.name}</h3>
             <div class="product-card-media ${backgroundClass}">
                 <img src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             </div>
             <div class="product-card-info">
-                <h3 class="product-card-name">${product.name}</h3>
                 <span class="product-card-price">${product.price}</span>
             </div>
         </article>
@@ -381,15 +382,23 @@ function createNewProductMarkup(productId) {
     if (!product) return "";
 
     const image = getPrimaryImage(product);
+    const blackImage = getBlackVariantImage(product) || image;
+    const backgroundClass = getGarmentBackgroundClass(image);
 
     return `
-        <article class="new-product-card reveal" data-new-product-id="${productId}">
-            <div class="new-product-media ${getGarmentBackgroundClass(image)}">
+        <article
+            class="new-product-card reveal ${backgroundClass}"
+            data-new-product-id="${productId}"
+            data-carousel-hover-image="${blackImage}"
+            data-carousel-before-hover-image=""
+            data-carousel-is-hovering="false"
+        >
+            <h3 class="new-product-name new-product-name-top">${product.name}</h3>
+            <div class="new-product-media ${backgroundClass}">
                 <img src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             </div>
             <div class="new-product-content">
                 <span class="new-product-label">Lo Nuevo</span>
-                <h3 class="new-product-name">${product.name}</h3>
                 <p class="new-product-description">${product.description}</p>
                 <div class="new-product-footer">
                     <span class="new-product-action">Ver detalle</span>
@@ -431,14 +440,22 @@ function createWardrobeCardMarkup(productId) {
 function createRelatedCardMarkup(productId) {
     const product = products[productId];
     const image = getPrimaryImage(product);
+    const blackImage = getBlackVariantImage(product) || image;
+    const backgroundClass = getGarmentBackgroundClass(image);
 
     return `
-        <article class="related-card" data-related-product-id="${productId}">
-            <div class="related-card-media ${getGarmentBackgroundClass(image)}">
+        <article
+            class="related-card ${backgroundClass}"
+            data-related-product-id="${productId}"
+            data-carousel-hover-image="${blackImage}"
+            data-carousel-before-hover-image=""
+            data-carousel-is-hovering="false"
+        >
+            <span class="related-card-name related-card-name-top">${product.name}</span>
+            <div class="related-card-media ${backgroundClass}">
                 <img src="${image}" alt="${product.name}" loading="lazy" decoding="async" />
             </div>
             <div class="related-card-info">
-                <span class="related-card-name">${product.name}</span>
                 <span class="related-card-price">${product.price}</span>
             </div>
         </article>
@@ -597,6 +614,58 @@ function setFullWardrobeHoverImage(card, isHovering) {
     const previousImage = card.dataset.productBeforeHoverImage;
 
     card.dataset.productIsHovering = "false";
+
+    if (previousImage) {
+        imageElement.src = previousImage;
+        imageElement.alt = product.name;
+
+        if (typeof getGarmentBackgroundClass === "function") {
+            const backgroundClass = getGarmentBackgroundClass(previousImage);
+
+            card.classList.remove("garment-bg-dark", "garment-bg-light");
+            card.classList.add(backgroundClass);
+
+            mediaElement?.classList.remove("garment-bg-dark", "garment-bg-light");
+            mediaElement?.classList.add(backgroundClass);
+        }
+    }
+}
+
+
+function setCarouselHoverImage(card, isHovering) {
+    const imageElement = card.querySelector(".new-product-media img, .related-card-media img");
+    const mediaElement = card.querySelector(".new-product-media, .related-card-media");
+
+    if (!imageElement) return;
+
+    const productId = card.dataset.newProductId || card.dataset.relatedProductId;
+    const product = products[productId];
+    const hoverImage = card.dataset.carouselHoverImage;
+
+    if (!product || !hoverImage) return;
+
+    if (isHovering) {
+        card.dataset.carouselBeforeHoverImage = imageElement.getAttribute("src") || "";
+        card.dataset.carouselIsHovering = "true";
+
+        imageElement.src = hoverImage;
+        imageElement.alt = `${product.name} versión negra`;
+
+        if (typeof getGarmentBackgroundClass === "function") {
+            const backgroundClass = getGarmentBackgroundClass(hoverImage);
+
+            card.classList.remove("garment-bg-dark", "garment-bg-light");
+            card.classList.add(backgroundClass);
+
+            mediaElement?.classList.remove("garment-bg-dark", "garment-bg-light");
+            mediaElement?.classList.add(backgroundClass);
+        }
+
+        return;
+    }
+
+    const previousImage = card.dataset.carouselBeforeHoverImage;
+    card.dataset.carouselIsHovering = "false";
 
     if (previousImage) {
         imageElement.src = previousImage;
@@ -1100,6 +1169,98 @@ function toggleMobileMenu() {
     document.body.classList.toggle("nav-open", isOpen);
 }
 
+
+function playHeaderLogoClickSpin() {
+    if (!headerLogoLink) return;
+
+    headerLogoLink.classList.remove("is-click-spinning");
+    void headerLogoLink.offsetWidth;
+    headerLogoLink.classList.add("is-click-spinning");
+
+    window.setTimeout(() => {
+        headerLogoLink.classList.remove("is-click-spinning");
+    }, 2450);
+}
+
+let visualLightbox = null;
+let lastFocusedBeforeVisualModal = null;
+
+function getVisualLightbox() {
+    if (visualLightbox) return visualLightbox;
+
+    visualLightbox = document.createElement("div");
+    visualLightbox.className = "visual-lightbox";
+    visualLightbox.setAttribute("aria-hidden", "true");
+    visualLightbox.innerHTML = `
+        <div class="visual-lightbox-backdrop" data-visual-lightbox-close></div>
+        <div class="visual-lightbox-panel" role="dialog" aria-modal="true" aria-label="Imagen ampliada de ARKIN">
+            <button class="visual-lightbox-close" type="button" aria-label="Cerrar imagen" data-visual-lightbox-close></button>
+            <img class="visual-lightbox-image" src="" alt="" />
+        </div>
+    `;
+
+    visualLightbox.querySelectorAll("[data-visual-lightbox-close]").forEach((element) => {
+        element.addEventListener("click", closeVisualLightbox);
+    });
+
+    document.body.appendChild(visualLightbox);
+    return visualLightbox;
+}
+
+function openVisualLightbox(imageElement) {
+    if (!imageElement) return;
+
+    const lightbox = getVisualLightbox();
+    const lightboxImage = lightbox.querySelector(".visual-lightbox-image");
+    const closeButton = lightbox.querySelector(".visual-lightbox-close");
+
+    lastFocusedBeforeVisualModal = document.activeElement;
+
+    lightboxImage.src = imageElement.currentSrc || imageElement.src;
+    lightboxImage.alt = imageElement.alt || "Imagen ARKIN ampliada";
+
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+    closeButton?.focus();
+}
+
+function closeVisualLightbox() {
+    if (!visualLightbox?.classList.contains("is-open")) return;
+
+    visualLightbox.classList.remove("is-open");
+    visualLightbox.setAttribute("aria-hidden", "true");
+
+    if (!modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open")) {
+        document.body.classList.remove("no-scroll");
+    }
+
+    if (lastFocusedBeforeVisualModal instanceof HTMLElement) {
+        lastFocusedBeforeVisualModal.focus();
+    }
+
+    lastFocusedBeforeVisualModal = null;
+}
+
+function initializeVisualCards() {
+    document.querySelectorAll(".nosotros-visual .visual-card").forEach((card) => {
+        const imageElement = card.querySelector("img");
+        if (!imageElement) return;
+
+        card.setAttribute("role", "button");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("aria-label", `Ampliar ${imageElement.alt || "imagen ARKIN"}`);
+
+        card.addEventListener("click", () => openVisualLightbox(imageElement));
+        card.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+
+            event.preventDefault();
+            openVisualLightbox(imageElement);
+        });
+    });
+}
+
 /* ================================
    EVENTOS
 ================================ */
@@ -1119,6 +1280,20 @@ newPrevButton?.addEventListener("click", () => {
 
 newProductsTrack?.addEventListener("mouseenter", stopNewProductsAutoScroll);
 newProductsTrack?.addEventListener("mouseleave", startNewProductsAutoScroll);
+
+newProductsTrack?.addEventListener("mouseover", (event) => {
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setCarouselHoverImage(card, true);
+});
+
+newProductsTrack?.addEventListener("mouseout", (event) => {
+    const card = event.target.closest("[data-new-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setCarouselHoverImage(card, false);
+});
 
 newProductsTrack?.addEventListener("click", (event) => {
     const card = event.target.closest("[data-new-product-id]");
@@ -1194,6 +1369,20 @@ wardrobeGrid?.addEventListener("keydown", (event) => {
 
     event.preventDefault();
     openProduct(card.dataset.wardrobeProductId);
+});
+
+relatedProductsTrack?.addEventListener("mouseover", (event) => {
+    const card = event.target.closest("[data-related-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setCarouselHoverImage(card, true);
+});
+
+relatedProductsTrack?.addEventListener("mouseout", (event) => {
+    const card = event.target.closest("[data-related-product-id]");
+    if (!card || card.contains(event.relatedTarget)) return;
+
+    setCarouselHoverImage(card, false);
 });
 
 relatedProductsTrack?.addEventListener("click", (event) => {
@@ -1273,6 +1462,11 @@ nextImageButton?.addEventListener("click", () => {
 document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
 
+    if (visualLightbox?.classList.contains("is-open")) {
+        closeVisualLightbox();
+        return;
+    }
+
     if (modal?.classList.contains("is-open")) {
         closeProduct();
         return;
@@ -1286,6 +1480,11 @@ document.addEventListener("keydown", (event) => {
 navMenuToggle?.addEventListener("click", toggleMobileMenu);
 mobileNavPanel?.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeMobileMenu);
+});
+
+headerLogoLink?.addEventListener("click", () => {
+    playHeaderLogoClickSpin();
+    closeMobileMenu();
 });
 
 window.addEventListener("scroll", () => {
@@ -1383,6 +1582,7 @@ setTheme(getSavedTheme(), false);
 renderProducts();
 renderNewProducts();
 renderWardrobeProducts();
+initializeVisualCards();
 updateHeaderState();
 updateActiveNav();
 startHeroSlider();
