@@ -2288,3 +2288,96 @@ body[data-theme="angelic"] .header-controls-desktop .header-language-toggle{
         transform: translateY(16px) scale(1) !important;
     }
 }
+
+/* ================================
+   AJUSTE FINAL - LOGO Y TEMA HEADER
+================================ */
+
+/* Logo del header un poco mas grande */
+@media (min-width: 861px) {
+    .nav-logo {
+        width: 88px !important;
+        height: 88px !important;
+    }
+
+    .nav-logo img {
+        width: 76px !important;
+    }
+
+    .site-header.is-scrolled .nav-logo img {
+        width: 70px !important;
+    }
+}
+
+/* Boton Dark / Angelic un poco mas pequeno */
+.header-controls-desktop .header-theme-toggle {
+    min-width: 158px !important;
+    height: 39px !important;
+    padding: 0 44px 0 14px !important;
+}
+
+.header-controls-desktop .header-theme-toggle .theme-toggle-text {
+    font-size: 0.56rem !important;
+    letter-spacing: 0.085em !important;
+    white-space: nowrap !important;
+}
+
+.header-controls-desktop .header-theme-toggle .theme-toggle-orb {
+    width: 23px !important;
+    height: 23px !important;
+    right: 8px !important;
+}
+
+/* Ajuste para pantallas intermedias */
+@media (max-width: 1180px) and (min-width: 861px) {
+    .header-controls-desktop .header-theme-toggle {
+        min-width: 148px !important;
+        height: 38px !important;
+        padding: 0 42px 0 13px !important;
+    }
+
+    .header-controls-desktop .header-theme-toggle .theme-toggle-text {
+        font-size: 0.52rem !important;
+        letter-spacing: 0.075em !important;
+    }
+}
+
+/* Movil: logo un poco mas presente, sin dañar hamburguesa */
+@media (max-width: 860px) {
+    .nav-logo {
+        width: 68px !important;
+        height: 68px !important;
+    }
+
+    .nav-logo img {
+        width: 58px !important;
+    }
+
+    .site-header.is-scrolled .nav-logo img {
+        width: 54px !important;
+    }
+
+    .mobile-theme-toggle {
+        height: 42px !important;
+        font-size: 0.62rem !important;
+    }
+
+    .mobile-theme-toggle .theme-toggle-text {
+        font-size: 0.62rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-logo {
+        width: 62px !important;
+        height: 62px !important;
+    }
+
+    .nav-logo img {
+        width: 52px !important;
+    }
+
+    .site-header.is-scrolled .nav-logo img {
+        width: 49px !important;
+    }
+}
