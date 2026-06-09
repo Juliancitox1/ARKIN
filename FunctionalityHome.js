@@ -1507,6 +1507,96 @@ function releasePageTransition() {
 }
 
 /* ================================
+   HISTORIAL INTERNO DE VENTANAS
+   Permite que el gesto atras del celular cierre primero
+   la ventana superior antes de salir de la pagina.
+================================ */
+const ARKIN_HISTORY_KEY = "arkinOverlay";
+const ARKIN_BASE_HISTORY_KEY = "arkinBase";
+
+function getOpenOverlayLevel() {
+    if (productImageLightbox?.classList.contains("is-open")) return "product-image";
+    if (visualLightbox?.classList.contains("is-open")) return "visual-image";
+    if (modal?.classList.contains("is-open")) return "product";
+    if (categoriaModal?.classList.contains("is-open")) return "category";
+    if (armarioCompleto?.classList.contains("is-open")) return "wardrobe";
+    return "page";
+}
+
+function initializeOverlayHistory() {
+    try {
+        const currentState = history.state && typeof history.state === "object" ? history.state : {};
+
+        if (currentState[ARKIN_BASE_HISTORY_KEY]) return;
+
+        history.replaceState({
+            ...currentState,
+            [ARKIN_BASE_HISTORY_KEY]: true,
+            [ARKIN_HISTORY_KEY]: "page"
+        }, "", window.location.href);
+    } catch (error) {
+        console.warn("No se pudo inicializar el historial interno:", error);
+    }
+}
+
+function pushOverlayHistory(level) {
+    try {
+        if (!level || history.state?.[ARKIN_HISTORY_KEY] === level) return;
+
+        history.pushState({
+            [ARKIN_BASE_HISTORY_KEY]: true,
+            [ARKIN_HISTORY_KEY]: level
+        }, "", window.location.href);
+    } catch (error) {
+        console.warn("No se pudo guardar el paso en historial:", error);
+    }
+}
+
+function closeOverlayThroughHistory(level) {
+    if (history.state?.[ARKIN_HISTORY_KEY] === level) {
+        history.back();
+        return true;
+    }
+
+    return false;
+}
+
+function closeTopOverlayFromHistory() {
+    const activeLevel = getOpenOverlayLevel();
+
+    if (activeLevel === "product-image") {
+        closeProductImageLightbox(true);
+        return true;
+    }
+
+    if (activeLevel === "visual-image") {
+        closeVisualLightbox(true);
+        return true;
+    }
+
+    if (activeLevel === "product") {
+        closeProduct(true);
+        return true;
+    }
+
+    if (activeLevel === "category") {
+        closeCategoryModal(true);
+        return true;
+    }
+
+    if (activeLevel === "wardrobe") {
+        closeArmarioModal(true);
+        return true;
+    }
+
+    return false;
+}
+
+window.addEventListener("popstate", () => {
+    closeTopOverlayFromHistory();
+});
+
+/* ================================
    ARMARIO COMPLETO
 ================================ */
 // Abre Armario completo y carga sus productos.
@@ -1523,6 +1613,7 @@ function openArmarioModal() {
             armarioCompleto.classList.add("is-open");
             armarioCompleto.setAttribute("aria-hidden", "false");
             document.body.classList.add("modal-open");
+            pushOverlayHistory("wardrobe");
 
             armarioCompleto.querySelector(".armario-panel")?.scrollTo({
                 top: 0,
@@ -1539,7 +1630,8 @@ function openArmarioModal() {
 }
 
 // Cierra Armario completo.
-function closeArmarioModal() {
+function closeArmarioModal(fromHistory = false) {
+    if (!fromHistory && closeOverlayThroughHistory("wardrobe")) return;
     if (!armarioCompleto || isPageTransitioning) return;
 
     isPageTransitioning = true;
@@ -1612,6 +1704,7 @@ function openCategoryModal(category) {
             categoriaModal.classList.add("is-open");
             categoriaModal.setAttribute("aria-hidden", "false");
             document.body.classList.add("modal-open");
+            pushOverlayHistory("category");
 
             categoriaModal.querySelector(".armario-panel")?.scrollTo({
                 top: 0,
@@ -1631,7 +1724,8 @@ function openCategoryModal(category) {
 }
 
 // Cierra la ventana de categoria.
-function closeCategoryModal() {
+function closeCategoryModal(fromHistory = false) {
+    if (!fromHistory && closeOverlayThroughHistory("category")) return;
     if (!categoriaModal || isPageTransitioning) return;
 
     isPageTransitioning = true;
@@ -1852,6 +1946,8 @@ function openProduct(productId, openedFromArmario = false) {
         return;
     }
 
+    const wasProductModalOpen = modal.classList.contains("is-open");
+
     isPageTransitioning = true;
     showPageLoader();
     pauseBackgroundMotion();
@@ -1870,6 +1966,10 @@ function openProduct(productId, openedFromArmario = false) {
             modal.setAttribute("aria-hidden", "false");
             document.body.classList.add("modal-open");
 
+            if (!wasProductModalOpen) {
+                pushOverlayHistory("product");
+            }
+
             modal.querySelector(".product-panel")?.scrollTo({
                 top: 0,
                 behavior: "auto"
@@ -1887,7 +1987,8 @@ function openProduct(productId, openedFromArmario = false) {
 }
 
 // Cierra el modal de producto.
-function closeProduct() {
+function closeProduct(fromHistory = false) {
+    if (!fromHistory && closeOverlayThroughHistory("product")) return;
     if (!modal || isPageTransitioning) return;
 
     isPageTransitioning = true;
@@ -2086,11 +2187,13 @@ function openVisualLightbox(imageElement) {
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.classList.add("no-scroll");
+    pushOverlayHistory("visual-image");
     closeButton?.focus();
 }
 
 // Cierra la imagen ampliada.
-function closeVisualLightbox() {
+function closeVisualLightbox(fromHistory = false) {
+    if (!fromHistory && closeOverlayThroughHistory("visual-image")) return;
     if (!visualLightbox?.classList.contains("is-open")) return;
 
     visualLightbox.classList.remove("is-open");
@@ -2133,8 +2236,7 @@ function getProductImageLightbox() {
                 <div class="product-image-lightbox-glow"></div>
                 <img class="product-image-lightbox-img" src="" alt="" />
                 <figcaption class="product-image-lightbox-caption">
-                    <span class="product-image-lightbox-color"></span>
-                    <span class="product-image-lightbox-count"></span>
+                    <span class="product-image-lightbox-title"></span>
                 </figcaption>
             </figure>
             <button class="product-image-lightbox-arrow product-image-lightbox-arrow-right" type="button" data-product-lightbox-next>&#10095;</button>
@@ -2166,6 +2268,9 @@ function getProductImageLightbox() {
 
     panel?.addEventListener("touchmove", (event) => {
         if (event.touches.length !== 1) return;
+
+        const isNativeBackArea = productLightboxTouchStartX <= 28 || productLightboxTouchStartX >= window.innerWidth - 28;
+        if (isNativeBackArea) return;
 
         const deltaX = event.touches[0].clientX - productLightboxTouchStartX;
         const deltaY = event.touches[0].clientY - productLightboxTouchStartY;
@@ -2212,8 +2317,7 @@ function renderProductImageLightbox() {
     productLightboxIndex = (productLightboxIndex + modalImages.length) % modalImages.length;
     const activeImage = modalImages[productLightboxIndex];
     const lightboxImage = productImageLightbox.querySelector(".product-image-lightbox-img");
-    const colorLabel = productImageLightbox.querySelector(".product-image-lightbox-color");
-    const countLabel = productImageLightbox.querySelector(".product-image-lightbox-count");
+    const titleLabel = productImageLightbox.querySelector(".product-image-lightbox-title");
     const backgroundClass = getGarmentBackgroundClass(activeImage.image || activeImage.colorName);
 
     if (lightboxImage) {
@@ -2226,13 +2330,7 @@ function renderProductImageLightbox() {
     productImageLightbox.classList.remove("garment-bg-dark", "garment-bg-light");
     productImageLightbox.classList.add(backgroundClass);
 
-    if (colorLabel) colorLabel.textContent = activeImage.colorName;
-    if (countLabel) {
-        countLabel.textContent = t("productImageCounter", {
-            current: String(productLightboxIndex + 1),
-            total: String(modalImages.length)
-        });
-    }
+    if (titleLabel) titleLabel.textContent = product.name;
 
     updateProductImageLightboxTexts();
 }
@@ -2252,10 +2350,12 @@ function openProductImageLightbox(index = currentImageIndex) {
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.classList.add("no-scroll");
+    pushOverlayHistory("product-image");
     lightbox.querySelector(".product-image-lightbox-close")?.focus();
 }
 
-function closeProductImageLightbox() {
+function closeProductImageLightbox(fromHistory = false) {
+    if (!fromHistory && closeOverlayThroughHistory("product-image")) return;
     if (!productImageLightbox?.classList.contains("is-open")) return;
 
     const product = products[currentProductId];
@@ -2830,51 +2930,10 @@ if ("IntersectionObserver" in window) {
 
 
 /* ================================
-   GESTOS MOVILES SEGUROS
+   GESTOS MOVILES NATIVOS
+   No bloqueamos el gesto atras del sistema.
+   El historial interno cierra primero lightbox, producto, categoria o armario.
 ================================ */
-let edgeGestureStartX = null;
-let edgeGestureStartY = null;
-
-function isEditableTarget(target) {
-    return Boolean(target?.closest?.("input, textarea, select, [contenteditable='true']"));
-}
-
-document.addEventListener("touchstart", (event) => {
-    if (event.touches.length !== 1 || isEditableTarget(event.target)) {
-        edgeGestureStartX = null;
-        edgeGestureStartY = null;
-        return;
-    }
-
-    const touch = event.touches[0];
-    const edgeSize = 18;
-    const isFromEdge = touch.clientX <= edgeSize || touch.clientX >= window.innerWidth - edgeSize;
-
-    edgeGestureStartX = isFromEdge ? touch.clientX : null;
-    edgeGestureStartY = isFromEdge ? touch.clientY : null;
-}, { passive: true });
-
-document.addEventListener("touchmove", (event) => {
-    if (edgeGestureStartX === null || event.touches.length !== 1) return;
-
-    const touch = event.touches[0];
-    const deltaX = touch.clientX - edgeGestureStartX;
-    const deltaY = touch.clientY - edgeGestureStartY;
-
-    if (Math.abs(deltaX) > 24 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) {
-        event.preventDefault();
-    }
-}, { passive: false });
-
-document.addEventListener("touchend", () => {
-    edgeGestureStartX = null;
-    edgeGestureStartY = null;
-}, { passive: true });
-
-document.addEventListener("touchcancel", () => {
-    edgeGestureStartX = null;
-    edgeGestureStartY = null;
-}, { passive: true });
 
 /* ================================
    RESPONSIVE FIX: ALTURA REAL EN MOVIL
@@ -2908,6 +2967,7 @@ if (window.visualViewport) {
 /* ================================
    INICIALIZACION
 ================================ */
+initializeOverlayHistory();
 setTheme(getSavedTheme(), false);
 setLanguage(getSavedLanguage(), false);
 renderProducts();

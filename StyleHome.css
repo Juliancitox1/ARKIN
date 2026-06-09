@@ -2488,3 +2488,90 @@ body[data-theme="angelic"] .product-image-lightbox-hint {
         font-size: 0.92rem;
     }
 }
+
+/* ================================
+   AJUSTE FINAL - LIGHTBOX PRODUCTO E HISTORIAL MOVIL
+================================ */
+
+/* Permite que el gesto nativo de atras funcione con el historial interno */
+html,
+body {
+    overscroll-behavior-x: auto !important;
+}
+
+/* La ventana de imagen del producto solo muestra el nombre del diseno */
+.product-image-lightbox-caption {
+    left: 50% !important;
+    right: auto !important;
+    bottom: 22px !important;
+    transform: translateX(-50%) !important;
+    width: min(88vw, 520px) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.product-image-lightbox-title {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    max-width: 100% !important;
+    padding: 10px 18px !important;
+    border-radius: 999px !important;
+    background: rgba(5, 3, 8, 0.72) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    color: rgba(245, 241, 232, 0.96) !important;
+    font-family: "Darkhusk", "Manrope", system-ui, sans-serif !important;
+    font-size: 0.86rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.13em !important;
+    line-height: 1.25 !important;
+    text-transform: uppercase !important;
+    white-space: normal !important;
+    backdrop-filter: blur(14px) !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34), 0 0 18px rgba(183, 148, 255, 0.14) !important;
+}
+
+/* Por seguridad, oculta los textos anteriores si quedaron en cache */
+.product-image-lightbox-color,
+.product-image-lightbox-count {
+    display: none !important;
+}
+
+body[data-theme="angelic"] .product-image-lightbox-title {
+    background: rgba(255, 250, 241, 0.88) !important;
+    color: rgba(32, 23, 37, 0.94) !important;
+    border-color: rgba(45, 31, 58, 0.14) !important;
+    box-shadow: 0 18px 46px rgba(83, 61, 109, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.68) inset !important;
+}
+
+/* En celular, el swipe interno funciona dentro de la imagen;
+   desde el borde queda libre para devolver entre ventanas. */
+.product-image-lightbox-panel {
+    touch-action: pan-y pinch-zoom !important;
+}
+
+@media (max-width: 860px) {
+    .product-image-lightbox-caption {
+        bottom: 14px !important;
+        width: min(86vw, 420px) !important;
+    }
+
+    .product-image-lightbox-title {
+        padding: 8px 14px !important;
+        font-size: 0.74rem !important;
+        letter-spacing: 0.105em !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-image-lightbox-caption {
+        bottom: 12px !important;
+    }
+
+    .product-image-lightbox-title {
+        font-size: 0.68rem !important;
+        letter-spacing: 0.09em !important;
+    }
+}
