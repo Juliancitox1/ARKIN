@@ -606,6 +606,12 @@ const languageText = {
         expandImage: "Ampliar {alt}",
         imageExpandedAlt: "Imagen ARKIN ampliada",
         colorAria: "Color {color}",
+        openProductImage: "Ampliar imagen del producto",
+        closeProductImage: "Cerrar imagen del producto",
+        previousProductImage: "Imagen anterior del producto",
+        nextProductImage: "Imagen siguiente del producto",
+        productImageCounter: "Imagen {current} de {total}",
+        swipeProductImage: "Desliza para ver mas fotos",
         whatsappMessage: "Hola ARKIN, estoy interesad@ en {product} | {price} | Color: {color}{size}"
     },
     en: {
@@ -674,6 +680,12 @@ const languageText = {
         expandImage: "Expand {alt}",
         imageExpandedAlt: "Expanded ARKIN image",
         colorAria: "Color {color}",
+        openProductImage: "Expand product image",
+        closeProductImage: "Close product image",
+        previousProductImage: "Previous product image",
+        nextProductImage: "Next product image",
+        productImageCounter: "Image {current} of {total}",
+        swipeProductImage: "Swipe to see more photos",
         whatsappMessage: "Hi ARKIN, I am interested in {product} | {price} | Color: {color}{size}"
     }
 };
@@ -851,6 +863,7 @@ function updateStaticTexts() {
 
     updateLanguageToggles();
     updateThemeText();
+    updateProductImageLightboxTexts();
 }
 
 function rerenderLanguageContent() {
@@ -1683,6 +1696,10 @@ function renderModalGallery(product) {
 
     mainImage.src = activeImage.image;
     mainImage.alt = `${product.name} ${activeImage.colorName}`;
+    mainImage.setAttribute("role", "button");
+    mainImage.setAttribute("tabindex", "0");
+    mainImage.setAttribute("aria-label", t("openProductImage"));
+    mainImage.setAttribute("title", t("openProductImage"));
 
     mainImage.classList.remove("garment-bg-dark", "garment-bg-light");
     mainImage.classList.add(activeBackgroundClass);
@@ -2090,6 +2107,191 @@ function closeVisualLightbox() {
     lastFocusedBeforeVisualModal = null;
 }
 
+
+/* ================================
+   LIGHTBOX PRODUCTO
+================================ */
+let productImageLightbox = null;
+let productLightboxIndex = 0;
+let lastFocusedBeforeProductLightbox = null;
+let productLightboxTouchStartX = 0;
+let productLightboxTouchStartY = 0;
+let productLightboxTouchMoved = false;
+
+function getProductImageLightbox() {
+    if (productImageLightbox) return productImageLightbox;
+
+    productImageLightbox = document.createElement("div");
+    productImageLightbox.className = "product-image-lightbox";
+    productImageLightbox.setAttribute("aria-hidden", "true");
+    productImageLightbox.innerHTML = `
+        <div class="product-image-lightbox-backdrop" data-product-lightbox-close></div>
+        <div class="product-image-lightbox-panel" role="dialog" aria-modal="true" aria-label="Imagen ampliada del producto">
+            <button class="product-image-lightbox-close" type="button" data-product-lightbox-close></button>
+            <button class="product-image-lightbox-arrow product-image-lightbox-arrow-left" type="button" data-product-lightbox-prev>&#10094;</button>
+            <figure class="product-image-lightbox-figure">
+                <div class="product-image-lightbox-glow"></div>
+                <img class="product-image-lightbox-img" src="" alt="" />
+                <figcaption class="product-image-lightbox-caption">
+                    <span class="product-image-lightbox-color"></span>
+                    <span class="product-image-lightbox-count"></span>
+                </figcaption>
+            </figure>
+            <button class="product-image-lightbox-arrow product-image-lightbox-arrow-right" type="button" data-product-lightbox-next>&#10095;</button>
+            <p class="product-image-lightbox-hint"></p>
+        </div>
+    `;
+
+    productImageLightbox.querySelectorAll("[data-product-lightbox-close]").forEach((element) => {
+        element.addEventListener("click", closeProductImageLightbox);
+    });
+
+    productImageLightbox.querySelector("[data-product-lightbox-prev]")?.addEventListener("click", () => {
+        moveProductImageLightbox(-1);
+    });
+
+    productImageLightbox.querySelector("[data-product-lightbox-next]")?.addEventListener("click", () => {
+        moveProductImageLightbox(1);
+    });
+
+    const panel = productImageLightbox.querySelector(".product-image-lightbox-panel");
+
+    panel?.addEventListener("touchstart", (event) => {
+        if (event.touches.length !== 1) return;
+
+        productLightboxTouchStartX = event.touches[0].clientX;
+        productLightboxTouchStartY = event.touches[0].clientY;
+        productLightboxTouchMoved = false;
+    }, { passive: true });
+
+    panel?.addEventListener("touchmove", (event) => {
+        if (event.touches.length !== 1) return;
+
+        const deltaX = event.touches[0].clientX - productLightboxTouchStartX;
+        const deltaY = event.touches[0].clientY - productLightboxTouchStartY;
+
+        if (Math.abs(deltaX) > 12 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+            productLightboxTouchMoved = true;
+            event.preventDefault();
+        }
+    }, { passive: false });
+
+    panel?.addEventListener("touchend", (event) => {
+        if (!productLightboxTouchMoved) return;
+
+        const changedTouch = event.changedTouches[0];
+        const deltaX = changedTouch.clientX - productLightboxTouchStartX;
+
+        if (Math.abs(deltaX) < 48) return;
+
+        moveProductImageLightbox(deltaX < 0 ? 1 : -1);
+    }, { passive: true });
+
+    document.body.appendChild(productImageLightbox);
+    return productImageLightbox;
+}
+
+function updateProductImageLightboxTexts() {
+    if (!productImageLightbox) return;
+
+    productImageLightbox.querySelector(".product-image-lightbox-close")?.setAttribute("aria-label", t("closeProductImage"));
+    productImageLightbox.querySelector("[data-product-lightbox-prev]")?.setAttribute("aria-label", t("previousProductImage"));
+    productImageLightbox.querySelector("[data-product-lightbox-next]")?.setAttribute("aria-label", t("nextProductImage"));
+
+    const hint = productImageLightbox.querySelector(".product-image-lightbox-hint");
+    if (hint) hint.textContent = t("swipeProductImage");
+}
+
+function renderProductImageLightbox() {
+    const product = products[currentProductId];
+    if (!product || !productImageLightbox) return;
+
+    const modalImages = getModalImages(product);
+    if (!modalImages.length) return;
+
+    productLightboxIndex = (productLightboxIndex + modalImages.length) % modalImages.length;
+    const activeImage = modalImages[productLightboxIndex];
+    const lightboxImage = productImageLightbox.querySelector(".product-image-lightbox-img");
+    const colorLabel = productImageLightbox.querySelector(".product-image-lightbox-color");
+    const countLabel = productImageLightbox.querySelector(".product-image-lightbox-count");
+    const backgroundClass = getGarmentBackgroundClass(activeImage.image || activeImage.colorName);
+
+    if (lightboxImage) {
+        lightboxImage.src = activeImage.image;
+        lightboxImage.alt = `${product.name} ${activeImage.colorName}`;
+        lightboxImage.classList.remove("garment-bg-dark", "garment-bg-light");
+        lightboxImage.classList.add(backgroundClass);
+    }
+
+    productImageLightbox.classList.remove("garment-bg-dark", "garment-bg-light");
+    productImageLightbox.classList.add(backgroundClass);
+
+    if (colorLabel) colorLabel.textContent = activeImage.colorName;
+    if (countLabel) {
+        countLabel.textContent = t("productImageCounter", {
+            current: String(productLightboxIndex + 1),
+            total: String(modalImages.length)
+        });
+    }
+
+    updateProductImageLightboxTexts();
+}
+
+function openProductImageLightbox(index = currentImageIndex) {
+    const product = products[currentProductId];
+    if (!product) return;
+
+    const modalImages = getModalImages(product);
+    if (!modalImages.length) return;
+
+    const lightbox = getProductImageLightbox();
+    productLightboxIndex = Number.isFinite(index) ? index : 0;
+    lastFocusedBeforeProductLightbox = document.activeElement;
+
+    renderProductImageLightbox();
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+    lightbox.querySelector(".product-image-lightbox-close")?.focus();
+}
+
+function closeProductImageLightbox() {
+    if (!productImageLightbox?.classList.contains("is-open")) return;
+
+    const product = products[currentProductId];
+    const modalImages = product ? getModalImages(product) : [];
+
+    if (modalImages[productLightboxIndex]) {
+        currentImageIndex = productLightboxIndex;
+        currentColorName = modalImages[productLightboxIndex].colorName;
+        renderModal();
+    }
+
+    productImageLightbox.classList.remove("is-open");
+    productImageLightbox.setAttribute("aria-hidden", "true");
+
+    if (!modal?.classList.contains("is-open") && !armarioCompleto?.classList.contains("is-open") && !categoriaModal?.classList.contains("is-open") && !visualLightbox?.classList.contains("is-open")) {
+        document.body.classList.remove("no-scroll");
+    }
+
+    if (lastFocusedBeforeProductLightbox instanceof HTMLElement) {
+        lastFocusedBeforeProductLightbox.focus();
+    }
+
+    lastFocusedBeforeProductLightbox = null;
+}
+
+function moveProductImageLightbox(direction) {
+    if (!productImageLightbox?.classList.contains("is-open")) return;
+
+    const product = products[currentProductId];
+    const modalImages = product ? getModalImages(product) : [];
+    if (!modalImages.length) return;
+
+    productLightboxIndex = (productLightboxIndex + direction + modalImages.length) % modalImages.length;
+    renderProductImageLightbox();
+}
+
 // Conecta las imagenes de Nosotros con el lightbox.
 function initializeVisualCards() {
     document.querySelectorAll(".nosotros-visual .visual-card").forEach((card) => {
@@ -2431,6 +2633,20 @@ sizesContainer?.addEventListener("click", (event) => {
     renderModal();
 });
 
+
+mainImage?.addEventListener("click", () => {
+    if (!currentProductId) return;
+    openProductImageLightbox(currentImageIndex);
+});
+
+mainImage?.addEventListener("keydown", (event) => {
+    if (!isKeyboardActivation(event)) return;
+
+    event.preventDefault();
+    if (!currentProductId) return;
+    openProductImageLightbox(currentImageIndex);
+});
+
 thumbnailsContainer?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-image-index]");
     if (!button || !currentProductId) return;
@@ -2471,6 +2687,25 @@ nextImageButton?.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
+    if (productImageLightbox?.classList.contains("is-open")) {
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            moveProductImageLightbox(-1);
+            return;
+        }
+
+        if (event.key === "ArrowRight") {
+            event.preventDefault();
+            moveProductImageLightbox(1);
+            return;
+        }
+
+        if (event.key === "Escape") {
+            closeProductImageLightbox();
+            return;
+        }
+    }
+
     if (event.key !== "Escape") return;
 
     if (visualLightbox?.classList.contains("is-open")) {
@@ -2593,20 +2828,81 @@ if ("IntersectionObserver" in window) {
 }
 
 
+
+/* ================================
+   GESTOS MOVILES SEGUROS
+================================ */
+let edgeGestureStartX = null;
+let edgeGestureStartY = null;
+
+function isEditableTarget(target) {
+    return Boolean(target?.closest?.("input, textarea, select, [contenteditable='true']"));
+}
+
+document.addEventListener("touchstart", (event) => {
+    if (event.touches.length !== 1 || isEditableTarget(event.target)) {
+        edgeGestureStartX = null;
+        edgeGestureStartY = null;
+        return;
+    }
+
+    const touch = event.touches[0];
+    const edgeSize = 18;
+    const isFromEdge = touch.clientX <= edgeSize || touch.clientX >= window.innerWidth - edgeSize;
+
+    edgeGestureStartX = isFromEdge ? touch.clientX : null;
+    edgeGestureStartY = isFromEdge ? touch.clientY : null;
+}, { passive: true });
+
+document.addEventListener("touchmove", (event) => {
+    if (edgeGestureStartX === null || event.touches.length !== 1) return;
+
+    const touch = event.touches[0];
+    const deltaX = touch.clientX - edgeGestureStartX;
+    const deltaY = touch.clientY - edgeGestureStartY;
+
+    if (Math.abs(deltaX) > 24 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+document.addEventListener("touchend", () => {
+    edgeGestureStartX = null;
+    edgeGestureStartY = null;
+}, { passive: true });
+
+document.addEventListener("touchcancel", () => {
+    edgeGestureStartX = null;
+    edgeGestureStartY = null;
+}, { passive: true });
+
 /* ================================
    RESPONSIVE FIX: ALTURA REAL EN MOVIL
 ================================ */
-// Guarda la altura real de pantalla para responsive movil.
+// Guarda la altura real de pantalla sin bloquear el zoom del navegador.
+let viewportHeightAnimationFrame = null;
+
 function updateAppViewportHeight() {
-    document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
+    const height = window.innerHeight || document.documentElement.clientHeight;
+    document.documentElement.style.setProperty("--app-height", `${height}px`);
+}
+
+function requestAppViewportHeightUpdate() {
+    cancelAnimationFrame(viewportHeightAnimationFrame);
+    viewportHeightAnimationFrame = requestAnimationFrame(updateAppViewportHeight);
 }
 
 updateAppViewportHeight();
-window.addEventListener("resize", updateAppViewportHeight);
-window.addEventListener("orientationchange", updateAppViewportHeight);
+window.addEventListener("resize", requestAppViewportHeightUpdate, { passive: true });
+window.addEventListener("orientationchange", () => {
+    window.setTimeout(requestAppViewportHeightUpdate, 180);
+}, { passive: true });
 
 if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", updateAppViewportHeight);
+    window.visualViewport.addEventListener("resize", () => {
+        if (window.visualViewport.scale && Math.abs(window.visualViewport.scale - 1) > 0.01) return;
+        requestAppViewportHeightUpdate();
+    }, { passive: true });
 }
 
 /* ================================
